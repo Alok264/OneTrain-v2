@@ -1,0 +1,18 @@
+<%- include('partials/header'); -%>
+<section id='blur'>
+    <section id="pnr-query">
+        <form action="/pnr-status" method="post">
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control pnr-input" id="floatingInput" placeholder="5489635789" autocomplete="off" name="pnrcheck">
+                <label for="floatingInput">10 Digit PNR Number</label>
+                <button type="submit" class="btn btn-success pnr-button" id="pnrSubmitButton"><h4 class="h4">Go..</h4></button>
+            </div>
+        </form>
+    </section>
+    <section id="alert">
+        <div class="alert">
+            <span class="alert-message"><%= alert %></span>
+        </div>
+    </section>
+</section>
+<%- include('partials/footer'); -%>

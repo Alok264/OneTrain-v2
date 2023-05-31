@@ -1,0 +1,26 @@
+<%- include('partials/header') -%>
+<section id='blur'>
+    <section id="running">
+        <form action="/running-status" method="post" class="running-form-input">
+            <div class="form-floating mb-3 running-input ">
+                <input type="text" class="form-control train-number-name search-train" id="floatingInput" placeholder="12331/Himgiri Express" autocomplete="off" name="runningNumber">
+                <label for="floatingInput" classs="label">Train Number Or Train Name</label>
+                <div class="autocom-box-train-search autocom-box"></div>
+            </div>
+            <div class="form-floating mb-3 running-input ">
+                <select class="form-select running-select" aria-label="Default select example" id="floatingInput1" placeholder="0 / Today" name="selected">
+                    <option selected>0 / Today</option>
+                    <option value="1">1 / Yesterday</option>
+                    <option value="2">2 / 2-days Ago</option>
+                    <option value="3">3 / 3-days Ago</option>
+                    <option value="4">4 / 4-days Ago</option>
+                </select>
+                <label for="floatingInput1" classs="label">Start Date</label>
+            </div>
+            <div class="form-floating mb-3 running-button">
+                <button type="submit" class="btn btn-success running-Submit"><h4 class="h4">Submit</h4></button>
+            </div>
+        </form>
+    </section>
+</section>
+<%- include('partials/footer') -%>

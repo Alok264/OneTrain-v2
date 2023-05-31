@@ -1,0 +1,64 @@
+<%- include('partials/header') -%>
+<section id='blur'>
+    <section id="Availability">
+        <form action="/fare" method="post" class="Availabilityinput">
+            <div class="Ticket-Avail-top">
+                <div class="form-floating mb-3 avail-input-station">
+                    <input type="text" class="form-control avail-source" id="floatingInput" placeholder="NDLS/New Delhi" autocomplete="off" name="Source">
+                    <label for="floatingInput">Source Station</label>
+                </div>
+                <div class="form-floating mb-3 avail-input-station">
+                    <input type="text" class="form-control avail-destination" id="floatingInput" placeholder="NDLS/New Delhi" autocomplete="off" name="Destination">
+                    <label for="floatingInput">Destination Station</label>
+                </div>
+                <div class="form-floating mb-3 avail-input-quota">
+                    <select class="form-select avail-quota" aria-label="Default select example" id="floatingInput1" placeholder="General" name="Quota">
+                        <option selected> General</option>
+                        <option value="1">Tatkal</option>
+                        <option value="2">Ladies</option>
+                        <option value="3">Lower Birth/Senior citizen</option>
+                        <option value="4">Premium Tatkal</option>
+                        <option value="5">Person With Disability</option>
+                        <option value="6">Senior citizen</option>
+                    </select>
+                    <label for="floatingInput1" classs="label">Quota</label>
+                </div>
+            </div>
+            <div  class="Ticket-Avail-top">
+                <div class="form-floating mb-3 avail-input-tnumber">
+                    <input type="text" class="form-control avail-tnumber" id="floatingInput" placeholder="12331/Himgiri Express" autocomplete="off" name="TNumber">
+                    <label for="floatingInput">Train Number/Name</label>
+                </div>
+                <div class="form-floating mb-3 avail-input-class-date-button">
+                    <select class="form-select avail-class" aria-label="Default select example" id="floatingInput1" placeholder="Sleeper" name="Class">
+                        <option selected>All Classes</option>
+                        <option value="1">Sleeper (SL)</option>
+                        <option value="2">AC 3 Tier (3A)</option>
+                        <option value="3">AC 2 Tier (2A)</option>
+                        <option value="4">AC First Class (1A)</option>
+                        <option value="5">Anubhuti Class (EA)</option>
+                        <option value="6">Exec. Chair Car (EC)</option>
+                        <option value="7">Vistadome AC (EV)</option>
+                        <option value="8">First Class (FC)</option>
+                        <option value="9">AC 3 Economy (3E)</option>
+                        <option value="10">Vistadome Chair Car (VC)</option>
+                        <option value="11">AC Chair Car (CC)</option>
+                        <option value="12">Vistadome Non AC (VS)</option>
+                        <option value="13">Second Sitting (2S)</option>
+                    </select>
+                    <label for="floatingInput1" classs="label">Class</label>
+                </div>
+                <div class="form-floating mb-3 avail-input-class-date-button">
+                    <input type="date" class="form-control avail-date" id="floatingInput" placeholder="24/03/2023" autocomplete="off" name="Date">
+                    <label for="floatingInput">Date</label>
+                </div>
+                    
+                <div class="form-floating mb-3 avail-input-class-date-button">
+                    <button type="submit" class="btn btn-success avail-check"><h4 class="h4">Check</h4></button>
+                </div>
+            </div>
+            
+        </form>
+    </section>
+</section>
+<%- include('partials/footer') -%>

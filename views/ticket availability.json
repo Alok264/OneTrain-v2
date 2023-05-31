@@ -1,0 +1,12 @@
+{
+  "status": true,
+  "message": "Success",
+  "timestamp": 1685540225520,
+  "data": [
+    {
+      "total_fare": 2440,
+      "date": "27-9-2023",
+      "current_status": "AVAILABLE-0002."
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+<%- include('partials/header') -%>
+<section id='blur'>
+    <section id="TBWS">
+        <form action="/TBWS" method="post" class="TBWSinput">
+            <div class="form-floating mb-3 TBWS-input ">
+                <input type="text" class="form-control source search-station" id="floatingInput" placeholder="NDLS/New Delhi" autocomplete="off" name="Source">
+                <label for="floatingInput">Source Station</label>
+                <div class="autocom-box autocom-source" id="autocom-source"></div>
+            </div>
+            <div class="form-floating mb-3 TBWS-input ">
+                <input type="text" class="form-control destination search-station" id="floatingInput" placeholder="NDLS/New Delhi" autocomplete="off" name="Destination">
+                <label for="floatingInput">Destination Station</label>
+                <div class="autocom-box autocom-destination" id="autocom-destination"></div>
+            </div>
+            <div class="form-floating mb-3 TBWS-input ">
+                <input type="date" class="form-control destination" id="floatingInput" placeholder="12/12/2012" autocomplete="off" name="Date">
+                <label for="floatingInput">Date</label>
+            </div>
+            <div class="form-floating mb-3 TBWS-button">
+                <button type="submit" class="btn btn-success TBWS-search"><h4 class="h4">Search</h4></button>
+            </div>
+        </form>
+    </section>
+</section>
+<%- include('partials/footer') -%>

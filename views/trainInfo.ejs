@@ -1,0 +1,80 @@
+<%- include('partials/header') -%>
+<section id='blur'>
+    <section id="train-info">
+        <form id="trainInfoForm" class="train-info-form-input">
+            <div class="form-floating mb-3 train-info-input ">
+                <input type="text" class="form-control train-number-name search-train" id="floatingInput" placeholder="12331/Himgiri Express" autocomplete="off" name="nameumber">
+                <label for="floatingInput" classs="label">Train Number Or Train Name</label>
+                <div class="autocom-box-train-search autocom-box"></div>
+            </div>
+            <ul class="search-recomend"></ul>
+            <div class="form-floating mb-3 train-info-button">
+                <button type="submit" class="btn btn-success train-info-search"><h4 class="h4">Search</h4></button>
+            </div>
+        </form>
+    </section>
+</section>
+<section id="train-info-output" style="display:none">
+    <div class="train-info-output">
+        <div class="train-schedule">
+            <div class="train-schedule-head">
+                <h6>Train Schedule</h6>
+            </div>
+            <div class="train-schedule-close-button">
+                <button type="button" class="train-info-close-button" onclick="close_train_info_output()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="train-first-body">
+            <div class="train-info-body">
+                <table>
+                    <thead>
+                        <tr class="train-info-head-head">
+                            <th>Train Number</th>
+                            <th>Train Name</th>
+                            <th>From Station</th>
+                            <th>To Station</th>
+                            <th>Running Days</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="train-info-head tr">
+                            <td id="train_number"></td>
+                            <td id="train_name">Himgiri Express</td>
+                            <td id="from_station"></td>
+                            <td id="to_station"></td>
+                            <td id="running_days">
+                                <p class="running-day">Mon</p>
+                                <p class="running-day">Tue</p>
+                                <p class="running-day">Wed</p>
+                                <p class="running-day">Thu</p>
+                                <p class="running-day">Fri</p>
+                                <p class="running-day">Sat</p>
+                                <p class="running-day">Sun</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table>
+                    <thead>
+                        <tr class="train-info-stations-head">
+                            <th>S.No.</th>
+                            <th>Station Code</th>
+                            <th>Station Name</th>
+                            <th>Arrival</th>
+                            <th>Departure</th>
+                            <th>Halt Time (in minutes)</th>
+                            <th>Distance</th>
+                            <th>Day</th>
+                        </tr>
+                    </thead>
+                    <tbody  id="train-info-stoppages">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<%- include('partials/footer') -%>

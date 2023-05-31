@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="images/train-station.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">  </head>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://kit.fontawesome.com/3194465800.css" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/3194465800.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../../../../../bootstrap-social.css">
+    <link rel="stylesheet" href="../../../../../../style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@500&display=swap&family=Righteous&display=swap" rel="stylesheet">
+    <title>One Train</title>
+</head>
+<body>
+<section id="navbar-blur">
+    <section id="title" class="title">
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg nav">
+                <button class="navbar-toggler colapse" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon span-button"></span>
+                </button>
+                <a href="/" class="navbar-brand logo"><img src="/images/Logo.png"></a>
+                <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                    <a href="/" class="host"><h3>One Train</h3></a>
+                    <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="/pnr-status" class="nav-link">PNR Status</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/train-info" class="nav-link">Train info.</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/running-status" class="nav-link">Running Status</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" >More</a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="/TBWS" class="dropdown-item">Train b/w Stations</a>
+                            </li>
+                            <li>
+                                <a href="/station-info" class="dropdown-item">Station info</a>
+                            </li>
+                            <li>
+                                <a href="/emergency" class="dropdown-item">Emergency Numbers</a>
+                            </li>
+                            <li>
+                                <a href="/ticket-avail" class="dropdown-item">Ticket Availability</a>
+                            </li>
+                            <li>
+                                <a href="/fare" class="dropdown-item">Fare Calculator</a>
+                            </li>
+                            <li>
+                                <a href="https://www.irctc.co.in/nget/train-search" class="dropdown-item">IRCTC Website</a>
+                            </li>
+                            <li>
+                                <a href="/help-desk" class="dropdown-item">Help Desk</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item login_dropdown"> <!--add dropdown on login-dropdown data-bs-toggle="dropdown" -->
+                        <a href="/login" role="button" aria-expanded="false" id="login_user"  class="nav-link dropdown-toggle d-flex align-items-center login_username text-success-emphasis rounded-pill">
+                            <img class="rounded-circle login_img me-1" width="24" height="24" src="https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-1.jpg" alt="User Profile"><span>Login/Signup</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-toggle">
+                            <li>
+                                <a href="/profile" class="dropdown-item">Profile</a>
+                            </li>
+                            <li>
+                                <a href="/logout" class="dropdown-item">Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </section>
+</section>
+    
+    <div class="goto-top2">
+        <button class="goto-top btn btn-lg btn-primary top" type="button">Top</button>
+    </div>
+    <div class="chatbot_click">
+        <button type="button" class="chatbot_button" data-bs-toggle="modal" data-bs-target="#chatbotModal" onclick=chatbot_button_clicked()>
+        <i class="fas fa-comment-dots chatbot-button-icon"></i>
+    </div>
+    <div class="chatbot-body">
+        <div class="chatbot-main-body">
+            <div class="chatbot-header">
+                <div class="chatbot-header-text">
+                    <h3>One Train</h3>
+                </div>
+                <div class="chatbot-header-icon">
+                    <button type="button" class="chatbot-header-button" data-bs-dismiss="modal" aria-label="Close" onclick=chatbot_close_button_clicked()>
+                        <i class="fas fa-times "></i>
+                    </button>
+                </div>
+            </div>
+            <div class="chatbot-content">
+                <div class="chatbot-content-text">
+                    <p>Hi, I am One Train Chatbot. How can I help you?</p>
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <div class="chatbot-input-text">
+                    <input type="text" class="chatbot-input-box" placeholder="Type your message here...">
+                </div>
+                <div class="chatbot-input-icon">
+                    <button type="button" class="chatbot-input-button">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<!-- write css for chatbot body 
+
+-->

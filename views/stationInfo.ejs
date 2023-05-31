@@ -1,0 +1,16 @@
+<%- include('partials/header') -%>
+<section id='blur'>
+    <section id="Station">
+        <form action="/station-info" method="post" class="Stationinput">
+            <div class="form-floating mb-3 Station-input ">
+                <input type="text" class="form-control source Station search-station" id="floatingInput" placeholder="NDLS/New Delhi" autocomplete="off" name="Station">
+                <label for="floatingInput">Station Name/Code</label>
+                <div class="autocom-box autocom-source" id="autocom-source"></div>
+            </div>
+            <div class="form-floating mb-3 Station-button">
+                <button type="submit" class="btn btn-success Station-search"><h4 class="h4">Search</h4></button>
+            </div>
+        </form>
+    </section>
+</section>
+<%- include('partials/footer') -%>

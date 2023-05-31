@@ -1,0 +1,411 @@
+<%- include('partials/header'); -%>
+<section id="blur">
+    <section id="title" class="title">
+        <p class="text-center fst-normal text-warning">------Right Now only PNR status, Train b/w stations, emergency number, login/signup, IRCTC website are working------</p>
+        <div clas="container-fluid">
+            <div class="title-content">
+                <div class="row align-items-md-stretch">
+                    <div class="col-lg-6">
+                        <div class="h-100 p-5 rounded-3">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label for="" class="col-form-label"><img src="images/From.png"> From</label>
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9">
+                                    <input type="text" id="" class="form-control source search-station">
+                                    <div class="autocom-box autocom-source" id="autocom-source"></div>
+                                </div>
+                            </div>
+                            <div class="switch">
+                                <button type="submit" class="switch-btn"><i class="fa-solid fa-repeat fa-lg"></i></button>
+                            </div>
+                            <div class="row g-3 align-items-center">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label for="" class="col-form-label"><img src="images/To.png"> To</label>
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9">
+                                    <input type="text" id="" class="form-control destination search-station" >
+                                    <div class="autocom-box autocom-destination" id="autocom-destination"></div>
+                                </div>
+                            </div>
+                            <div class="row g-3 align-items-center">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label for="" class="col-form-label"> <img src="images/calendar.png"> Date</label>
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9">
+                                    <input type="Date" id="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row g-3 align-items-center">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label for="" class="col-form-label"> <img src="images/class.png"> Class</label>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <select class="form-select form-select" aria-label=".form-select-lg example">
+                                        <option selected>All Classes</option>
+                                        <option value="1">Sleeper (SL)</option>
+                                        <option value="2">AC 3 Tier (3A)</option>
+                                        <option value="3">AC 2 Tier (2A)</option>
+                                        <option value="4">AC First Class (1A)</option>
+                                        <option value="5">Anubhuti Class (EA)</option>
+                                        <option value="6">Exec. Chair Car (EC)</option>
+                                        <option value="7">Vistadome AC (EV)</option>
+                                        <option value="8">First Class (FC)</option>
+                                        <option value="9">AC 3 Economy (3E)</option>
+                                        <option value="10">Vistadome Chair Car (VC)</option>
+                                        <option value="11">AC Chair Car (CC)</option>
+                                        <option value="12">Vistadome Non AC (VS)</option>
+                                        <option value="13">Second Sitting (2S)</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label for="" class="col-form-label"><img src="images/quotation.png"> Quota</label>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <select class="form-select form-select" aria-label=".form-select-lg example">
+                                        <option selected> General</option>
+                                        <option value="1">Tatkal</option>
+                                        <option value="2">Ladies</option>
+                                        <option value="3">Lower Birth/Senior citizen</option>
+                                        <option value="4">Premium Tatkal</option>
+                                        <option value="5">Person With Disability</option>
+                                        <option value="6">Senior citizen</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row g-3 align-item-center">
+                                <button class="btn  btn-primary btn-lg " type="button"> Search</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="colmd col-lg-6">
+                        <div class="h-100 p-5 border rounded-3">
+                            <h1 class="Title-heading">Book Train Ticket In Just Three Steps</h1>
+                            <div class="title-img">
+                                <img  src="images/Train first.png">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="custom-shape-divider-top-1677185813">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
+            <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
+            <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
+        </svg>
+    </div>
+
+    <section id="features">
+        <div class="row features-container">
+            <div class="col col-md-4 col-sm-6">
+                <div class="card scale shadow-lg">
+                    <img class="feature-col-img" src="images/Train.jpg" alt="PNR Status" srcset="">
+                    <div class="card-body feature-content">
+                        <p class="card-text">PNR (Passenger Name Record) status is a record of a passenger’s journey, which includes information about their booking status, seat availability, and fare.</p>
+                        <div>
+                            <a class="btn btn-outline-success btn-lg feature-button" href="/pnr-status">PNR Status</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-md-4 col-sm-6">
+                <div class="card scale  shadow-lg">
+                    <img class="feature-col-img"  src="images/Train 1.jpg" alt="Train Info." srcset="">
+                    <div class="card-body feature-content">
+                        <p class="card-text">Train Info provides information about train schedules, routes, seat availability, fare, and live train status.</p>
+                        <div>
+                            <a class="btn btn-outline-success btn-lg feature-button" href="/train-info">Train Info.</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-md-4 col-sm-6">
+                <div class="card scale  shadow-lg">
+                    <img class="feature-col-img"  src="images/Train 2.jpg" alt="Running Status" srcset="">
+                    <div class="card-body feature-content">
+                        <p class="card-text">Running Status provides live updates on the current location and expected arrival/departure time of a train.</p>
+                        <div>
+                            <a class="btn btn-outline-success btn-lg feature-button" href="/running-status">Running Status</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-md-4 col-sm-6">
+                <div class="card scale  shadow-lg">
+                    <img class="feature-col-img"  src="images/Train 3.jpg" alt="Emergency Number" srcset="">
+                    <div class="card-body feature-content">
+                        <p class="card-text">Emergency Number is an emergency telephone number that provides immediate assistance from police, fire, and medical services.</p>
+                        <div>
+                            <a class="btn btn-outline-success btn-lg feature-button" href="/emergency">Emergency Numbers</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-md-4 col-sm-6">
+                <div class="card scale  shadow-lg">
+                    <img class="feature-col-img"  src="images/Train 4.jpg" alt="Station Info" srcset="">
+                    <div class="card-body feature-content">
+                        <p class="card-text">Station Info provides information about train arrivals, departures, and delays at a particular railway station.</p>
+                        <div>
+                            <a class="btn btn-outline-success btn-lg feature-button" href="/station-info">Station Info.</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-md-4 col-sm-6">
+                <div class="card scale  shadow-lg">
+                    <img class="feature-col-img"  src="images/Train 5.jpg" alt="Ticket Availability" srcset="">
+                    <div class="card-body feature-content">
+                        <p class="card-text">Ticket Availability: Check availability of train tickets in real-time, book online or through authorized agents.</p>
+                        <div>
+                            <a class="btn btn-outline-success btn-lg feature-button" href="/ticket-avail">Ticket Availability</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="more">
+            <button class="btn btn-lg btn-outline-dark more-button"> More </button>
+        </div>
+        <div class="row features-container-more status" id="status">
+            <div class="col-lg-3 col-md-4 col-sm-6 col-more">
+                <div class="card scale  shadow-lg more-card">
+                    <div class="card-body feature-content">
+                        <p class="card-text">Fare Calculator is a tool to estimate the cost of travel based on distance and class</p>
+                        <div>
+                            <a class="btn btn-outline-success btn-md more-feature-button" href="/fare">Fare Calculator</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-more">
+                <div class="card scale  shadow-lg more-card">
+                    <div class="card-body feature-content">
+                        <p class="card-text">Get details of all the trains between two stations</p>
+                        <div>
+                            <a class="btn btn-outline-success btn-md more-feature-button" href="/TBWS">Train b/w Stations</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-more">
+                <div class="card scale  shadow-lg more-card">
+                    <div class="card-body feature-content">
+                        <p class="card-text">Know more about One Train</p>
+                        <div>
+                            <a class="btn btn-outline-success btn-md more-feature-button" href="/about">About Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-more">
+                <div class="card scale  shadow-lg more-card">
+                    <div class="card-body feature-content">
+                        <p class="card-text">Know More About IRCTC</p>
+                        <div>
+                            <a class="btn btn-outline-success btn-md more-feature-button" href="/know-irctc">Know IRCTC</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-more">
+                <div class="card scale  shadow-lg more-card">
+                    <div class="card-body feature-content">
+                        <p  class="card-text">Click here to go to IRCTC Website</p>
+                        <div>
+                            <a class="btn btn-outline-success btn-md more-feature-button" href="https://www.irctc.co.in/nget/train-search">IRCTC Website</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6 col-more">
+                <div class="card scale shadow-lg more-card">
+                    <div class="card-body feature-content">
+                        <p class="card-text">Click here if you need some help!</p>
+                        <div>
+                            <a class="btn btn-outline-success btn-md more-feature-button" href="/help-desk">Help Desk</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="hr">
+    <section id="service">
+        <div class="service-head">
+            <h1 class="on-scroll">On the OneTrain</h1>
+        </div>
+        <div class="row service-container">
+            <div class="col-md-6 service-box">
+                <div class="row service-item">
+                    <div class="col-sm-1 service-img">
+                        <img src="images/On Ontrain.png" alt="services">
+                    </div>
+                    <div class="col-sm-11 service-content">
+                        <h3>Get confirm train tickets</h3>
+                        <p>Book train tickets early to get confirmed seats</p>
+                    </div>
+                </div>
+                <div class="row service-item">
+                    <div class="col-sm-1 service-img">
+                        <img src="images/On Ontrain.png" alt="services">
+                    </div>
+                    <div class="col-sm-11 service-content">
+                        <h3>Get Live train status</h3>
+                        <p>Track train status live with real-time updates</p>
+                    </div>
+                </div>
+                <div class="row service-item">
+                    <div class="col-sm-1 service-img">
+                        <img src="images/On Ontrain.png" alt="services">
+                    </div>
+                    <div class="col-sm-11 service-content">
+                        <h3>Highly secure payment</h3>
+                        <p>Secure payment method for safe financial transactions</p>
+                    </div>
+                </div>
+             </div>
+             <div class="col-md-6 service-box">
+                <div class="row service-item">
+                    <div class="col-sm-1 service-img">
+                        <img src="images/On Ontrain.png" alt="services">
+                    </div>
+                    <div class="col-sm-11 service-content">
+                        <h3>Free cancelation of tickets</h3>
+                        <p>Cancel train tickets for free without any hassle</p>
+                    </div>
+                </div>
+                <div class="row service-item">
+                    <div class="col-sm-1 service-img">
+                        <img src="images/On Ontrain.png" alt="services">
+                    </div>
+                    <div class="col-sm-11 service-content">
+                        <h3>Emergency support 24x7</h3>
+                        <p>Emergency support available 24/7</p>
+                    </div>
+                </div>
+                <div class="row service-item">
+                    <div class="col-sm-1 service-img">
+                        <img src="images/On Ontrain.png" alt="services">
+                    </div>
+                    <div class="col-sm-11 service-content">
+                        <h3>Instant cancelation & refund</h3>
+                        <p>Cancel and receive refund quickly for train tickets</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="custom-shape-divider-bottom-1677184806">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+        </svg>
+    </div>
+    <div class="custom-shape-divider-top-1677184575">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+        </svg>
+    </div>
+    <section id="info">
+        <div class="info-head">
+            <h1 class="on-scroll">Know The Railway Terms</h1>
+        </div>
+        <div class="row info-container">
+            <div class="col-md-6 col-sm-12">
+                <div class="card shadow-lg info-card">
+                    <div class="card-body info-card-body">
+                        <p><b>PNR : </b> Passenger Name Record</p>
+                        <p><b>CNF : </b> confirmed</p>
+                        <p><b>WL : </b> Waiting List</p>
+                        <p><b>RAC : </b> Reservation Against Cancellation</p>
+                        <p><b>GNWL : </b>  General Waiting List</p>
+                        <p><b>PQWL : </b> Pooled Quota Waiting List</p>
+                        <p><b>RLWL : </b> Remote Location Waiting List</p>
+                        <p><b>TQWL : </b> Tatkal Quota Waiting List</p>
+                        <p><b>CK : </b> Tatkal Quota</p>
+                        <p><b>FTQ : </b> Foreign Tourist Quota</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="card shadow-lg">
+                    <div class="card-body info-card-body">
+                        <p><b>RSWL : </b> Roadside Station Waiting List</p>
+                        <p><b>CKWL : </b> Tatkal Waiting List</p>
+                        <p><b>RLGN : </b> Remote Location General Waiting List</p>
+                        <p><b>RQWL : </b> Request Waiting List</p>
+                        <p><b>DP : </b> Duty Pass</p>
+                        <p><b>FP : </b> Privilege Pass</p>
+                        <p><b>DF : </b>Defence Quota</p>
+                        <p><b>LD : </b> Ladies Quota</p>
+                        <p><b>HO : </b> High Official Quota</p>
+                        <p><b>IRCTC : </b> Indian Railway Catering and Tourism Corporation</p>
+                    </div>
+                </div>
+            </div> 
+        </div>
+        <div class="more">
+                <a class="btn btn-lg btn-outline-success more-button" href="/more-info"> More </a>
+        </div>
+    </section>
+    <hr class="hr">
+    <section id="trains">
+        <div class="trains-head">
+            <h1 >Trains of Indian Railway</h1>
+        </div>
+        <div id="carouselExampleAutoplaying" class="carousel slide mx-auto" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active carousel-1">
+                    <img src="images/vande.jpg" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-sm-block">
+                        <h2 class="carousel-text">Vande Bharat Express</h2>
+                        <p>India's Fastest and most loved Trains by passengers</p>
+                    </div>
+                </div>
+                <div class="carousel-item carousel-2">
+                    <img src="images/tejas.jpg" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-sm-block">
+                        <h2  class="carousel-text">Tejas Express</h2>
+                        <p>India's first Private Train with luxurious facilities</p>
+                    </div>
+                </div>
+                <div class="carousel-item carousel-3">
+                    <img src="images/shatabdi.jpg" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-sm-block">
+                        <h2 class="carousel-text">Shatabdi Express</h2>
+                        <p>India's second fastest and premium superfast train </p>
+                    </div>
+                </div>
+                <div class="carousel-item carousel-4">
+                    <img src="images/rajdhani.jpg" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-sm-block">
+                        <h2 class="carousel-text">Rajdhani Express</h2>
+                        <p>It is a premium long-distance passenger train</p>
+                    </div>
+                </div>
+                <div class="carousel-item carousel-5">
+                    <img src="images/black.jpg" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-sm-block">
+                        <h2 class="carousel-text">Click Here to know more about Indian Trains</h2>
+                        <a href="http://" class="btn carousel-text btn-md btn-success" href="/trains-IR">Know More</a>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+    <hr  class="hr hrTrain">
+</section>
+<%- include('partials/footer'); -%>
