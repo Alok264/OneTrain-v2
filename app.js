@@ -1,5 +1,4 @@
 //jshint esversion:6
-//All required packages
 require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -15,16 +14,9 @@ const passportLM = require("passport-local-mongoose");
 const passportL = require("passport-local");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
-// const bcrypt = require("bcrypt");
 const findOrCreate = require("mongoose-findorcreate");
-// const saltRound = 15;
 const app = express();
 
-
-
-
-
-// All global functions
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname+"/public"));
 app.use(bodyParser.urlencoded({extended: true}));
@@ -35,28 +27,11 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 3600000 // 1 hour in milliseconds
+    maxAge: 3600000
   }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-
-
-// Database Connection
-
-
-
-/* const uri = process.env.MONGO_CONNECTION_STRING;
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-client.connect(err => {
-  const collection = client.db("ONESNC").collection("users");
-  if(err){ console.error(err); return false;}
-    // connection to mongo is successful, listen for requests
-  app.listen(process.env.PORT || 12331, () => {
-      console.log("listening for requests on port 12331 or other port");
-  });
-  client.close();
-}); */
 
 mongoose.set('strictQuery', false);
 const connectDB = async () => {
@@ -74,22 +49,6 @@ connectDB().then(() => {
   });
 });
 
-
-/* mongoose.connect('mongodb+srv://onetrain01.hlthc2t.mongodb.net/ONESNC', {
-  useNewUrlParser: true,
-  auth: {
-    username: process.env.MONGOOSE_USERNAME,
-    password: process.env.MONGOOSE_PASSWORD
-  }
-});
- */
-
-// Database Connection
-// mongoose.connect('mongodb://127.0.0.1:27017/SNC', { useNewUrlParser: true });
-
-
-
-//Database Schemas
 const StationSchema = new mongoose.Schema({
   A: String,
   B: String
@@ -116,34 +75,13 @@ const IndianTrains = new mongoose.Schema({
   trainImage: [String]
 });
 
-// Plugins
 userSchema.plugin(passportLM);
 userSchema.plugin(findOrCreate);
 
-// Database Collections/models
 const stationList = new mongoose.model('list', StationSchema);
 const User = new mongoose.model('user', userSchema);
 const Train = new mongoose.model('train', TrainSchema);
 
-// upload train list from json to train database
-// let train_count = 0;
-// uploadTrainList();
-// function uploadTrainList(){
-//   const trainList = require("./datasets/train_info.json");
-//   trainList.forEach((train)=> {
-//     train_count++;
-//     const newTrain = new Train({
-//       trainNo: train.No.toString(),
-//       trainName: train.Name
-//     });
-//     newTrain.save();
-//   });
-// }
-// console.log(train_count + "Number of trains uploaded to database");
-
-
-
-// All global Variables
 let pnr = 1;
 let alert = "";
 let PassengerPNR = [];
@@ -154,12 +92,7 @@ let userWarning;
 let notFoundWarning;
 let userLoginWarning;
 
-
-
-
-
-// passport configurations
-passport.use(User.createStrategy()); // creates a local strategy for passport
+passport.use(User.createStrategy());  
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
@@ -170,10 +103,6 @@ passport.deserializeUser(function(id, done){
 });
 
 
-
-
-
-//Google Strategy for passport authentication using google account for login and signup purpose
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -206,8 +135,6 @@ function(accessToken, refreshToken, profile, cb) {
 }
 ));
 
-
-// Facebook Strategy for passport authentication using facebook account for login and signup purpose
 passport.use(new FacebookStrategy({
   clientID: process.env.FACEBOOK_CLIENT_ID,
   clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
@@ -239,11 +166,6 @@ passport.use(new FacebookStrategy({
 ));
 
 
-
-
-
-//` All routes or get requests
-// Home Page
 app.get("/", function(req, res){
   if(req.isAuthenticated())
   {
@@ -252,20 +174,17 @@ app.get("/", function(req, res){
   res.render("home");
 })
 
-// Google Auth Routes for login and signup
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'], prompt: 'select_account'}));
 app.get('/auth/google/OneTrain', passport.authenticate('google', { failureRedirect: '/singup' }), function(req, res) {
-    // Successful authentication, redirect home.
+   
     res.redirect('/');
   });
 
-// Facebook Auth Routes for login and signup
 app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'], authType: 'reauthenticate', prompt: 'select_account' }));
 
 app.get('/auth/facebook/OneTrain',
   passport.authenticate('facebook', { failureRedirect: '/signup' }),
   function(req, res) {
-    // Successful authentication, redirect home.
     res.redirect('/');
   });
 
@@ -275,8 +194,6 @@ app.get('/email-verification', (req, res)=>{
 })
 
 
-
-// PNR input Page
 app.get("/pnr-status", (req, res)=>{
   if(req.isAuthenticated())
     {
@@ -291,34 +208,28 @@ app.get("/pnr-status", (req, res)=>{
   
 })
 
-// PNR Output page
 app.get("/pnr-check/:pnr", (req, res)=>{
   res.render("Check", {
     response: PassengerPNR
   });
 })
 
-// Train b/w stations input page
 app.get('/TBWS', function(req, res){
   res.render('TBWS');
 })
 
-// Train b/w stations output page
 app.get('/TBWS/:from/:to', (req, res)=>{
   res.render('TBWSoutput', {source: lodash.upperCase(req.params.from), destination: lodash.upperCase(req.params.to), docs: TBWS_trains});
 })
 
-// Train Info page
 app.get('/train-info', (req, res)=> {
   res.render('trainInfo', {trainNo: null, response: null});
 })
 
-// Train Info output page
 app.get('/train-info/:train', (req, res)=> {
   res.render('trainInfoOutput');
 })
 
-// Running status input page
 app.get('/running-status', (req, res)=> {
   if(req.isAuthenticated())
   {
@@ -330,17 +241,14 @@ app.get('/running-status', (req, res)=> {
   }
 })
 
-//Station info page
 app.get('/station-info', (req, res)=>{
   res.render('stationInfo');
 })
 
-//fare calculator input page
 app.get('/fare', (req, res)=>{
   res.render('fareCal');
 })
 
-// Ticket Availability input page
 app.get('/ticket-avail', (req, res)=>{
   if(req.isAuthenticated())
   {
@@ -352,29 +260,16 @@ app.get('/ticket-avail', (req, res)=>{
   }
 })
 
-// Emergency number page
 app.get('/emergency', (req, res)=>{
   res.render('Emergency');
 })
 
-// Login input Page
 app.get('/login', (req, res)=>{
   res.render('login', {userLoginWarning: userLoginWarning});
   userLoginWarning = "";
 })
 
-// Signup Input Page
 app.get('/signup', (req, res)=>{
-  /* if(req.xhr) {
-    const inputCP = req.query.inputCP;
-    const inputP = req.query.inputP;
-    if(inputCP === inputP) {
-      res.json({success: "true"});
-    } else {
-      res.json({success: "false"});
-    }
-    return;
-  } */
   res.render('signup', {userWarning: userWarning});
   userWarning = "";
 });
@@ -432,10 +327,6 @@ app.get('/profile', (req, res)=>{
 });
 
 
-
-
-// All post requests
-// PNR-Status post request
 app.post("/pnr-status", (req, res) =>
 {
     const userID = req.user.id;
@@ -485,14 +376,12 @@ app.post("/TBWS", function(req, res){
   const destinationArr = destination.split('-');
   const destinationStation = lodash.lowerCase(destinationArr[1]);
   let date = req.body.Date;
-  // res.redirect(`/TBWS/${source}/${destination}`);
   TBWSAPIoutput(res, sourceStation, destinationStation, date);
 })
 
 app.post('/TBWS/:from/:to', (req, res)=>{
   let source = lodash.lowerCase(req.body.Source);
   let destination = lodash.lowerCase(req.body.Destination);
-  // res.redirect(`/TBWS/${source}/${destination}`);
   TBWSAPIoutput(res, source, destination);
 })
 
@@ -628,7 +517,6 @@ app.post('/login', (req, res)=>{
       res.redirect('/login');
     }
   }).catch((err)=> console.log(err));
-    // find user in database
 });
 
 app.post('/signup', (req, res)=>{
@@ -658,13 +546,10 @@ app.post('/signup', (req, res)=>{
   }).catch((err)=>{
     console.log(err);
   });
-  // must give a unique username and also write username: req.body.username. This is must. and also, write req.body.password remember password must include
   
 });
 
 
-
-// Required Functions
 function TBWSAPIoutput(res, source, destination, date){
 
   const options = {
@@ -732,11 +617,3 @@ function TrainFindByNumberAPI(res, train_number){
 });
 }
 
-
-// 6416530261
-
-
-// App Listen
-/*  app.listen(process.env.PORT || 12331, function(){
-    console.log("Server is running on port 12331");
-});  */
