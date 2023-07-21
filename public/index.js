@@ -135,6 +135,39 @@ $(document).ready(function(){
   })
 })
 
+$(document).ready(function(){
+  $('.signup-email').on('blur', function(){
+    let email = $(this).val();
+    if(email.length>0)
+    {
+      $.ajax({
+        url: '/email-validation',
+        method: 'get',
+        data: { email: email},
+        success: function(response){
+          console.log(response);
+          if(response === "invalid")
+          {
+            $('.email-error-message').text("This is not a valid email");
+          }
+          else{
+            $('.email-error-message').text("");
+          }
+        }
+      })
+    }
+    else
+    {
+      $('.email-error-message').text("");
+    }
+  })
+});
+$(document).ready(function(){
+  $('.signup-email').click(function () {
+    $('.email-error-message').text("");
+  });
+});
+
 function chatbot_button_clicked(){
   $('.chatbot_click').css('display', 'none');
   $('.chatbot-body').css('animation-duration', '0.5s');
