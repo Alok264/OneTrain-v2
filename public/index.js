@@ -104,6 +104,9 @@ $(document).ready(function(){
         $('.login_username').find('span').text("Login/Signup");
         $('#login_user').removeAttr('data-bs-toggle');
       }
+    },
+    error: function(error){
+        console.log("IsLoggedIn response error from server side, a get request has been made to check whether the user is logedin or not");
     }
   })
 });
@@ -184,7 +187,7 @@ input.on('keyup', function (e) {
         const searchValue = input.val();
         $.ajax({
             url: '/station-search',
-            method: 'post',
+            method: 'POST',
             data: { input: searchValue},
             success: function(response)
             {
@@ -247,6 +250,9 @@ input.on('keyup', function (e) {
                     }
                     input.next('input').focus();
                 }
+            },
+            error: function(error){
+                console.log("Server response error in station search");
             }
         });
     }, 300);
@@ -340,6 +346,9 @@ function TrainSearch(train_search_input, train_search_result)
                         train_search_result.hide();
                     }
                 } 
+            },
+            error: function(error){
+                console.log("Server response error in train search");
             }
           });
         }
