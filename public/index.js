@@ -159,8 +159,6 @@ let searchResult;
 $(document).ready(function() 
 {
       $('.search-station').on('focus', function(){
-        console.log($(this).hasClass('source') + "for source");
-        console.log($(this).hasClass('destination') + "for destination");
         if ($(this).hasClass('source')) {
           input = $('.source');
           searchResult = $('.autocom-source');
@@ -169,8 +167,6 @@ $(document).ready(function()
           input = $('.destination');
           searchResult = $('.autocom-destination');
         }
-        console.log(input + "   input");
-        console.log(searchResult+ "    searchResult");
         Active(input, searchResult);
       });
   });
@@ -185,7 +181,6 @@ let debounceTimer;
 input.on('keyup', function (e) {
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
-        console.log(e.key);
         const searchValue = input.val();
         $.ajax({
             url: '/station-search',
@@ -193,12 +188,9 @@ input.on('keyup', function (e) {
             data: { input: searchValue},
             success: function(response)
             {
-                console.log(response);
                 let filteredSuggestions = response;
-                console.log("filteredSuggestions array: " + filteredSuggestions);
                 const listtlength = Math.min(filteredSuggestions.length, 6);
                 searchResult.empty();
-
                 if (searchValue) {
                     filteredSuggestions.slice(0, listtlength).forEach(suggestion => {;
                         searchResult.append(`<li type="none" class="search-list">${suggestion.A +" - "+ suggestion.B}</li>`);
@@ -255,7 +247,6 @@ input.on('keyup', function (e) {
                     }
                     input.next('input').focus();
                 }
-                console.log(currentFocus); 
             }
         });
     }, 300);
@@ -379,7 +370,6 @@ $('#trainInfoForm').submit(function(event) {
   {
       trainNumber = value.split(" - ")[0];
   }
-  console.log(trainNumber);
   if(trainNumber.length > 0)
   {
     $.ajax({
