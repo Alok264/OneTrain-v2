@@ -188,29 +188,6 @@ app.get('/auth/facebook/OneTrain',
     res.redirect('/');
   });
 
-app.get('/email-verification', (req, res)=>{
-  let email = req.query.email;
-  const options = {
-      method: 'GET',
-      url: 'https://validect-email-verification-v1.p.rapidapi.com/v1/verify',
-      params: {
-        email: email
-      },
-      headers: {
-        'X-RapidAPI-Key': process.env.X_RAPID_API_KEY_EMAIL_VERIFIER,
-        'X-RapidAPI-Host': 'validect-email-verification-v1.p.rapidapi.com'
-      }
-    }
-    axios.request(options).then(function (response) {
-      const emailInfo = response.data.status;
-      res.send(emailInfo);
-    })
-    .catch(function (error) {
-      console.error(error)
-      res.send("error");
-    })
-})
-
 
 app.get("/pnr-status", (req, res)=>{
   if(req.isAuthenticated())
@@ -222,8 +199,6 @@ app.get("/pnr-status", (req, res)=>{
     {
         res.redirect('/login');
     }
-  
-  
 })
 
 app.get("/pnr-check/:pnr", (req, res)=>{
