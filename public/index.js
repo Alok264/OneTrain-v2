@@ -1,4 +1,3 @@
-/******************************************************************************************************************* */
 $(document).ready(function() {
 $(".dropdown").hover(function() 
 {
@@ -7,7 +6,7 @@ $(".dropdown").hover(function()
   $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
 });
 });
-/******************************************************************************************************************* */
+
 $(document).ready(function () {
   $(window).scroll(function () {
     var top =  $(".goto-top");
@@ -23,7 +22,7 @@ $(document).ready(function () {
     });
 });
 
-/******************************************************************************************************************* */
+
 var count = 0;
 $(document).ready(function() {
 var button = $(".more-button").on("click", function(){
@@ -41,7 +40,7 @@ var button = $(".more-button").on("click", function(){
   }
 });
 });
-/******************************************************************************************************************* */
+
 $(document).ready(function() {
   $('.password').on('blur', function(){
     let password = $(this).val();
@@ -54,7 +53,7 @@ $(document).ready(function() {
       else 
       {
           $('.error-message').text("Password must contain atleast 8 characters, 1 uppercase, 1 lowercase, 1 number and 1 special character");
-          // Password is invalid
+          
       }
     }
     else
@@ -63,18 +62,13 @@ $(document).ready(function() {
     }
     });
 });
-/******************************************************************************************************************* */
+
 $(document).ready(function(){
   $('.confirm-password').on('input', function(){
     const inputP = $('.password').val();
     const inputCP= $(this).val();
     if(inputCP.length>0)
     {
-      /* $.ajax({
-        url: '/signup',
-        method: 'get',
-        data: { inputP: inputP, inputCP: inputCP},
-        success: function(response){ */
           if(inputCP != inputP)
           {
             $('.signup-button').attr('disabled', 'disabled');
@@ -90,7 +84,7 @@ $(document).ready(function(){
     }
   })
 })
-/******************************************************************************************************************* */
+
 $(document).ready(function(){
   $.ajax({
     url: '/isLogedIn',
@@ -113,7 +107,7 @@ $(document).ready(function(){
     }
   })
 });
-/******************************************************************************************************************* */
+
 $(document).ready(function(){
   $('.pnr-input').on('input', function(){
     let pnr = $(this).val();
@@ -141,7 +135,6 @@ $(document).ready(function(){
   })
 })
 
-/******************************************************************************************************************* */
 function chatbot_button_clicked(){
   $('.chatbot_click').css('display', 'none');
   $('.chatbot-body').css('animation-duration', '0.5s');
@@ -158,7 +151,7 @@ function chatbot_close_button_clicked(){
   }, 1001);
   $('#blur').removeClass('blur-background');
 }
-/******************************************************************************************************************* */
+
 
 let input;
 let searchResult;
@@ -269,7 +262,6 @@ input.on('keyup', function (e) {
   }); 
 };
 
-/******************************************************************************************************************* */
 let train_search_input;
 let train_search_result;
 $(document).ready(function(){
@@ -369,145 +361,6 @@ function TrainSearch(train_search_input, train_search_result)
     });
 };
 
-/* $(document).ready(function () {
-  $(document).on('focus', '.search-train', function () {
-    const train_search_input = $(this);
-    const train_search_result = $('.autocom-box-train-search');
-    TrainSearch(train_search_input, train_search_result);
-  });
-
-  $(document).on('focus', '.search-station', function () {
-    const input = $(this);
-    const searchResult = input.hasClass('source') ? $('.autocom-source') : $('.autocom-destination');
-    Active(input, searchResult);
-  });
-});
-
-function TrainSearch(train_search_input, train_search_result) {
-  let currentFocus = -1;
-  let current_child;
-
-  train_search_input.on('keyup focus', _.debounce(function (e) {
-    const searchValue = train_search_input.val();
-    if (searchValue.length > 0) {
-      $.ajax({
-        url: '/train-search',
-        method: 'POST',
-        data: { input: searchValue },
-        success: function (response) {
-          const filteredSuggestions = response.slice(0, 8);
-          const listItems = filteredSuggestions.map(suggestion => `<li type="none" class="search-list">${suggestion.trainNo} - ${suggestion.trainName}</li>`);
-
-          train_search_result.empty().append(listItems).show();
-
-          currentFocus = -1;
-          current_child = null;
-        }
-      });
-    } else {
-      train_search_result.empty().hide();
-      currentFocus = -1;
-      current_child = null;
-    }
-  }, 300));
-
-  $(document).on('click', '.autocom-box-train-search li', function () {
-    train_search_input.val($(this).text());
-    train_search_result.hide();
-  });
-
-  $(document).on('keydown', '.search-train', function (e) {
-    const key = e.key;
-    const listItems = train_search_result.find('li');
-    const listLength = listItems.length;
-
-    if (key === 'ArrowDown') {
-      currentFocus = Math.min(currentFocus + 1, listLength - 1);
-      current_child = listItems.eq(currentFocus);
-    } else if (key === 'ArrowUp') {
-      currentFocus = Math.max(currentFocus - 1, 0);
-      current_child = listItems.eq(currentFocus);
-    } else if (key === 'Enter' && current_child) {
-      train_search_input.val(current_child.text());
-      train_search_result.hide();
-    }
-
-    listItems.removeClass('highlight');
-    if (current_child) {
-      current_child.addClass('highlight');
-    }
-  });
-}
-
-function Active(input, searchResult) {
-  let currentFocus = -1;
-  let current_child;
-
-  input.on('keyup', function (e) {
-    const searchValue = input.val();
-    if (searchValue.length > 0) {
-      $.ajax({
-        url: '/station-search',
-        method: 'post',
-        data: { input: searchValue },
-        success: function (response) {
-          const filteredSuggestions = response.slice(0, 6);
-          const listItems = filteredSuggestions.map(suggestion => `<li type="none" class="search-list">${suggestion.A} - ${suggestion.B}</li>`);
-
-          searchResult.empty().append(listItems).show();
-
-          currentFocus = -1;
-          current_child = null;
-        }
-      });
-    } else {
-      searchResult.empty().hide();
-      currentFocus = -1;
-      current_child = null;
-    }
-  });
-
-  $(document).on('click', '.autocom-source li, .autocom-destination li', function () {
-    input.val($(this).text());
-    searchResult.hide();
-    input.next('input').focus();
-  });
-
-  $(document).on('keydown', '.search-station', function (e) {
-    const key = e.key;
-    const listItems = searchResult.find('li');
-    const listLength = listItems.length;
-
-    if (key === 'ArrowDown') {
-      currentFocus = Math.min(currentFocus + 1, listLength - 1);
-      current_child = listItems.eq(currentFocus);
-    } else if (key === 'ArrowUp') {
-      currentFocus = Math.max(currentFocus - 1, 0);
-      current_child = listItems.eq(currentFocus);
-    } else if (key === 'Enter' && current_child) {
-      input.val(current_child.text());
-      searchResult.hide();
-      input.next('input').focus();
-    }
-
-    listItems.removeClass('highlight');
-    if (current_child) {
-      current_child.addClass('highlight');
-    }
-  });
-} */
-
-
-
-
-/******************************************************************************************************************* */
-// function operate_train_button_clicked(){
-//   $('.train-info-output').css('animation-name', 'train-info-output-in-animation');
-//   $('#train-info-output').css('display', 'block');
-//   $('#blur').css('filter', 'blur(5px)');
-//   $('#navbar-blur').css('filter', 'blur(5px)');
-//   $('body').css('overflow', 'hidden');
-// }
 function close_train_info_output() {
   $('.train-info-output').css('animation-name', 'train-info-output-out-animation');
   setTimeout(function() {
@@ -593,178 +446,12 @@ $('#trainInfoForm').submit(function(event) {
   }
 });
 
-/******************************************************************************************************************* */
-
-/******************************************************************************************************************* */
-
 loader = $(".lds-default");
 $('#blur').addClass('blur-background');
 window.addEventListener("load", function(){
     loader.css('display', 'none');
     $('#blur').removeClass('blur-background');
 });
-
-// $(window).on('load', function(){
-//   $('.loading').fadeOut(1000);
-//   $('.loading').css('display', 'none');
-// });
-
-// .loading is the cclass in the loading animation div
-// .main is the class in the main div
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/* <button onclick="printDiv()">Print Content</button>
-
-<script>
-function printDiv() {
-  var divContents = document.getElementById("printableDiv").innerHTML;
-  var a = window.open('', '', 'height=500, width=500');
-  a.document.write('<html>');
-  a.document.write('<body >');
-  a.document.write(divContents);
-  a.document.write('</body></html>');
-  a.document.close();
-  a.print();
-}
-</script>
-In the printDiv() function, first we get the innerHTML of the div using getElementById() method. Then, we open a new window using window.open() method and write the div contents to it using document.write() method. After that, we close the document using document.close() method and print it using print() method.
- */}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* $('#input').on('input', function() {
-    let value = $(this).val();
-    $.ajax({
-      url: '/',
-      method: 'POST',
-      data: { input: value },
-      success: function(response) {
-        console.log('Server response:', response);
-      }
-    });
- });
- */
-/* $(".password").on('blur', (e)=>{
-  let password = $('#password').val();
-  console.log(password);
-  let regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+])(?=.*[a-zA-Z!@#$%^&*()_+])(?!.*\s).{8,20}$/;
-  console.log(regex.test(password));
-    if (regex.test(password)) {
-        $('.signup-button').removeAttr('disabled');
-        $('.error-message').text("");
-    } 
-    else 
-    {
-        $('.error-message').text("Password must contain atleast 8 characters, 1 uppercase, 1 lowercase, 1 number and 1 special character");
-        // Password is invalid
-    }
-}) */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* $(".password").on('input', (e)=>{
-  let password = e.target.value;
-  console.log(password);
-  $(".confirm-password").on('input', (c)=>{
-    let confirmPassword = c.target.value;
-    console.log(confirmPassword);
-    if(password == confirmPassword)
-    {
-      $('.signup-button').removeAttr('disabled');
-    }
-    else{
-      $('.signup-button').attr('disabled', 'disabled');
-    }
-  })
-}); */
-
-
-/* const animateOnScroll = () => {
-  const element = document.querySelector('.animate-on-scroll');
-  const elementTop = element.getBoundingClientRect().top;
-  const elementHeight = element.offsetHeight;
-  const windowHeight = window.innerHeight;
-
-  if (elementTop <= windowHeight - elementHeight / 2) {
-    element.classList.add('animate');
-    setTimeout(function(){
-      element.classList.remove('animate');
-    }, 800);
-    $(window).off('scroll', animateOnScroll);
-  }
-};
-
-$(".service-head").on('scroll', function(){
-  $(window).on('scroll', animateOnScroll);
-}) */
-
-
-
-/* const OnScroll = () => {
-  const element1 = document.querySelector('.on-scroll');
-  const elementTop1 = element1.getBoundingClientRect().top;
-  const elementHeight1 = element1.offsetHeight;
-  const windowHeight1 = window.innerHeight;
-
-  if (elementTop1 <= windowHeight1 - elementHeight1 / 2) {
-    element1.classList.add('animate');
-    setTimeout(function(){
-      element1.classList.remove('animate');
-    }, 800);
-    $(window).off('scroll', OnScroll);
-  }
-};
-$(".info-head").on('scroll', function(){
-  $(window).on('scroll', OnScroll);
-}) */
-
-
 
 $(document).ready(function() {
   $(".print").click(function() {
@@ -775,55 +462,3 @@ $(document).ready(function() {
     $("body").html(originalContent);
   });
 });
-
-// $(".source").on('input', (e)=>{
-//   var source = e.target.value;
-//   console.log(source);});
-/*  var codes;
-$.getJSON('Name-Code.json', function(data) {
-  // store the data in a variable for later use
-  codes = data;
-});
-
-$('.source').on('input', function(E) {
-  // get the current value of the input field
-  var userInput = E.target.value;
-  // filter the codes based on the user input
-  var filteredCodes = codes.filter(function(item) {
-    var keys = Object.keys(item.B);
-    var match = false;
-    
-    keys.forEach(function(key) {
-      if (item[key].startsWith(userInput.toUpperCase())) {
-        match = true;
-      }
-    });
-    
-    return match;
-  });
-  
-  // create a list of options to show to the user
-  var optionsList = '';
-  
-  filteredCodes.forEach(function(item) {
-    var keys = Object.keys(item);
-    keys.forEach(function(key) {
-      optionsList += '<li>' + item[key] + '</li>';
-    });
-  });
-  
-  // display the list of options to the user
-  console.log(optionsList);
-});
- */
-
-// $(document).ready(function(){
-//   let width = $(window).width();
-//   console.log(width);
-//   if(width<=576)
-//   {
-//     $(".TBWS_from").addClass("order-1 col-sm-6");
-//     $(".TBWS_to").addClass("order-2 col-sm-6");
-//     $(".TBWS_CR").addClass("order-3 col-sm-12");
-//   }
-// })
