@@ -189,8 +189,26 @@ app.get('/auth/facebook/OneTrain',
   });
 
 app.get('/email-verification', (req, res)=>{
-  const email = req.body.email;
-  
+  let email = req.query.email;
+  const options = {
+      method: 'GET',
+      url: 'https://validect-email-verification-v1.p.rapidapi.com/v1/verify',
+      params: {
+        email: email
+      },
+      headers: {
+        'X-RapidAPI-Key': process.env.X_RAPID_API_KEY_EMAIL_VERIFIER,
+        'X-RapidAPI-Host': 'validect-email-verification-v1.p.rapidapi.com'
+      }
+    }
+    axios.request(options).then(function (response) {
+      const emailInfo = response.data.status;
+      res.send(emailInfo);
+    })
+    .catch(function (error) {
+      console.error(error)
+      res.send("error");
+    })
 })
 
 
@@ -391,7 +409,6 @@ app.get("/", function(req, res){
 
 app.post('/station-search', (req, res) => {
   const value = req.body.input;
-  console.log(value);
   if (value) {
     stationList.aggregate([
       {
@@ -417,8 +434,6 @@ app.post('/station-search', (req, res) => {
         $sort: { priority: 1 }
       }
     ]).then(function (docs) {
-      console.log(docs);
-      console.log(docs.length);
       res.send(docs.slice(0, 6));
     }).catch(function (err) {
       console.log(err);
@@ -458,8 +473,6 @@ app.post('/train-search', function (req, res) {
         $sort: { priority: 1 }
       }
     ]).then(function (docs) {
-      console.log(docs);
-      console.log(docs.length);
       docs.sort((a, b) => parseInt(a.trainNo) - parseInt(b.trainNo));
       res.send(docs.slice(0, 8));
     }).catch(function (err) {
@@ -471,14 +484,8 @@ app.post('/train-search', function (req, res) {
   }
 });
 
-
-
-
-
-
 app.post('/train-info', (req, res)=>{
   const trainNo = req.body.trainNo;
-  console.log(trainNo);
   TrainInfoAPIoutput(res, trainNo).then((trainInfoArray) => {
       res.send({ trainInfoArray: trainInfoArray, trainNo: trainNo });
     })
@@ -498,7 +505,6 @@ app.post('/login', (req, res)=>{
         password: req.body.password
       });
       req.login(existUser, function(err){
-        console.log(existUser);
             if(err){
                 console.log(err);
                 res.redirect('/login');
@@ -535,12 +541,10 @@ app.post('/signup', (req, res)=>{
         }
         else
         {
-          console.log("Reached to signup passport.authenticate");
           passport.authenticate("local")(req, res, function(){
                     logedIn = true;
                     res.redirect('/');
         });
-        console.log("leaving to signup passport.authenticate");
       }});
     }
   }).catch((err)=>{
