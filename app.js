@@ -15,6 +15,7 @@ const passportL = require("passport-local");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
 const findOrCreate = require("mongoose-findorcreate");
+const { spawn } = require('child_process');
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -318,6 +319,28 @@ app.get('/profile', (req, res)=>{
     res.redirect('/login');
   }
 });
+
+app.get('/chat', (req, res) => {
+  let userMessage = req.query.userMessage;
+  const chat_process = spawn('python', ['./public/Chatbot/chat.py', userMessage]);
+  let error = false;
+  let output = "";
+  chat_process.stdout.on('data', (data) => {
+    output = data;
+  });
+  chat_process.stderr.on('data', (data) => {
+    console.log(`error ${data}`);
+    error = true;
+  });
+  chat_process.on('close', (code) => {
+    console.log(`child process exited with code ${code}`);
+    if(error) {
+      res.send("There is some error in the chatbot. Please try again later.");
+    } else {
+      res.send(output);
+    }
+  });
+})
 
 
 app.post("/pnr-status", (req, res) =>
