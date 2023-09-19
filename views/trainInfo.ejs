@@ -18,62 +18,60 @@
     <div class="train-info-output">
         <div class="train-schedule">
             <div class="train-schedule-head">
-                <h6>Train Schedule</h6>
-            </div>
-            <div class="train-schedule-close-button">
+                <h6 style="padding:0; margin: auto 0;">Train Schedule</h6>
                 <button type="button" class="train-info-close-button" onclick="close_train_info_output()">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
         </div>
         <div class="train-first-body">
-            <div class="train-info-body">
-                <table>
-                    <thead>
-                        <tr class="train-info-head-head">
-                            <th>Train Number</th>
-                            <th>Train Name</th>
-                            <th>From Station</th>
-                            <th>To Station</th>
-                            <th>Running Days</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="train-info-head tr">
-                            <td id="train_number"></td>
-                            <td id="train_name">Himgiri Express</td>
-                            <td id="from_station"></td>
-                            <td id="to_station"></td>
-                            <td id="running_days">
-                                <p class="running-day">Mon</p>
-                                <p class="running-day">Tue</p>
-                                <p class="running-day">Wed</p>
-                                <p class="running-day">Thu</p>
-                                <p class="running-day">Fri</p>
-                                <p class="running-day">Sat</p>
-                                <p class="running-day">Sun</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table>
-                    <thead>
-                        <tr class="train-info-stations-head">
-                            <th>S.No.</th>
-                            <th>Station Code</th>
-                            <th>Station Name</th>
-                            <th>Arrival</th>
-                            <th>Departure</th>
-                            <th>Halt Time (in minutes)</th>
-                            <th>Distance</th>
-                            <th>Day</th>
-                        </tr>
-                    </thead>
-                    <tbody  id="train-info-stoppages">
-                        
-                    </tbody>
-                </table>
-            </div>
+            <table class="table-head">
+                <thead class="table-head-head">
+                    <tr class="train-info-head-head">
+                        <th style="width:11%">Train Number</th>
+                        <th style="width:25%">Train Name</th>
+                        <th style="width:18%">From Station</th>
+                        <th style="width:18%">To Station</th>
+                        <th style="width:28%">Running Days</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="train-info-head-tr">
+                        <td id="train_number"></td>
+                        <td id="train_name"></td>
+                        <td id="from_station"></td>
+                        <td id="to_station"></td>
+                        <td id="running_days">
+                            <div class="RunsOn">
+                                <span class="running-day mon"  style="width:14.2857143%">Mon</span>
+                                <span class="running-day tue"  style="width:14.2857143%">Tue</span>
+                                <span class="running-day wed"  style="width:14.2857143%">Wed</span>
+                                <span class="running-day thu"  style="width:14.2857143%">Thu</span>
+                                <span class="running-day fri"  style="width:14.2857143%">Fri</span>
+                                <span class="running-day sat"  style="width:14.2857143%">Sat</span>
+                                <span class="running-day sun"  style="width:14.2857143%">Sun</span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table-info">
+                <thead class="table-info-head">
+                    <tr class="train-info-stations-head">
+                        <th style="width:6.25%">S.No.</th>
+                        <th style="width:11.5%">Station Code</th>
+                        <th style="width:27%">Station Name</th>
+                        <th style="width:8.25%">Arrival</th>
+                        <th style="width:8.25%">Departure</th>
+                        <th style="width:16.75%">Halt Time (in minutes)</th>
+                        <th style="width:11.5%">Distance (Km)</th>
+                        <th style="width:10.5%">Day</th>
+                    </tr>
+                </thead>
+                <tbody  id="train-info-stoppages">
+                    
+                </tbody>
+            </table>
         </div>
     </div>
 </section>
