@@ -143,7 +143,10 @@ function chatbot_button_clicked(){
   $('.chatbot-body').css('animation-duration', '0.5s');
   $('.chatbot-body').css('animation-name', 'chatbot-body-bottom-to-top-animation');
   $('.chatbot-body').css('display', 'block');
-  $('#blur').addClass('blur-background');
+  $('#blur, #navbar-blur').addClass('blur-background');
+  $('#userInput').focus();
+  $('body').css('overflow-y', 'hidden');
+
 }
 function chatbot_close_button_clicked(){
   $('.chatbot-body').css('animation-duration', '1s');
@@ -152,9 +155,46 @@ function chatbot_close_button_clicked(){
     $('.chatbot-body').css('display', 'none');
     $('.chatbot_click').css('display', 'block');
   }, 1001);
-  $('#blur').removeClass('blur-background');
+  $('#blur, #navbar-blur').removeClass('blur-background');
+  $('body').css('overflow-y', 'auto');
 }
 
+
+function chat_response() {
+  let userMessage = $("#userInput").val();
+  $("#userInput").val("");
+  let userHtml = '<div class="chat09-container-user text09"><div class="chat09-container-text-user"><span class="chat09-container-user-text">' + userMessage + '</span></div></div>';
+  $("#chatbox").append(userHtml);
+  loadingAnimation(true);
+  console.log(userMessage);
+  $.ajax({
+    method: "GET",
+    url: "/chat",
+    data: { userMessage: userMessage },
+    success: function (response) {
+      loadingAnimation(false);
+      let botMessage = response;
+      console.log(botMessage);
+      let botHtml = '<div class="chat09-container-system text09"><div class="chat09-container-text-system"><span class="chat09-container-system-text">' + botMessage + '</span></div></div>';
+      $("#chatbox").append(botHtml);
+      $("#chatbox").scrollTop($("#chatbox").prop("scrollHeight"));
+
+    },
+    error: function (error) {
+      console.log(error);
+    },
+  });
+  return false;
+}
+
+function loadingAnimation(show) {
+  let loadingHtml = '<div class="scaling-dots"><div></div><div></div><div></div><div></div></div>'
+  if (show) {
+    $("#chatbox").append(loadingHtml);
+  } else {
+    $(".scaling-dots").remove();
+  }
+} 
 
 let input;
 let searchResult;
@@ -372,13 +412,14 @@ function close_train_info_output() {
   }, 1001);
 }
 $('#trainInfoForm').submit(function(event) {
-  event.preventDefault();
+  event.preventDefault();  //prevent reloading of page after form submission
   let value = $('.train-number-name').val();
   let trainNumber = value;
   if(value.length > 6)
   {
       trainNumber = value.split(" - ")[0];
   }
+  console.log(trainNumber);
   if(trainNumber.length > 0)
   {
     $.ajax({
@@ -390,14 +431,37 @@ $('#trainInfoForm').submit(function(event) {
         $('#train-info-output').css('display', 'block');
         $('#blur, #navbar-blur').css('filter', 'blur(5px)');
         $('body').css('overflow', 'hidden');
-        
-        let responseArray = data.trainInfoArray.route;
+        let response = data.trainInfoArray;
+        let responseArray = response.route;
         let trainNo = data.trainNo;
         let route_length = responseArray.length;
         $('#train_number').text(trainNo);
-        $('#train_name').text(value.split(" - ")[1]);
+        $('#train_name').text(response.trainName);
         $('#from_station').text(responseArray[0].station_name);
         $('#to_station').text(responseArray[route_length - 1].station_name);
+        let rundays = response.runDays;
+        $.each(rundays, function(index, day) {
+          if (day === false) {
+            $('.'+day).css('background-color','#ff8484');
+          }
+          else
+          {
+            $('.'+day).css('background-color','#0DE89F');
+          }
+        });
+        for (let key in rundays) {
+          if (rundays.hasOwnProperty(key)) {
+              value = rundays[key];
+              if (value === false) {
+                $('.'+key).css('background-color','#ff8484');
+              }
+              else
+              {
+                $('.'+key).css('background-color','#0DE89F');
+              }
+        }
+    }
+
         
         let SNo = 0;
         $.each(responseArray, function(index, route) {
