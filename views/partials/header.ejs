@@ -97,32 +97,72 @@
         <div class="chatbot-main-body">
             <div class="chatbot-header">
                 <div class="chatbot-header-text">
-                    <h3>One Train</h3>
+                    <h3 style="font-size:1.6rem;font-family: 'Pacifico', cursive;">One Train</h3>
                 </div>
                 <div class="chatbot-header-icon">
                     <button type="button" class="chatbot-header-button" data-bs-dismiss="modal" aria-label="Close" onclick=chatbot_close_button_clicked()>
-                        <i class="fas fa-times "></i>
+                        <i class="fa-solid fa-angles-down"></i>
                     </button>
                 </div>
             </div>
             <div class="chatbot-content">
-                <div class="chatbot-content-text">
-                    <p>Hi, I am One Train Chatbot. How can I help you?</p>
+                <div class="service09 row">
+                    <div class="service091 row">
+                        <div class="service091-20 col">
+                            <div class="service091-button">
+                                <button class="btn btn-outline-success btn-md service091-btn" >Pnr Status</button>
+                            </div>
+                        </div>
+                        <div class="service091-20 col">
+                            <div class="service091-button">
+                                <button class="btn btn-outline-success btn-md service091-btn">Train Info</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row service091">
+                        <div class="service091-20 col">
+                            <div class="service091-button">
+                                <button class="btn btn-outline-success btn-md service091-btn">Fare Calculator</button>
+                            </div>
+                        </div>
+                        <div class="service091-20 col">
+                            <div class="service091-button">
+                                <button class="btn btn-outline-success btn-md service091-btn">Go To IRCTC</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat09 row">
+                    <div class="chat09-container" id="chatbox">
+                        <!-- <div class="chat09-container-user text09">
+                            <div class="chat09-container-text-user">
+                                <span class="chat09-container-user-text">Hi!</span>
+                            </div>
+                        </div>
+                        <div class="chat09-container-system text09">
+                            <div class="chat09-container-text-system">
+                                <span class="chat09-container-system-text">Hi, I am One Train. How can I help you?</span>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+                <div>
+                    
                 </div>
             </div>
             <div class="chatbot-input">
-                <div class="chatbot-input-text">
-                    <input type="text" class="chatbot-input-box" id="userInput" placeholder="Type your message here..." name="userInput">
-                </div>
-                <div class="chatbot-input-icon">
-                    <button type="button" class="chatbot-input-button">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </div>
+                <form class="chatbot-input-form" onsubmit="return chat_response()">
+                    <div class="chatbot-input-text">
+                        <input type="text" class="chatbot-input-box" id="userInput" placeholder="May I Help You......." name="userInput">
+                    </div>
+                    <div class="chatbot-input-icon">
+                        <button type="submit" class="chatbot-input-button">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
     <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-<!-- write css for chatbot body 
 
--->
