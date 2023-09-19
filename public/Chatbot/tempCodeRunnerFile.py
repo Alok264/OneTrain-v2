@@ -1,0 +1,1 @@
+msg = str(sys.argv[1]) 

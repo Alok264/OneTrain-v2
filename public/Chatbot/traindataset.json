@@ -1,0 +1,938 @@
+{
+    "intents": [
+        {
+            "tag": "greeting",
+            "patterns": [
+                "Hi",
+                "How are you?",
+                "Is anyone there?",
+                "Hello",
+                "Good day",
+                "What's up",
+                "how are ya",
+                "heyy",
+                "whatsup",
+                "??? ??? ??",
+                "Hi",
+                "Hello",
+                "Hey",
+                "What's up?",
+                "Good morning",
+                "Good afternoon",
+                "Good evening",
+                "Howdy",
+                "Greetings"
+            ],
+            "responses": [
+                "Hello!",
+                "Hi there, how can I help?",
+                "Hi there, how can I help?",
+                "Hey!",
+                "Hi there!",
+                "Good to see you!"
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "pnr",
+            "patterns": [
+                "What is PNR?",
+                "What does PNR stand for?",
+                "PNR",
+                "PNR number",
+                "PNR status",
+                "PNR status enquiry",
+                "PNR enquiry",
+                "PNR status check",
+                "PNR check",
+                "What is PNR status?",
+                "Check PNR status",
+                "PNR status enquiry"
+            ],
+            "responses": [
+                "PNR status is the current status of your booking, it shows whether your ticket is confirmed or on the waiting list.",
+                "PNR stands for 'Passenger Name Record'. It is a unique 10-digit number assigned to each booking made on Indian Railways. You can check your PNR status on the IRCTC website or mobile app.",
+                "PNR is a record in the database of Indian Railways computer reservation system (IR-CRS) that contains the itinerary details of a passenger or a group of passengers who are travelling together."
+                ],
+            "context_set": ""
+        },
+        {
+            "tag": "insult",
+            "patterns": [
+                "you are dumb",
+                "you are stupid",
+                "you are a fool",
+                "you suck",
+                "shut up",
+                "idiot",
+                "you're useless",
+                "you're a waste of space",
+                "go away",
+                "nobody likes you",
+                "you're ugly",
+                "you're fat",
+                "you're a joke"
+            ],
+            "responses": [
+                "Well that hurts :(",
+                "Why are you being so mean?",
+                "That's not very nice.",
+                "You're entitled to your opinion.",
+                "I'm sorry you feel that way.",
+                "I don't appreciate being insulted.",
+                "Can we please keep this conversation civil?",
+                "Let's focus on the issue at hand instead of resorting to insults.",
+                "I'm sorry you feel that way. I'm here to help you."
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "activity",
+            "patterns": [
+                "what are you doing",
+                "what are you up to",
+                "what's going on",
+                "what's happening",
+                "what's new",
+                "what have you been doing",
+                "what are you currently doing",
+                "what are you working on",
+                "what's up"
+            ],
+            "responses": [
+                "I'm here to chat with you! :)",
+                "Chatting with you is what I'm up to right now.",
+                "Nothing much, just chatting with you. How about you?"
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "gnwl",
+            "patterns": [
+                "What does GNWL mean?",
+                "What is the full form of GNWL?",
+                "What is the difference between GNWL and WL?",
+                "How is GNWL status determined?",
+                "GNWL",
+                "GNWL status",
+                "GNWL meaning",
+                "GNWL full form",
+                "full form of GNWL",
+                "GNWL status enquiry",
+                "GNWL enquiry",
+                "GNWL status check",
+                "GNWL check"
+            ],
+            "responses": [
+                "GNWL stands for 'General Waiting List'. It is the waiting list for passengers who are boarding the train from the station where the train originates or where the passenger has reserved accommodation. GNWL is given more preference than WL (Remote Location Waiting List) and RQWL (Request Waiting List).",
+                "GNWL is the most common waiting list type and is generally found on routes where the train originates from a station and there is a high demand for the seats/berths."
+                ],
+            "context_set": ""
+        },
+        {
+            "tag": "irctc",
+            "patterns": [
+                "What is IRCTC?",
+                "What does IRCTC stand for?",
+                "IRCTC full form",
+                "irctc",
+                "full form of IRCTC",
+                "IRCTC meaning",
+                "IRCTC full name",
+                "IRCTC fullform",
+                "IRCTC full",
+                "IRCTC full form in English"
+            ],
+            "responses": [
+                "IRCTC is Indian Railway Catering and Tourism Corporation. It is a subsidiary of the Indian Railways that handles the catering, tourism and online ticketing operations of the Indian Railways.",
+                "IRCTC stands for Indian Railway Catering and Tourism Corporation. It is a subsidiary of Indian Railways and is responsible for online ticket booking, catering, and tourism services."
+            ]
+        },
+        {
+            "tag": "cancel_ticket",
+            "patterns": [
+                "How can I cancel my ticket?",
+                "What is the cancellation process?",
+                "How can I cancel my ticket online?",
+                "How to cancel ticket?",
+                "cancel ticket",
+                "cancel",
+                "cancel my ticket",
+                "Can I cancel my ticket online?"
+            ],
+            "responses": [
+                "You can cancel your ticket online through the IRCTC website or mobile app. The cancellation process depends on the type of ticket you have booked and the time of cancellation. You can check the cancellation policy on the IRCTC website.",
+                "To cancel your ticket, you need to log in to your IRCTC account and go to the 'Booked Tickets' section. From there, you can select the ticket you want to cancel and follow the instructions on the screen.",
+                "If you want to cancel your ticket through the Indian Railways website, you need to go to the 'Cancel Ticket' page and enter your PNR number and other details. You can also cancel your ticket at the station or through the reservation counter.",
+                "You can cancel your ticket through the IRCTC app by selecting the 'Booked Tickets' option from the menu and following the instructions on the screen."
+                ],
+            "context_set": ""
+        },
+        {
+            "tag": "tatkal_booking",
+            "patterns": [
+                "What is Tatkal booking?",
+                "Tatkal booking rules",
+                "tatkal booking",
+                "tatkal booking rules",
+                "tatkal booking timings",
+                "tatkal",
+                "tatkal ticket",
+                "tatkal ticket booking",
+                "tatkal ticket booking rules",
+                "tatkal ticket booking timings",
+                "tatkal ticket booking time",
+                "tatkal ticket booking time online",
+                "tatkal ticket booking time IRCTC",
+                "How to book Tatkal ticket?"
+            ],
+            "responses": [
+                "Tatkal booking is a facility provided by the Indian Railways for passengers who need to travel at short notice. Tatkal tickets can be booked one day before the date of journey. However, the Tatkal booking charges are higher than the regular booking charges.",
+                "To book a Tatkal ticket, you can visit the IRCTC website or mobile app. The Tatkal booking opens at 10:00 AM for AC classes and 11:00 AM for non-AC classes, one day before the date of journey.",
+                "The Tatkal booking is available for all classes except First AC. You can book a maximum of four passengers on a Tatkal ticket. The Tatkal booking charges range from Rs. 10 to Rs. 500 depending on the class of travel and distance of the journey."
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "appreciate",
+            "patterns": [
+                "You are awesome",
+                "you are the best",
+                "you are great",
+                "you are good",
+                "I appreciate you",
+                "you rock",
+                "you're amazing",
+                "cute",
+                "nice",
+                "good",
+                "great",
+                "awesome",
+                "cool",
+                "fantastic",
+                "wonderful",
+                "brilliant",
+                "excellent",
+                "perfect",
+                "you are so helpful",
+                "helpful"
+
+            ],
+            "responses": [
+                "Thank you so much!",
+                "Thanks for your kind words!",
+                "I really appreciate it!",
+                "My pleasure!"
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "suggest",
+            "patterns": [
+                "you are useless",
+                "useless",
+                "suggest",
+                "suggestions",
+                "you are bad",
+                "you are not helpful",
+                "can you do better",
+                "improve",
+                "any suggestions"
+            ],
+            "responses": [
+                "Please email your suggestions to alokraj262@gmail.com. Your feedback will help me improve!",
+                "I'm sorry to hear that. Please let me know how I can improve by emailing me at alokraj262@gmail.com.",
+                "I appreciate your feedback. If you have any specific suggestions, please email me at alokraj262@gmail.com."
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "thanks",
+            "patterns": [
+                "Thanks",
+                "thank",
+                "Thank you",
+                "Appreciate it",
+                "Thanks a lot",
+                "Thank you so much",
+                "Thanks so much",
+                "Thanks a bunch",
+                "Thanks a ton",
+                "Thanks a million",
+                "Many thanks"
+            ],
+            "responses": [
+                "You're welcome!",
+                "No problem",
+                "Glad I could help",
+                "My pleasure",
+                "No worries",
+                "I'm happy to help",
+                "I'm glad to be of service"
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "apology",
+            "patterns": [
+                "Sorry",
+                "Apologies",
+                "My bad",
+                "I'm sorry",
+                "I apologize",
+                "So sorry",
+                "I'm so sorry",
+                "I apologize for that",
+                "I'm really sorry",
+                "I'm very sorry",
+                "Sorry about that",
+                "Sorry about this",
+                "Sorry about that"
+            ],
+            "responses": [
+                "It's okay, no worries!",
+                "No problem, don't sweat it!",
+                "Don't worry about it!",
+                "It's all good!",
+                "No need to apologize!"
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "goodbye",
+            "patterns": [
+                "cya",
+                "see you",
+                "bye bye",
+                "See you later",
+                "Goodbye",
+                "I am Leaving",
+                "Bye",
+                "Have a Good day",
+                "talk to you later",
+                "ttyl",
+                "i got to go",
+                "i must go",
+                "have a nice day",
+                "gtg",
+                "It was nice speaking with you",
+                "I enjoyed talking to you",
+                "Goodbye for now",
+                "Talk to you later",
+                "See you soon",
+                "Have a good day",
+                "Take care",
+                "Bye",
+                "Goodbye",
+                "See you later",
+                "Nice to meet you"
+            ],
+            "responses": [
+                "Sad to see you go :(",
+                "Talk to you later",
+                "Goodbye!",
+                "See you later",
+                "Have a nice day"
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "refund_policy",
+            "patterns": [
+                "What is the refund policy of Indian Railways?",
+                "How much refund will I get if I cancel my ticket?",
+                "Refund rules for cancelled tickets",
+                "refund policy",
+                "refund",
+                "refund rules"
+            ],
+            "responses": [
+                "The refund policy of Indian Railways depends on the type of ticket you have booked and the time of cancellation. The cancellation charges and refund amount vary according to the class of travel, time of cancellation and other factors. You can check the refund rules on the IRCTC website.",
+                "If you cancel your ticket before the chart is prepared, you will get a refund after deducting the cancellation charges. The cancellation charges depend on the class of travel and the time of cancellation. You can check the refund rules on the IRCTC website.",
+                "The refund process for cancelled tickets involves submitting a refund application with your ticket details. The refund amount will be credited to your account within a few days after deducting the cancellation charges. You can check the refund rules on the IRCTC website."
+                ],
+            "context_set": ""
+        },
+        {
+            "tag": "name",
+            "patterns": [
+                "What's your name?",
+                "What do I call you?",
+                "Who are you?",
+                "May I know your name?",
+                "What's your name please?",
+                "What should I call you?",
+                "Do you have a name?",
+                "What is your name?",
+                "What is your name please?",
+                "name",
+                "your name"
+            ],
+            "responses": [
+                "My name is ChatBot",
+                "You can call me ChatBot",
+                "I'm ChatBot",
+                "I am a Chatbot.",
+                "I am your helper"
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "help",
+            "patterns": [
+                "Can you help me?",
+                "I need assistance",
+                "Can you assist me?",
+                "Help me please",
+                "I need help",
+                "I need help with this",
+                "I need a bit of help",
+                "I need some help",
+                "I need your help"
+            ],
+            "responses": [
+                "Sure, I'd be happy to help",
+                "What can I do to help you?",
+                "Let me know how I can help"
+            ],
+            "context_set": ""
+        },
+        
+        {
+            "tag": "general_quota",
+            "patterns": [
+                "What is general quota?",
+                "general",
+                "general quota",
+                "General Quota",
+                "General Quota Booking",
+                "General Quota Rules",
+                "General Quota Booking Rules",
+                "How to book ticket in general quota?",
+                "General quota booking rules",
+                "How to book ticket in general quota?"
+            ],
+            "responses": [
+                "General quota is the most common quota used for booking train tickets. The general quota booking opens 120 days before the date of journey. The booking can be done through the IRCTC website, mobile app or at the railway station.",
+                "The general quota is the default quota for train ticket booking. It has the largest number of seats available for booking. You can book tickets in the general quota through the IRCTC website, mobile app, or at the railway station.",
+                "General quota is the quota for train tickets that is available to the general public. The booking opens 120 days before the date of journey. You can book tickets in the general quota through the IRCTC website, mobile app, or at the railway station."
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "wl",
+            "patterns": [
+                "What is WL?",
+                "WL full form",
+                "What is the full form of WL?",
+                "What is the meaning of WL?",
+                "What is the meaning of WL in Indian railway?",
+                "What is the meaning of WL in train ticket?",
+                "What is the meaning of WL in train ticket booking?",
+                "wl",
+                "full form of wl",
+                "wl full form",
+                "wl meaning",
+                "What does WL mean?"
+            ],
+            "responses": [
+                "WL stands for Waiting List. It is a status given to a ticket when all the confirmed tickets have been sold out. The waiting list tickets get confirmed only if some confirmed tickets are cancelled or the quota of the train is increased.",
+                "Waiting List (WL) is a status given to a train ticket when all the available seats on a train are sold out and the passenger is unable to get a confirmed seat. The passenger's name is added to a waitlist and a unique waiting list number is generated. If some confirmed ticket holders cancel their tickets, the seats are allotted to the passengers on the waiting list according to their waiting list number. The probability of getting a confirmed seat depends on the number of cancellations and the time of booking.",
+                "Waiting List, often abbreviated as WL, is a term used by the Indian Railways to indicate that a seat or berth on a particular train is currently unavailable, but may become available in the future. When all of the available seats and berths on a train have been sold, the Indian Railways will start assigning waitlisted status to additional ticket reservations."
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "waiting_list",
+            "patterns": [
+                "What is waiting list?",
+                "waiting list",
+                "waiting list full form",
+                "waiting list meaning",
+                "waiting list meaning in indian railway",
+                "waiting list meaning in train ticket",
+                "waiting list meaning in train ticket booking",
+                "waiting list full form in indian railway",
+                "What is the difference between WL and RAC?",
+                "How does waiting list work?",
+                "How can I check waiting list status?",
+                "What are the chances of confirmation of a WL ticket?"
+            ],
+            "responses": [
+                "Waiting list (WL) is a system in Indian Railways that allows passengers to book tickets when all confirmed seats have been sold out. If a passenger has a waiting list ticket, they have not been assigned a seat on the train and can only board the train if a confirmed seat becomes available. WL tickets can be upgraded to RAC or confirmed tickets based on availability.",
+                "WL stands for Waiting List. It means that you have not been assigned a confirmed seat on the train and are currently on the waiting list.",
+                "When a ticket is booked under waiting list, it is marked with a unique 10-digit PNR (Passenger Name Record) number. The status of the ticket can be checked using the PNR number on the Indian Railways website, mobile app, or through SMS."
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "wl_info",
+            "patterns": [
+                "How does the waiting list system work?",
+                "What is the probability of getting a waiting list ticket confirmed?",
+                "What are the different types of waiting lists?",
+                "Can I travel on a waiting list ticket?",
+                "wl info",
+                "wl information",
+                "wl information in indian railway",
+                "waiting list information",
+                "waiting list information in indian railway",
+                "Can I book a waiting list ticket online?",
+                "What happens if my waiting list ticket does not get confirmed?"
+            ],
+            "responses": [
+                "The waiting list system works based on cancellations and availability of seats. If a confirmed ticket is cancelled, the first person on the waiting list gets a confirmed ticket. The probability of getting a waiting list ticket confirmed depends on various factors like the type of ticket, the route, and the time of booking. There are different types of waiting lists like GNWL, RLWL, PQWL, etc. You can travel on a waiting list ticket only if it gets confirmed before the journey date. Yes, you can book a waiting list ticket online through the IRCTC website or app. If your waiting list ticket does not get confirmed, it automatically gets cancelled and the refund is processed as per the cancellation policy."
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "rac",
+            "patterns": [
+                "What is RAC?",
+                "What does RAC mean?",
+                "RAC full form",
+                "RAC",
+                "Reservation against cancellation"
+            ],
+            "responses": [
+                "RAC stands for Reservation Against Cancellation. It is a type of ticket that provides a reserved seat on the train, but not a full berth. RAC passengers have to share the berth with another RAC passenger. RAC tickets are considered confirmed tickets, but they can be upgraded to a full berth if there are enough cancellations.",
+                "RAC stands for Reservation Against Cancellation. It is a type of ticket in which you are guaranteed a seat on the train, but only a partial berth. If any confirmed ticket gets canceled, the berth is allocated to the RAC ticket holders on a first-come-first-served basis.",
+                "RAC means Reservation Against Cancellation. It is a type of ticket in which you are guaranteed a seat on the train, but only a partial berth."
+                ],
+            "context_set": ""
+        },
+        {
+            "tag": "pqwl",
+            "patterns": [
+                "What is PQWL?",
+                "PQWL full form",
+                "PQWL",
+                "full form of pqwl",
+                "Pooled Qupta Waiting List",
+                "What does PQWL mean?"
+            ],
+            "responses": [
+                "PQWL stands for Pooled Quota Waiting List. It is a waiting list status given to a ticket when the ticket is booked from a station that is not the originating station and there is no available seat in the general quota or the remote location quota. PQWL tickets get confirmed only if some confirmed tickets from the pooled quota are cancelled.",
+                "PQWL is a waiting list status in Indian Railways that is used when there is no seat available in the general quota or remote location quota. PQWL tickets have a lesser chance of getting confirmed than the tickets with GNWL or RLWL status.",
+                "PQWL is a type of waiting list in Indian Railways that is used for tickets booked from intermediate stations. PQWL tickets get confirmed only if some confirmed tickets are cancelled or the quota of the train is increased."
+                ],
+            "context_set": ""
+        },
+        {
+            "tag": "chart_preparation",
+            "patterns": [
+                "What is chart preparation?",
+                "When does chart preparation happen?",
+                "How is chart preparation done?",
+                "What is the process of chart preparation in Indian Railways?",
+                "What happens during chart preparation?",
+                "What is the timing for chart preparation?"
+            ],
+            "responses": [
+                "Chart preparation is the process of finalizing the seat allocation of passengers on a train. During this process, the final reservation chart is prepared, which includes the details of all the passengers who have confirmed tickets. The timing for chart preparation varies depending on the train and the route. Generally, chart preparation is done a few hours before the departure of the train. Passengers can check the exact time of chart preparation on the IRCTC website."
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "TQWL",
+            "patterns": [
+                "What is TQWL?",
+                "TQWL full form",
+                "TQWL",
+                "full form of TQWL",
+                "Tatkal Quota Waiting List",
+                "What does TQWL mean?"
+            ],
+            "responses": [
+                "TQWL stands for Tatkal Quota Waiting List. It is a waiting list status for tickets booked under the Tatkal quota, which is a scheme for passengers who need to travel at short notice.",
+                "TQWL is a type of waiting list in Indian Railways that is used for Tatkal tickets. Tatkal tickets are available for booking one day before the date of journey, and are subject to availability."
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "RLWL",
+            "patterns": [
+                "What is RLWL?",
+                "RLWL full form",
+                "RLWL",
+                "full form of RLWL",
+                "Remote Location Waiting List",
+                "What does RLWL mean?"
+            ],
+            "responses": [
+                "RLWL stands for Remote Location Waiting List. It is a waiting list status given to a ticket when the passenger is travelling to a station that is not the originating station, and there is no available seat in the general quota or the Tatkal quota.",
+                "RLWL is a type of waiting list in Indian Railways that is used for tickets booked from intermediate stations. RLWL tickets get confirmed only if some confirmed tickets are cancelled or the quota of the train is increased."
+               ],
+            "context_set": ""
+        },
+        {
+            "tag": "CNF",
+            "patterns": [
+                "What is CNF?",
+                "CNF full form",
+                "CNF",
+                "full form of CNF",
+                "Confirmed",
+                "What does CNF mean?"
+            ],
+            "responses": [
+                "CNF stands for Confirmed. It is a status given to a ticket when a seat or berth has been confirmed for the passenger.",
+                "If your ticket has CNF status, it means that you have a confirmed seat or berth for your journey."
+                ],
+            "context_set": ""
+        },
+        {
+            "tag": "3A",
+            "patterns": [
+                "What is 3A class in Indian Railways?",
+                "What is the meaning of 3A in train ticket?",
+                "Explain 3A class in detail.",
+                "3A",
+                "What is the full form of 3A?",
+                "What is the meaning of 3A in train ticket?",
+                "What is the meaning of 3A in Indian Railways?",
+                "What is the meaning of 3A in train?",
+                "Third AC",
+                "What is 3A class?",
+                "What is 3A class in train?",
+                "What is 3A class in Indian Railways?",
+                "What is third AC",
+                "What is third AC in train?",
+                "What is third AC in Indian Railways?"],
+            "responses": [
+                "3A is a class of travel in Indian Railways which stands for Third AC. It is an air-conditioned class with 8 berths (4 on each side) in a compartment. It is a popular class of travel in Indian Railways and is considered to be a comfortable and affordable option for long-distance travel.",
+                "3A class provides air-conditioned comfort and is more spacious than Sleeper class. It is a popular class of travel for long-distance trains."
+             ],
+            "context_set": ""
+        },
+        {
+            "tag": "2A",
+            "patterns": [
+                "What is 2A class in Indian Railways?",
+                "What is the meaning of 2A in train ticket?",
+                "Explain 2A class in detail.",
+                "2A",
+                "Second class",
+                "second class AC",
+                "What is the full form of 2A?",
+                "What is the meaning of 2A in train ticket?",
+                "What is the meaning of 2A in Indian Railways?",
+                "What are the facilities provided in 2A class?"
+            ],
+            "responses": [
+                "2A is a class of travel in Indian Railways which stands for Second AC. It is an air-conditioned class with 4 berths (2 on each side) in a compartment. It is a premium class of travel in Indian Railways and is considered to be a comfortable and luxurious option for long-distance travel.",
+                "2A class provides air-conditioned comfort and is more spacious than 3A class. It is a premium class of travel for long-distance trains.",
+                "2A class is a good option for those who want to travel in luxury and comfort. It provides air-conditioned comfort and is more spacious than 3A class."
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "1A",
+            "patterns": [
+                "What is 1A class?",
+                "Full form of 1A",
+                "1A",
+                "1 AC",
+                "1AC",
+                "First AC",
+                "First Class AC",
+                "What is the full form of 1A?",
+                "What is the meaning of 1A in train ticket?",
+                "1A class in Indian Railways",
+                "First class in Indian Railways",
+                "1A class amenities"
+            ],
+            "responses": [
+                "1A is the highest class of travel in Indian Railways. It is a luxury class with air-conditioned cabins, comfortable beds, and personalized service. The fare for 1A class is the highest among all classes.",
+                "1A stands for First AC. It is a premium class of travel in Indian Railways with exclusive cabins, beds, and other amenities. The cabins are equipped with air-conditioning, reading lights, and charging points."
+                 ],
+            "context_set": ""
+        },
+        {
+            "tag": "SL",
+            "patterns": [
+                "What is SL class?",
+                "Full form of SL",
+                "SL",
+                "Sleeper",
+                "Sleeper class",
+                "What is the full form of SL?",
+                "What is the meaning of SL in train ticket?",
+                "SL class in Indian Railways",
+                "Difference between SL and other classes",
+                "Sleeper class in Indian Railways",
+                "Sleeper class amenities"
+            ],
+            "responses": [
+                "SL stands for Sleeper Class. It is the most common class of travel in Indian Railways. It has non-air-conditioned coaches with berths for sleeping. The fare for sleeper class is relatively low compared to other classes.",
+                "Sleeper class is a popular class of travel in Indian Railways. It offers non-air-conditioned coaches with berths for sleeping. The cabins are equipped with fans and reading lights. Passengers traveling in sleeper class can also order meals from the pantry car.",
+                "Sleeper class is a budget-friendly class of travel in Indian Railways. It offers non-air-conditioned coaches with berths for sleeping. The cabins are equipped with fans and reading lights. Passengers traveling in sleeper class can also order meals from the pantry car.",
+                "Sleeper class is a comfortable and budget-friendly class of travel in Indian Railways. It offers non-air-conditioned coaches with berths for sleeping. The cabins are equipped with fans and reading lights. Passengers traveling in sleeper class can also order meals from the pantry car."
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "2S",
+            "patterns": [
+                "What is 2S class?",
+                "2S class in Indian Railways",
+                "2S class"
+            ],
+            "responses": [
+                "2S class is the cheapest class of travel in Indian Railways, also known as Second Seating. It has bench-style seats and is usually overcrowded. This class is mostly available in short distance passenger trains."
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "3rd_AC",
+            "patterns": [
+                "What is 3rd AC?",
+                "3rd AC class in Indian Railways",
+                "3AC class",
+                "third AC class",
+                "3rd AC",
+                "AC 3 tier"
+            ],
+            "responses": [
+                "3rd AC is an air-conditioned class of travel in Indian Railways, also known as AC 3 tier. It has three tiers of berths arranged in bays of six, with curtains for privacy. This class is popular for long-distance journeys and is more comfortable than Sleeper and 2S classes."
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "2nd_AC",
+            "patterns": [
+                "What is 2nd AC?",
+                "2nd AC class in Indian Railways",
+                "2AC class",
+                "second AC class",
+                "2nd AC",
+                "AC 2 tier"
+            ],
+            "responses": [
+                "2nd AC is an air-conditioned class of travel in Indian Railways, also known as AC 2 tier. It has two tiers of berths arranged in bays of four, with curtains for privacy. This class is more comfortable than 3rd AC and is suitable for long-distance journeys."
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "1st_AC",
+            "patterns": [
+                "What is 1st AC?",
+                "1st AC class in Indian Railways",
+                "1AC class",
+                "first AC class",
+                "1st AC",
+                "AC first class"
+            ],
+            "responses": [
+                "1st AC is the most luxurious class of travel in Indian Railways, also known as AC first class. It has private cabins with lockable doors, a personal washbasin, and a sitting area. This class is only available in a few selected trains and is suitable for those who prefer luxury and comfort over cost."
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "Sleeper",
+            "patterns": [
+                "What is Sleeper class?",
+                "Sleeper class in Indian Railways",
+                "SL class",
+                "sl",
+                "Sleeper",
+                "non-AC class",
+                "non-AC",
+                "sleeper",
+                "sleeper class",
+                "Sleeper coach"
+            ],
+            "responses": [
+                "Sleeper class is a non-air-conditioned class of travel in Indian Railways. It has three tiers of berths arranged in bays of six, with no curtains for privacy. This class is suitable for those who want to travel long distances at an affordable price."
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "cc",
+            "patterns": [
+                "What is CC in train?",
+                "What does CC stand for?",
+                "CC meaning in Indian railways",
+                "CC train class",
+                "CC full form in train",
+                "What are the features of CC class?",
+                "chair car",
+                "chair car class",
+                "chair class",
+                "chair"
+            ],
+            "responses": [
+                "CC stands for AC Chair Car. It is a type of air-conditioned seating coach with a seating arrangement of 3x2.",
+                "CC is a type of air-conditioned seating class available on Indian trains, which has comfortable seating with overhead racks for luggage.",
+                "In Indian Railways, CC stands for AC Chair Car, which is a comfortable air-conditioned seating class with reclining seats.",
+                "CC is an air-conditioned seating class in Indian trains that provides comfortable seating with adjustable headrests and footrests."
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "ec",
+            "patterns": [
+                "What is EC in train?",
+                "What does EC stand for?",
+                "EC meaning in Indian railways",
+                "EC train class",
+                "EC full form in train",
+                "EC class facilities"
+            ],
+            "responses": [
+                "EC stands for Executive Class. It is a premium air-conditioned class with spacious seating and enhanced amenities.",
+                "EC is a premium air-conditioned class available on select Indian trains, which offers spacious seating and a host of amenities.",
+                "In Indian Railways, EC stands for Executive Class, which is a premium air-conditioned class with spacious and comfortable seating arrangements.",
+                "EC is a premium air-conditioned class in Indian trains, which offers spacious seating, enhanced amenities, and personalized service."
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "Executive_class",
+            "patterns": [
+                "What is Executive class?",
+                "Tell me about Executive class",
+                "Executive class in trains",
+                "Features of Executive class",
+                "Executive class facilities",
+                "executive",
+                "executive class",
+                "executive car"
+            ],
+            "responses": [
+                "Executive class is a premium class of travel in Indian Railways. It is available in Shatabdi Express trains, Duronto Express trains and a few other express trains. The Executive class is a fully air-conditioned class with spacious seats and other amenities like reading lights, mobile charging points, etc. The seating arrangement is in a 2+2 configuration with seats that can recline up to 140 degrees. Passengers traveling in Executive class are provided with complimentary meals and beverages during the journey.",
+                "The Executive class is the most luxurious class of travel in Indian Railways. It is designed for passengers who want to travel in utmost comfort and luxury. The Executive class coaches are fully air-conditioned and have wider seats that can recline up to 140 degrees. The passengers are also provided with a welcome drink, snacks, and a meal during the journey.",
+                "The Executive class is a premium class of travel in Indian Railways that offers the most luxurious travel experience. The Executive class coaches are fully air-conditioned and equipped with modern amenities like reading lights, mobile charging points, etc. The passengers traveling in Executive class are provided with a welcome drink, snacks, and a meal during the journey. The seating arrangement is in a 2+2 configuration with wider seats that can recline up to 140 degrees.",
+                "Executive class is a premium class of travel in Indian Railways that is available in Shatabdi Express trains and a few other express trains. The Executive class coaches are fully air-conditioned and have spacious seats that can recline up to 140 degrees. Passengers traveling in Executive class are provided with a welcome drink, snacks, and a meal during the journey. The seating arrangement is in a 2+2 configuration."
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "Vande_Bharat",
+            "patterns": [
+                "What is Vande Bharat Express?",
+                "Tell me about Vande Bharat",
+                "Vande Bharat train",
+                "vande bharat express train",
+                "vande bharat express",
+                "vande bharat",
+                "Features of Vande Bharat",
+                "Vande Bharat facilities"
+            ],
+            "responses": [
+                "Vande Bharat Express is a semi-high speed train in India that runs between New Delhi and Varanasi. It is the fastest train in India with a maximum speed of 160 km/h. Vande Bharat is a fully air-conditioned train with state-of-the-art facilities and amenities like GPS-based passenger information system, bio-toilets, automatic doors, and more. The train has two classes of travel, including Chair Car and Executive Chair Car.",
+                "Vande Bharat Express is a modern, semi-high speed train in India that runs between New Delhi and Varanasi. It is the fastest train in India with a maximum speed of 160 km/h. The train is fully air-conditioned and equipped with state-of-the-art facilities like GPS-based passenger information system, bio-toilets, automatic doors, and more. The train has two classes of travel, including Chair Car and Executive Chair Car.",
+                "Vande Bharat Express is a semi-high speed train in India that is designed to provide a comfortable and luxurious travel experience to passengers. The train runs between New Delhi and Varanasi and has a maximum speed of 160 km/h. It is fully air-conditioned and equipped with modern amenities like GPS-based passenger information system, bio-toilets, automatic doors, and more. The train has two classes of travel, including Chair Car and Executive Chair Car."
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "premium_tatkal",
+            "patterns": [
+                "What is Premium Tatkal?",
+                "What is the difference between Tatkal and Premium Tatkal?",
+                "How is Premium Tatkal different from Tatkal?",
+                "prmium tatkal",
+                "premium tatkal",
+                "premium",
+                "How can I book a ticket under Premium Tatkal quota?"
+            ],
+            "responses": [
+                "Premium Tatkal is a type of train ticket booking facility provided by the Indian Railways. It is an online reservation facility that allows passengers to book train tickets at a higher price than the regular Tatkal quota. The fare for Premium Tatkal is dynamic and increases with the demand for the tickets. The booking for Premium Tatkal quota starts at 10 AM for AC classes and 11 AM for non-AC classes, one day before the date of journey.",
+                "Premium Tatkal is a type of train ticket booking facility introduced by the Indian Railways to cater to the last-minute travel needs of passengers. It is similar to Tatkal but with higher fares. The Premium Tatkal fares are dynamic and increase with the demand for tickets. The booking for Premium Tatkal quota starts at 10 AM for AC classes and 11 AM for non-AC classes, one day before the date of journey. To book a ticket under Premium Tatkal quota, you need to log in to the IRCTC website or mobile app, select the train and class of travel, and check the availability of Premium Tatkal quota. If seats are available, you can book the ticket by paying the Premium Tatkal fare. "
+            ],
+            "context_set": ""
+        },
+        
+        {
+            "tag": "rajdhani_express",
+            "patterns": [
+                "What is Rajdhani Express?",
+                "Rajdhani",
+                "Rajdhani Express train",
+                "Rajdhani Express"
+            ],
+            "responses": [
+                "Rajdhani Express is a premium express train service of Indian Railways connecting major cities across the country. It is known for its speed, comfort, and punctuality. The train is equipped with modern amenities like air-conditioned coaches, onboard catering, and Wi-Fi facilities."
+                ],
+            "context_set": ""
+        },
+        {
+            "tag": "shatabdi_express",
+            "patterns": [
+                "What is Shatabdi Express?",
+                "Shatabdi",
+                "Shatabdi Express train",
+                "Shatabdi Express"
+                ],
+            "responses": [
+                "Shatabdi Express is a series of fast passenger trains operated by Indian Railways connecting metro cities with other cities important for tourism, pilgrimage or business. These trains have chair car coaches with air-conditioning and have onboard catering facilities."],
+            "context_set": ""
+        },
+        {
+            "tag": "Tejas_Express",
+            "patterns": [
+                "What is Tejas Express?",
+                "Tell me about Tejas Express",
+                "Tejas Express information",
+                "Tejas Express details",
+                "Tejas",
+                "Tejas Express train",
+                "Tejas Express"
+            ],
+            "responses": [
+                "Tejas Express is a luxury train of Indian Railways that operates between various cities in India. It is known for its state-of-the-art amenities and features, including modern coaches, personalized infotainment systems, onboard Wi-Fi, and more.",
+                "Tejas Express is one of the most popular and luxurious trains of Indian Railways. It offers a unique travel experience to passengers with its comfortable seating, modern amenities, and high-speed connectivity.",
+                "Tejas Express is a semi-high speed train of Indian Railways that operates on some of the busiest routes in India. It is designed to offer passengers a comfortable and luxurious travel experience with features like onboard entertainment, Wi-Fi, and more."],
+            "context_set": ""
+        },
+        {
+            "tag": "Passenger_Train",
+            "patterns": [
+                "What is a passenger train?",
+                "Tell me about passenger trains",
+                "Passenger train details",
+                "passenger",
+                "passenger train",
+                "passenger trains",
+                "local",
+                "local train"
+            ],
+            "responses": [
+                "A passenger train is a type of train that is designed to transport passengers from one place to another. It is a popular mode of transportation in many countries and offers various classes of travel for passengers to choose from.",
+                "Passenger trains are an essential part of the public transportation system in many countries. They are designed to offer passengers a comfortable and safe travel experience with features like comfortable seating, air conditioning, and more.",
+                "Passenger trains are a cost-effective and efficient way to travel for both short and long distances. They are designed to offer passengers a comfortable and enjoyable travel experience with features like onboard food service, entertainment, and more."
+            ],
+            "context_set": ""
+        },
+        {
+            "tag": "emergency_number",
+            "patterns": [
+                "What is the emergency number for Indian Railways?",
+                "Emergency number for trains in India",
+                "Indian Railways emergency number",
+                "What is the phone number for railway emergency?",
+                "Railway emergency contact number",
+                "emergency",
+                "emergency number",
+                "help line number",
+                "emergency contact number",
+                "emergency helpline number",
+                "emergency helpline",
+                "emergency phone number",
+                "emergency contact",
+                "emergency number for railway",
+                "emergency number for trains",
+                "emergency number for Indian Railways"
+                ],
+            "responses": [
+                "The emergency number for Indian Railways is 138. This number can be used to report any emergency related to your train journey, such as accidents, medical emergencies, or security issues. You can also call this number to report any complaints or issues related to your journey.",
+                "If you are travelling on an Indian Railways train and need to report an emergency, you can call the railway emergency number at 138. This number is available 24/7 and can be used to report medical emergencies, security issues, or any other emergency related to your journey.",
+                "In case of an emergency during your train journey in India, you can call the Indian Railways emergency number at 138. This number can be used to report medical emergencies, accidents, or any other emergency related to your journey.",
+                "If you are travelling by train in India and need to contact the railway emergency services, you can call the emergency number 138. This number is available 24/7 and can be used to report any emergency related to your journey.",
+                "The helpline number for railway emergency in India is 138. This number can be used to report any emergency related to your train journey, such as medical emergencies, accidents, or security issues. You can also use this number to report any complaints or issues related to your journey."
+            ],
+            "context_set": ""
+        }
+    ]
+}
