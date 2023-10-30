@@ -1,5 +1,15 @@
 "use strict";
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 //jshint esversion:6
 require("dotenv").config();
 
@@ -29,16 +39,36 @@ var passportLM = require("passport-local-mongoose");
 
 var passportL = require("passport-local");
 
+var cookieParser = require('cookie-parser'); // date added 17/10/2023
+
+
+var nodemailer = require('nodemailer');
+
 var GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 var FacebookStrategy = require("passport-facebook").Strategy;
 
+var bcrypt = require("bcrypt");
+
 var findOrCreate = require("mongoose-findorcreate");
+
+var saltRound = 15;
 
 var _require2 = require('child_process'),
     spawn = _require2.spawn;
 
 var app = express();
+
+var fs = require('fs');
+
+var mysql = require('mysql2');
+
+var _require3 = require('path'),
+    resolve = _require3.resolve;
+
+var _require4 = require('assert'),
+    rejects = _require4.rejects;
+
 app.set('view engine', 'ejs');
 app.use(express["static"](__dirname + "/public"));
 app.use(bodyParser.urlencoded({
@@ -91,6 +121,15 @@ var connectDB = function connectDB() {
   }, null, null, [[0, 7]]);
 };
 
+var pool = mysql.createPool({
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+});
 connectDB().then(function () {
   app.listen(process.env.PORT || 12331, function () {
     console.log("listening for requests on port 12331 or other port");
@@ -115,9 +154,35 @@ var userSchema = new mongoose.Schema({
   googleId: String,
   facebookId: String,
   photo: String,
-  contactInfo: String,
-  username: String,
-  userPNR: [String]
+  contact_no: {
+    type: String,
+    maxlength: 10,
+    minlength: 10,
+    unique: true
+  },
+  username: {
+    type: String,
+    unique: true
+  },
+  OtpVerifyCode: {
+    otp: String,
+    time: Date
+  },
+  user_trip: [{
+    pnr: {
+      type: String,
+      unique: true,
+      maxlength: 10,
+      minlength: 10
+    },
+    train_number: String,
+    train_name: String,
+    source: String,
+    destination: String,
+    date: Date,
+    "class": String,
+    count: Number
+  }]
 });
 var TrainSchema = new mongoose.Schema({
   trainNo: String,
@@ -133,8 +198,9 @@ userSchema.plugin(findOrCreate);
 var stationList = new mongoose.model('list', StationSchema);
 var User = new mongoose.model('user', userSchema);
 var Train = new mongoose.model('train', TrainSchema);
+var IndianTrain = new mongoose.model('indiantrain', IndianTrains);
 var pnr = 1;
-var alert = "";
+var alert = '';
 var PassengerPNR = [];
 var TBWS_trains = [];
 var trainInfo = [];
@@ -142,7 +208,9 @@ var logedIn;
 var userWarning;
 var notFoundWarning;
 var userLoginWarning;
-var searchTrains = [];
+var trainList;
+var stationInformation;
+var stationSearchError;
 passport.use(User.createStrategy());
 passport.serializeUser(function (user, done) {
   done(null, user);
@@ -298,7 +366,9 @@ app.get('/running-status', function (req, res) {
   }
 });
 app.get('/station-info', function (req, res) {
-  res.render('stationInfo');
+  res.render('stationInfo', {
+    stationSearchError: stationSearchError
+  });
 });
 app.get('/fare', function (req, res) {
   res.render('fareCal');
@@ -397,6 +467,21 @@ app.get('/chat', function (req, res) {
     } else {
       res.send(output);
     }
+  });
+});
+app.get('/service-not-available', function (req, res) {
+  res.render('notAvailable');
+});
+app.get('/:userID/resetPassword', function (req, res) {
+  res.render('resetPassword', {
+    userID: req.params.userID
+  });
+});
+app.get('/stationSearchInfo', function (req, res) {
+  console.log(stationInformation);
+  res.render('stationSearchInfo', {
+    stationInformation: stationInformation,
+    trainFromStation: trainList
   });
 });
 app.post("/pnr-status", function (req, res) {
@@ -555,53 +640,68 @@ app.post('/train-info', function (req, res) {
 });
 app.post('/login', function (req, res) {
   User.findOne({
-    email: req.body.username
+    email: lodash.toLower(req.body.username)
   }).then(function (user) {
     if (user) {
-      userWarning = "";
-      var existUser = new User({
-        email: req.body.username,
-        password: req.body.password
-      });
-      req.login(existUser, function (err) {
-        if (err) {
-          console.log(err);
-          res.redirect('/login');
-        } else {
-          passport.authenticate("local")(req, res, function () {
-            logedIn = true;
-            res.redirect('/');
-          });
-        }
-      });
+      if (user.googleId) {
+        userLoginWarning = 'This Email Address is registered with Google. Please Login with Google.';
+        res.redirect('/login');
+      } else if (user.facebookId) {
+        userLoginWarning = 'This Email Address is registered with Facebook. Please Login with Facebook.';
+        res.redirect('/login');
+      } else {
+        userWarning = '';
+        var existUser = new User({
+          email: lodash.toLower(req.body.username),
+          password: req.body.password
+        });
+        var rememberMe = req.body.rememberMe;
+        req.login(existUser, function (err) {
+          if (err) {
+            console.log(err);
+            res.redirect('/login');
+          } else {
+            passport.authenticate('local')(req, res, function () {
+              logedIn = true;
+              res.redirect('/');
+            });
+
+            if (rememberMe === 'on') {
+              req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000;
+            } else {
+              req.session.cookie.expires = false;
+            }
+          }
+        });
+      }
     } else {
-      userLoginWarning = "This Email Address is not registered. Please Sign Up or use registered email address.";
+      userLoginWarning = 'This Email Address is not registered. Please Sign Up or use registered email address.';
       res.redirect('/login');
     }
   })["catch"](function (err) {
     return console.log(err);
-  });
+  }); // find user in database
 });
 app.post('/signup', function (req, res) {
   User.findOne({
-    email: req.body.username
+    email: lodash.toLower(req.body.username)
   }).then(function (user) {
     if (user) {
-      userWarning = "This Email Address is already registered. Please Login or use another email address.";
+      userWarning = 'This Email Address is already registered. Please Login or use another email address.';
       res.redirect('/signup');
     } else {
-      userWarning = "";
+      userWarning = '';
       User.register({
-        username: req.body.username,
-        email: req.body.username,
-        last_name: req.body.last_name,
-        first_name: req.body.first_name
+        username: lodash.toLower(req.body.username),
+        email: lodash.toLower(req.body.username),
+        last_name: lodash.upperFirst(lodash.toLower(req.body.last_name)),
+        first_name: lodash.upperFirst(lodash.toLower(req.body.first_name))
       }, req.body.password, function (err, user) {
         if (err) {
           console.log(err);
           res.redirect('/signup');
         } else {
-          passport.authenticate("local")(req, res, function () {
+          passport.authenticate('local')(req, res, function () {
             logedIn = true;
             res.redirect('/');
           });
@@ -610,8 +710,322 @@ app.post('/signup', function (req, res) {
     }
   })["catch"](function (err) {
     console.log(err);
+  }); // must give a unique username and also write username: req.body.username. This is must. and also, write req.body.password remember password must include
+});
+app.post('/editprofile', function (req, res) {
+  var userId = req.user.id;
+  var newFirstName = req.body.fname;
+  var newLastName = req.body.lname;
+  var newContact = req.body.contact;
+  var userName = req.body.userID;
+  var userEmail = req.body.email;
+  User.findById(userId).then(function (foundUser) {
+    if (foundUser) {
+      var foundUserWithUserEmail = null;
+      var foundUserWithUserName = null;
+
+      if (foundUser.email !== userEmail) {
+        foundUserWithUserEmail = User.findOne({
+          email: userEmail
+        });
+      }
+
+      if (foundUser.username !== userName) {
+        foundUserWithUserName = User.findOne({
+          username: userName
+        });
+      }
+
+      if (foundUserWithUserName) {
+        var warning = 'This username is already taken. Please try another.';
+        res.send(warning);
+      } else if (foundUserWithUserEmail) {
+        var _warning = 'This email is already taken. Please try another.';
+        res.send(_warning);
+      }
+
+      var success = 'Profile Updated Successfully.';
+      foundUser.first_name = newFirstName;
+      foundUser.last_name = newLastName;
+      foundUser.contact_no = newContact;
+      foundUser.username = userName;
+      foundUser.save();
+      res.send(success);
+    }
+  })["catch"](function (err) {
+    return console.log(err);
   });
 });
+
+function generateOTP() {
+  var digits = '123456789';
+  var OTP = digits[Math.floor(Math.random() * 9)];
+  digits = '0123456789';
+
+  for (var i = 0; i < 5; i++) {
+    OTP += digits[Math.floor(Math.random() * 10)];
+  }
+
+  return OTP;
+}
+
+function sendEmail(senderEmail, Message, receiverEmail, subject, anyhtml) {
+  return new Promise(function (resolve, reject) {
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.COMPANY_ID,
+        pass: process.env.APP_PASSWORD
+      }
+    });
+    var mailOptions = {
+      from: senderEmail,
+      to: receiverEmail,
+      subject: subject,
+      text: Message,
+      html: anyhtml
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+        reject(false); // Email sending failed, reject the promise with false
+      } else {
+        console.log("Email sent: " + info.response);
+        resolve(true); // Email sent successfully, resolve the promise with true
+      }
+    });
+  });
+}
+
+function getCurrentTime(time) {
+  var x = new Date();
+  x.get;
+  var hour = time.getHours();
+  var minute = time.getMinutes();
+  var second = time.getSeconds();
+  var date = time.getDate();
+  var month = time.getMonth();
+  var year = time.getFullYear();
+  var currentTime = hour + ' : ' + minute + ' : ' + second;
+  var Todaydate = date + '/' + month + '/' + year;
+  return {
+    currentTime: currentTime,
+    Todaydate: Todaydate
+  };
+}
+
+app.post('/forgotPassword', function (req, res) {
+  var userEmail = req.body.email;
+  User.findOne({
+    email: userEmail
+  }).then(function (foundUser) {
+    if (foundUser) {
+      var otp = generateOTP();
+      foundUser.OtpVerifyCode.otp = bcrypt.hashSync(otp, saltRound);
+      foundUser.OtpVerifyCode.time = new Date();
+      foundUser.save();
+      var time = getCurrentTime(new Date());
+      var html = "<h1>OneTrain</h1><br><h2>Your ONE TRAIN account OTP for password reset is  ".concat(otp, " , and valid for only 10 minutes. \n\n\n      (Generated at ").concat(time.Todaydate, "  ").concat(time.currentTime, ") \n\n ********************************** \n This is an auto-generated email. Do not reply to this email.</h2>");
+      var subject = "OTP for password reset";
+      var senderEmail = process.env.COMPANY_ID;
+      var receiverEmail = userEmail;
+      var message = "";
+      var emailSent = sendEmail(senderEmail, message, receiverEmail, subject, html);
+      emailSent.then(function (success) {
+        if (success) {
+          res.send({
+            success: true,
+            message: "Email sent successfully"
+          });
+        } else {
+          res.send({
+            success: false,
+            message: "Email could not be sent. Please check your Email and try Again"
+          });
+        }
+      })["catch"](function (error) {
+        console.error(error);
+        res.send({
+          success: false,
+          message: "Email could not be sent due to an error. Please try again later."
+        });
+      });
+    } else {
+      res.send({
+        success: false,
+        message: "This email address is not registered. Please try another."
+      });
+    }
+  });
+});
+app.post('/verifyOtp', function (req, res) {
+  var userEmail = req.body.email;
+  var otp = req.body.otp;
+  console.log(otp + " ***** " + _typeof(otp) + ' **** ' + userEmail);
+  User.findOne({
+    email: userEmail
+  }).then(function (foundUser) {
+    if (foundUser) {
+      var otpString = otp.toString();
+      var hashedOTPString = foundUser.OtpVerifyCode.otp.toString();
+      var time = new Date();
+      var savedTime = foundUser.OtpVerifyCode.time;
+
+      if (time.getTime() - savedTime.getTime() > 600000) {
+        res.send({
+          success: false,
+          message: "OTP is expired. Please try again."
+        });
+      }
+
+      bcrypt.compare(otpString, hashedOTPString).then(function (result) {
+        if (result) {
+          res.send({
+            success: true,
+            message: "OTP is verified successfully",
+            userID: foundUser._id
+          });
+        } else {
+          res.send({
+            success: false,
+            message: "OTP is incorrect. Please try again."
+          });
+        }
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    } else {
+      res.send({
+        success: false,
+        message: "This email address is not registered. Please try another."
+      });
+    }
+  });
+});
+app.post('/resetPassword', function _callee(req, res) {
+  var userID, newPassword, foundUser;
+  return regeneratorRuntime.async(function _callee$(_context2) {
+    while (1) {
+      switch (_context2.prev = _context2.next) {
+        case 0:
+          userID = req.body.userID;
+          newPassword = req.body.newPassword;
+          _context2.prev = 2;
+          _context2.next = 5;
+          return regeneratorRuntime.awrap(User.findById(userID));
+
+        case 5:
+          foundUser = _context2.sent;
+
+          if (!foundUser) {
+            _context2.next = 14;
+            break;
+          }
+
+          _context2.next = 9;
+          return regeneratorRuntime.awrap(foundUser.setPassword(newPassword));
+
+        case 9:
+          _context2.next = 11;
+          return regeneratorRuntime.awrap(foundUser.save());
+
+        case 11:
+          res.send({
+            success: true,
+            message: "Password reset successfully."
+          });
+          _context2.next = 15;
+          break;
+
+        case 14:
+          res.send({
+            success: false,
+            message: "User not found."
+          });
+
+        case 15:
+          _context2.next = 21;
+          break;
+
+        case 17:
+          _context2.prev = 17;
+          _context2.t0 = _context2["catch"](2);
+          console.error(_context2.t0);
+          res.status(500).send({
+            success: false,
+            message: "Internal server error."
+          });
+
+        case 21:
+        case "end":
+          return _context2.stop();
+      }
+    }
+  }, null, null, [[2, 17]]);
+});
+var promisePool = pool.promise();
+app.post('/stationSearchInfo', function _callee2(req, res) {
+  var stationName, stationNameArr, stationCode, _ref, _ref2, rows, fields;
+
+  return regeneratorRuntime.async(function _callee2$(_context3) {
+    while (1) {
+      switch (_context3.prev = _context3.next) {
+        case 0:
+          stationName = req.body.station_info_input;
+          stationNameArr = stationName.split('-');
+          stationCode = lodash.lowerCase(stationNameArr[1]).trim();
+          _context3.prev = 3;
+          _context3.next = 6;
+          return regeneratorRuntime.awrap(promisePool.execute('SELECT * FROM stations_info WHERE station_code = ?', [stationCode]));
+
+        case 6:
+          _ref = _context3.sent;
+          _ref2 = _slicedToArray(_ref, 2);
+          rows = _ref2[0];
+          fields = _ref2[1];
+          // console.log('Query Results:', rows); // send javascript object to the client
+          stationInformation = rows;
+          stationInfo(res, req, rows, stationCode);
+          _context3.next = 19;
+          break;
+
+        case 14:
+          _context3.prev = 14;
+          _context3.t0 = _context3["catch"](3);
+          console.error('Error executing query:', _context3.t0);
+          stationSearchError = "500 Server Error";
+          res.redirect('/station-info');
+
+        case 19:
+        case "end":
+          return _context3.stop();
+      }
+    }
+  }, null, null, [[3, 14]]);
+});
+
+function stationInfo(res, req, rows, stationCode) {
+  var options = {
+    method: 'GET',
+    url: 'https://irctc1.p.rapidapi.com/api/v3/getTrainsByStation',
+    params: {
+      stationCode: stationCode
+    },
+    headers: {
+      'X-RapidAPI-Key': process.env.X_RAPID_API_KEY,
+      'X-RapidAPI-Host': 'irctc1.p.rapidapi.com'
+    }
+  };
+  var response = axios.request(options).then(function (response) {
+    trainList = response.data.data;
+    stationSearchError = '';
+    res.redirect('/stationSearchInfo');
+  })["catch"](function (error) {
+    console.error(error);
+    stationSearchError = "500 Server Error";
+    res.redirect('/station-info');
+  });
+}
 
 function TBWSAPIoutput(res, source, destination, date) {
   var options = {

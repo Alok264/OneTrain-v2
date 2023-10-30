@@ -1,527 +1,997 @@
-$(document).ready(function() {
-$(".dropdown").hover(function() 
-{
-  $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
-}, function() {
-  $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
-});
-});
+
 
 $(document).ready(function () {
+  $('.dropdown').hover(
+    function () {
+      $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500)
+    },
+    function () {
+      $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500)
+    }
+  )
+})
+/******************************************************************************************************************* */
+$(document).ready(function () {
   $(window).scroll(function () {
-    var top =  $(".goto-top");
-        if ( $('body').height() <= (    $(window).height() + $(window).scrollTop() + 200 )) {
-  top.animate({"margin-left": "0px"},1500);
-        } else {
-            top.animate({"margin-left": "-100%"},1500);
-        }
-    });
-
-    $(".goto-top").on('click', function () {
-        $("html, body").animate({scrollTop: 0}, 400);
-    });
-});
-
-
-var count = 0;
-$(document).ready(function() {
-var button = $(".more-button").on("click", function(){
-  count++;
-  if(count%2!=0)
-  {
-      $(".status").css("display", "flex");
-      $(".status").css("animation-name", "more-top-to-bottom-translation");
-      button.text("Less");
-  }
-  else
-  {
-      $(".status").css("display", "none");
-      button.text("More");
-  }
-});
-});
-
-$(document).ready(function() {
-  $('.password').on('blur', function(){
-    let password = $(this).val();
-    if(password.length>0)
-    {
-      let regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+])(?=.*[a-zA-Z!@#$%^&*()_+])(?!.*\s).{8,20}$/;
-      if (regex.test(password)) {
-          $('.error-message').text("");
-      } 
-      else 
-      {
-          $('.error-message').text("Password must contain atleast 8 characters, 1 uppercase, 1 lowercase, 1 number and 1 special character");
-          
-      }
+    var top = $('.goto-top')
+    if (
+      $('body').height() <=
+      $(window).height() + $(window).scrollTop() + 200
+    ) {
+      top.animate({ 'margin-left': '0px' }, 1500)
+    } else {
+      top.animate({ 'margin-left': '-100%' }, 1500)
     }
-    else
-    {
-      $('.error-message').text("");
-    }
-    });
-});
+  })
 
-$(document).ready(function(){
-  $('.confirm-password').on('input', function(){
-    const inputP = $('.password').val();
-    const inputCP= $(this).val();
-    if(inputCP.length>0)
-    {
-          if(inputCP != inputP)
-          {
-            $('.signup-button').attr('disabled', 'disabled');
-          }
-          else{
-            $('.signup-button').removeAttr('disabled');
-            $('.confirm-error-message').text("");
-          }
-    }
-    else
-    {
-      $('.confirm-error-message').text("");
-    }
+  $('.goto-top').on('click', function () {
+    $('html, body').animate({ scrollTop: 0 }, 400)
   })
 })
 
-$(document).ready(function(){
+/******************************************************************************************************************* */
+var count = 0
+$(document).ready(function () {
+  var button = $('.more-button').on('click', function () {
+    count++
+    if (count % 2 != 0) {
+      $('.status').css('display', 'flex')
+      $('.status').css('animation-name', 'more-top-to-bottom-translation')
+      button.text('Less')
+    } else {
+      $('.status').css('display', 'none')
+      button.text('More')
+    }
+  })
+})
+/******************************************************************************************************************* */
+
+/******************************************************************************************************************* */
+
+/******************************************************************************************************************* */
+$(document).ready(function () {
   $.ajax({
     url: '/isLogedIn',
     method: 'GET',
-    success: function(response){
-      if(response.logedIn === true)
-      {
-        $('.login_img').attr('src', response.photourl);
-        $('.login_img').css('display', 'block');
-        $('.login_dropdown').addClass("dropdown");
-        $('.login_username').find('span').text(response.username);
-        $('#login_user').attr('data-bs-toggle', 'dropdown');
+    success: function (response) {
+      if (response.logedIn === true) {
+        $('.login_img').attr('src', response.photourl)
+        $('.login_img').css('display', 'block')
+        $('.login_dropdown').addClass('dropdown')
+        $('.login_username').find('span').text(response.username)
+        $('#login_user').attr('data-bs-toggle', 'dropdown')
+      } else {
+        $('.login_img').css('display', 'none')
+        $('.login_dropdown').removeClass('dropdown')
+        $('.login_username').find('span').text('Login/Signup')
+        $('#login_user').removeAttr('data-bs-toggle')
       }
-      else{
-        $('.login_img').css('display', 'none');
-        $('.login_dropdown').removeClass("dropdown");
-        $('.login_username').find('span').text("Login/Signup");
-        $('#login_user').removeAttr('data-bs-toggle');
-      }
-    },
-    error: function(error){
-        console.log("IsLoggedIn response error from server side, a get request has been made to check whether the user is logedin or not");
-    }
-  })
-});
-
-$(document).ready(function(){
-  $('.pnr-input').on('input', function(){
-    let pnr = $(this).val();
-    if(pnr.length < 10 || pnr.length > 10)
-    {
-      if(pnr.length<10)
-      {
-        $('.alert-message').css('color', 'blue');
-      }
-      else
-      {
-        $('.alert-message').css('color', 'red');
-      }
-      $('.alert-message').text("PNR must be of 10 digits"+" Enter Remaining "+(10-pnr.length)+" digits");
-      $('.alert-message').css('display', 'block');
-      $('.pnr-button').attr('disabled', 'disabled');
-    }
-    else
-    {
-      $('.alert-message').css('color', 'green');
-      $('.alert-message').text("Hurrah! You can check your PNR status now");
-      $('.alert-message').css('display', 'block');
-      $('.pnr-button').removeAttr('disabled');
     }
   })
 })
+/******************************************************************************************************************* */
+$(document).ready(function () {
+  $('.pnr-input').on('input', function () {
+    let pnr = $(this).val()
+    if (pnr.length < 10 || pnr.length > 10) {
+      if (pnr.length < 10) {
+        $('.alert-message').css('color', 'blue')
+      } else {
+        $('.alert-message').css('color', 'red')
+      }
+      $('.alert-message').text(
+        'PNR must be of 10 digits' +
+          ' Enter Remaining ' +
+          (10 - pnr.length) +
+          ' digits'
+      )
+      $('.alert-message').css('display', 'block')
+      $('.pnr-button').attr('disabled', 'disabled')
+    } else {
+      $('.alert-message').css('color', 'green')
+      $('.alert-message').text('Hurrah! You can check your PNR status now')
+      $('.alert-message').css('display', 'block')
+      $('.pnr-button').removeAttr('disabled')
+    }
+  })
+})
+/********************************************************************************************************************************/
 
-function chatbot_button_clicked(){
-  $('.chatbot_click').css('display', 'none');
-  $('.chatbot-body').css('animation-duration', '0.5s');
-  $('.chatbot-body').css('animation-name', 'chatbot-body-bottom-to-top-animation');
-  $('.chatbot-body').css('display', 'block');
-  $('#blur, #navbar-blur').addClass('blur-background');
-  $('#userInput').focus();
-  $('body').css('overflow-y', 'hidden');
 
+/********************************************************************************************************************************/
+
+/***************************Chatbot**************************************************************************************** */
+function chatbot_button_clicked () {
+  $('.chatbot_click').css('display', 'none')
+  $('.chatbot-body').css('animation-duration', '0.5s')
+  $('.chatbot-body').css(
+    'animation-name',
+    'chatbot-body-bottom-to-top-animation'
+  )
+  $('.chatbot-body').css('display', 'block')
+  $('#blur, #navbar-blur').addClass('blur-background')
+  $('#userInput').focus()
+  $('body').css('overflow-y', 'hidden')
 }
-function chatbot_close_button_clicked(){
-  $('.chatbot-body').css('animation-duration', '1s');
-  $('.chatbot-body').css('animation-name', 'chatbot-body-top-to-bottom-animation');
-  setTimeout(function(){
-    $('.chatbot-body').css('display', 'none');
-    $('.chatbot_click').css('display', 'block');
-  }, 1001);
-  $('#blur, #navbar-blur').removeClass('blur-background');
-  $('body').css('overflow-y', 'auto');
+function chatbot_close_button_clicked () {
+  $('.chatbot-body').css('animation-duration', '1s')
+  $('.chatbot-body').css(
+    'animation-name',
+    'chatbot-body-top-to-bottom-animation'
+  )
+  setTimeout(function () {
+    $('.chatbot-body').css('display', 'none')
+    $('.chatbot_click').css('display', 'block')
+  }, 1001)
+  $('#blur, #navbar-blur').removeClass('blur-background')
+  $('body').css('overflow-y', 'auto')
 }
 
-
-function chat_response() {
-  let userMessage = $("#userInput").val();
-  $("#userInput").val("");
-  let userHtml = '<div class="chat09-container-user text09"><div class="chat09-container-text-user"><span class="chat09-container-user-text">' + userMessage + '</span></div></div>';
-  $("#chatbox").append(userHtml);
-  loadingAnimation(true);
-  console.log(userMessage);
+function chat_response () {
+  let userMessage = $('#userInput').val()
+  $('#userInput').val('')
+  let userHtml =
+    '<div class="chat09-container-user text09"><div class="chat09-container-text-user"><span class="chat09-container-user-text">' +
+    userMessage +
+    '</span></div></div>'
+  $('#chatbox').append(userHtml)
+  loadingAnimation(true)
+  console.log(userMessage)
   $.ajax({
-    method: "GET",
-    url: "/chat",
+    method: 'GET',
+    url: '/chat',
     data: { userMessage: userMessage },
     success: function (response) {
-      loadingAnimation(false);
-      let botMessage = response;
-      console.log(botMessage);
-      let botHtml = '<div class="chat09-container-system text09"><div class="chat09-container-text-system"><span class="chat09-container-system-text">' + botMessage + '</span></div></div>';
-      $("#chatbox").append(botHtml);
-      $("#chatbox").scrollTop($("#chatbox").prop("scrollHeight"));
+      loadingAnimation(false)
+      let botMessage = response
+      console.log(botMessage)
+      let botHtml =
+        '<div class="chat09-container-system text09"><div class="chat09-container-text-system"><span class="chat09-container-system-text">' +
+        botMessage +
+        '</span></div></div>'
 
+      $('#chatbox').append(botHtml)
+      $('#chatbox').scrollTop($('#chatbox').prop('scrollHeight'))
     },
     error: function (error) {
-      console.log(error);
-    },
-  });
-  return false;
+      console.log(error)
+    }
+  })
+  return false
 }
 
-function loadingAnimation(show) {
-  let loadingHtml = '<div class="scaling-dots"><div></div><div></div><div></div><div></div></div>'
+function loadingAnimation (show) {
+  let loadingHtml =
+    '<div class="scaling-dots"><div></div><div></div><div></div><div></div></div>'
   if (show) {
-    $("#chatbox").append(loadingHtml);
+    $('#chatbox').append(loadingHtml)
   } else {
-    $(".scaling-dots").remove();
+    $('.scaling-dots').remove()
   }
-} 
-
-let input;
-let searchResult;
-
-$(document).ready(function() 
-{
-      $('.search-station').on('focus', function(){
-        if ($(this).hasClass('source')) {
-          input = $('.source');
-          searchResult = $('.autocom-source');
-        } 
-        if ($(this).hasClass('destination')) {
-          input = $('.destination');
-          searchResult = $('.autocom-destination');
-        }
-        Active(input, searchResult);
-      });
-  });
-
-function Active(input, searchResult) {
-let currentFocus = -1;
-let previous_child;
-let next_child;
-let current_child;
-let debounceTimer;
-
-input.on('keyup', function (e) {
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => {
-        const searchValue = input.val();
-        $.ajax({
-            url: '/station-search',
-            method: 'POST',
-            data: { input: searchValue},
-            success: function(response)
-            {
-                let filteredSuggestions = response;
-                const listtlength = Math.min(filteredSuggestions.length, 6);
-                searchResult.empty();
-                if (searchValue) {
-                    filteredSuggestions.slice(0, listtlength).forEach(suggestion => {;
-                        searchResult.append(`<li type="none" class="search-list">${suggestion.A +" - "+ suggestion.B}</li>`);
-                    });
-                    searchResult.show();
-                } else {
-                    searchResult.hide();
-                }
-                
-                const listItems = searchResult.find('li');
-                const first_child = listItems.first();
-                
-                $('li').on('click', function(){
-                    input.val($(this).text());
-                    searchResult.hide();
-                    input.next('input').focus();
-                })
-
-                if (e.key === "ArrowDown") {
-                    if (currentFocus === listtlength-1) {
-                        currentFocus = -1;
-                    }
-                    if (currentFocus === -1) {
-                        currentFocus = 0;
-                        first_child.addClass('highlight');
-                    } else {
-                        previous_child = listItems.eq(currentFocus);
-                        previous_child.removeClass('highlight');
-                        currentFocus++;
-                        current_child = listItems.eq(currentFocus);
-                        current_child.addClass('highlight');
-                    }
-                }
-                if (e.key === "ArrowUp") {
-                    if (currentFocus === 0) {
-                        currentFocus = listtlength;
-                    }
-                    if (currentFocus === -1) {
-                        currentFocus = listtlength-1;
-                        listItems.eq(currentFocus).addClass('highlight');
-                    } else {
-                        previous_child = listItems.eq(currentFocus);
-                        previous_child.removeClass('highlight');
-                        currentFocus--;
-                        current_child = listItems.eq(currentFocus);
-                        current_child.addClass('highlight');
-                    }
-                }
-                if (e.key === "Enter") {
-                    e.preventDefault(); // Prevent form submission
-                    if (current_child) {
-                        input.val(current_child.text());
-                        searchResult.hide();
-                    }
-                    input.next('input').focus();
-                }
-            },
-            error: function(error){
-                console.log("Server response error in station search");
-            }
-        });
-    }, 300);
-  }); 
-};
-
-let train_search_input;
-let train_search_result;
-$(document).ready(function(){
-  $('.search-train').on('focus', function(){
-          train_search_input = $('.train-number-name');
-          train_search_result = $('.autocom-box-train-search');
-        TrainSearch(train_search_input, train_search_result);
-      });
-  });
-
-function TrainSearch(train_search_input, train_search_result)
-{
-  let currentFocus = -1;
-  let previous_child;
-  let next_child;
-  let current_child;
-  let debounceTimer;
-    train_search_input.on('keyup focus', function(e)
-    {
-      clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => {
-        const searchValue = $(this).val();
-        if(searchValue.length > 0)
-        {
-          $.ajax({
-              url: '/train-search',
-              method: 'POST',
-              data: { input: searchValue},
-              success: function(response)
-              {
-                let filteredSuggestions = response;
-                const listtlength = Math.min(filteredSuggestions.length, 8);
-                train_search_result.empty();
-
-                if (searchValue) {
-                    filteredSuggestions.slice(0, listtlength).forEach(suggestion => {;
-                        train_search_result.append(`<li type="none" class="search-list">${suggestion.trainNo +" - "+ suggestion.trainName}</li>`);
-                    });
-                    train_search_result.show();
-                } else {
-                    train_search_result.hide();
-                }
-                
-                const listItems = train_search_result.find('li');
-                const first_child = listItems.first();
-                $('li').on('click', function(){
-                    train_search_input.val($(this).text());
-                    train_search_result.hide();
-                })
-
-                if (e.key === "ArrowDown") {
-                    if (currentFocus === listtlength-1) {
-                        currentFocus = -1;
-                    }
-                    if (currentFocus === -1) {
-                        currentFocus = 0;
-                        first_child.addClass('highlight');
-                    } else {
-                        previous_child = listItems.eq(currentFocus);
-                        previous_child.removeClass('highlight');
-                        currentFocus++;
-                        current_child = listItems.eq(currentFocus);
-                        current_child.addClass('highlight');
-                    }
-                }
-                if (e.key === "ArrowUp") {
-                    if (currentFocus === 0) {
-                        currentFocus = listtlength;
-                    }
-                    if (currentFocus === -1) {
-                        currentFocus = listtlength-1;
-                        listItems.eq(currentFocus).addClass('highlight');
-                    } else {
-                        previous_child = listItems.eq(currentFocus);
-                        previous_child.removeClass('highlight');
-                        currentFocus--;
-                        current_child = listItems.eq(currentFocus);
-                        current_child.addClass('highlight');
-                    }
-                }
-                if (e.key === "Enter") {
-                    e.preventDefault(); // Prevent form submission
-                    if (current_child) {
-                        train_search_input.val(current_child.text());
-                        train_search_result.hide();
-                    }
-                } 
-            },
-            error: function(error){
-                console.log("Server response error in train search");
-            }
-          });
-        }
-        else
-        {
-          train_search_result.empty();
-          train_search_result.hide();
-        }
-      }, 300);
-    });
-};
-
-function close_train_info_output() {
-  $('.train-info-output').css('animation-name', 'train-info-output-out-animation');
-  setTimeout(function() {
-    $('#train_number, #train_name, #from_station, #to_station').text("");
-    $('#train-info-stoppages').empty();
-    $('#train-info-output').css('display', 'none');
-    $('#blur, #navbar-blur').css('filter', 'blur(0px)');
-    $('body').css('overflow', 'auto');
-  }, 1001);
 }
-$('#trainInfoForm').submit(function(event) {
-  event.preventDefault();  //prevent reloading of page after form submission
-  let value = $('.train-number-name').val();
-  let trainNumber = value;
-  if(value.length > 6)
-  {
-      trainNumber = value.split(" - ")[0];
+
+/******************************************************************************************************************* */
+
+let input
+let searchResult
+
+$(document).ready(function () {
+  $('.search-station').on('focus', function () {
+    console.log($(this).hasClass('source') + 'for source')
+    console.log($(this).hasClass('destination') + 'for destination')
+    if ($(this).hasClass('source')) {
+      input = $('.source')
+      searchResult = $('.autocom-source')
+    }
+    if ($(this).hasClass('destination')) {
+      input = $('.destination')
+      searchResult = $('.autocom-destination')
+    }
+    console.log(input + '   input')
+    console.log(searchResult + '    searchResult')
+    Active(input, searchResult)
+  })
+})
+
+function Active (input, searchResult) {
+  let currentFocus = -1
+  let previous_child
+  let next_child
+  let current_child
+  let debounceTimer
+
+  input.on('keyup', function (e) {
+    clearTimeout(debounceTimer)
+    debounceTimer = setTimeout(() => {
+      console.log(e.key)
+      const searchValue = input.val()
+      $.ajax({
+        url: '/station-search',
+        method: 'POST',
+        data: { input: searchValue },
+        success: function (response) {
+          let filteredSuggestions = response
+          console.log('filteredSuggestions array: ' + filteredSuggestions)
+          const listtlength = Math.min(filteredSuggestions.length, 6)
+          searchResult.empty()
+
+          if (searchValue) {
+            filteredSuggestions.slice(0, listtlength).forEach(suggestion => {
+              searchResult.append(
+                `<li type="none" class="search-list">${
+                  suggestion.A + ' - ' + suggestion.B
+                }</li>`
+              )
+            })
+            searchResult.show()
+          } else {
+            searchResult.hide()
+          }
+
+          const listItems = searchResult.find('li')
+          const first_child = listItems.first()
+
+          $('li').on('click', function () {
+            input.val($(this).text())
+            searchResult.hide()
+            input.next('input').focus()
+          })
+
+          if (e.key === 'ArrowDown') {
+            if (currentFocus === listtlength - 1) {
+              currentFocus = -1
+            }
+            if (currentFocus === -1) {
+              currentFocus = 0
+              first_child.addClass('highlight')
+            } else {
+              previous_child = listItems.eq(currentFocus)
+              previous_child.removeClass('highlight')
+              currentFocus++
+              current_child = listItems.eq(currentFocus)
+              current_child.addClass('highlight')
+            }
+          }
+          if (e.key === 'ArrowUp') {
+            if (currentFocus === 0) {
+              currentFocus = listtlength
+            }
+            if (currentFocus === -1) {
+              currentFocus = listtlength - 1
+              listItems.eq(currentFocus).addClass('highlight')
+            } else {
+              previous_child = listItems.eq(currentFocus)
+              previous_child.removeClass('highlight')
+              currentFocus--
+              current_child = listItems.eq(currentFocus)
+              current_child.addClass('highlight')
+            }
+          }
+          if (e.key === 'Enter') {
+            e.preventDefault() // Prevent form submission
+            if (current_child) {
+              input.val(current_child.text())
+              searchResult.hide()
+            }
+            input.next('input').focus()
+          }
+          console.log(currentFocus)
+        },
+        error: function (error) {
+          console.log(error)
+        }
+      })
+    }, 300)
+  })
+}
+
+/******************************************************************************************************************* */
+let train_search_input
+let train_search_result
+$(document).ready(function () {
+  $('.search-train').on('focus', function () {
+    train_search_input = $('.train-number-name')
+    train_search_result = $('.autocom-box-train-search')
+    TrainSearch(train_search_input, train_search_result)
+  })
+})
+
+function TrainSearch (train_search_input, train_search_result) {
+  let currentFocus = -1
+  let previous_child
+  let next_child
+  let current_child
+  let debounceTimer
+  train_search_input.on('keyup focus', function (e) {
+    clearTimeout(debounceTimer)
+    debounceTimer = setTimeout(() => {
+      const searchValue = $(this).val()
+      if (searchValue.length > 0) {
+        $.ajax({
+          url: '/train-search',
+          method: 'POST',
+          data: { input: searchValue },
+          success: function (response) {
+            let filteredSuggestions = response
+            const listtlength = Math.min(filteredSuggestions.length, 8)
+            train_search_result.empty()
+
+            if (searchValue) {
+              filteredSuggestions.slice(0, listtlength).forEach(suggestion => {
+                train_search_result.append(
+                  `<li type="none" class="search-list">${
+                    suggestion.trainNo + ' - ' + suggestion.trainName
+                  }</li>`
+                )
+              })
+              train_search_result.show()
+            } else {
+              train_search_result.hide()
+            }
+
+            const listItems = train_search_result.find('li')
+            const first_child = listItems.first()
+            $('li').on('click', function () {
+              train_search_input.val($(this).text())
+              train_search_result.hide()
+            })
+
+            if (e.key === 'ArrowDown') {
+              if (currentFocus === listtlength - 1) {
+                currentFocus = -1
+              }
+              if (currentFocus === -1) {
+                currentFocus = 0
+                first_child.addClass('highlight')
+              } else {
+                previous_child = listItems.eq(currentFocus)
+                previous_child.removeClass('highlight')
+                currentFocus++
+                current_child = listItems.eq(currentFocus)
+                current_child.addClass('highlight')
+              }
+            }
+            if (e.key === 'ArrowUp') {
+              if (currentFocus === 0) {
+                currentFocus = listtlength
+              }
+              if (currentFocus === -1) {
+                currentFocus = listtlength - 1
+                listItems.eq(currentFocus).addClass('highlight')
+              } else {
+                previous_child = listItems.eq(currentFocus)
+                previous_child.removeClass('highlight')
+                currentFocus--
+                current_child = listItems.eq(currentFocus)
+                current_child.addClass('highlight')
+              }
+            }
+            if (e.key === 'Enter') {
+              e.preventDefault() // Prevent form submission
+              if (current_child) {
+                train_search_input.val(current_child.text())
+                train_search_result.hide()
+              }
+            }
+          }
+        })
+      } else {
+        train_search_result.empty()
+        train_search_result.hide()
+      }
+    }, 300)
+  })
+}
+
+
+function close_train_info_output () {
+  $('.train-info-output').css(
+    'animation-name',
+    'train-info-output-out-animation'
+  )
+  setTimeout(function () {
+    $('#train_number, #train_name, #from_station, #to_station').text('')
+    $('#train-info-stoppages').empty()
+    $('#train-info-output').css('display', 'none')
+    $('#blur, #navbar-blur').css('filter', 'blur(0px)')
+    $('body').css('overflow', 'auto')
+  }, 1001)
+}
+$('#trainInfoForm').submit(function (event) {
+  event.preventDefault() //prevent reloading of page after form submission
+  let value = $('.train-number-name').val()
+  let trainNumber = value
+  if (value.length > 6) {
+    trainNumber = value.split(' - ')[0]
   }
-  console.log(trainNumber);
-  if(trainNumber.length > 0)
-  {
+  console.log(trainNumber)
+  if (trainNumber.length > 0) {
     $.ajax({
       url: '/train-info',
       method: 'POST',
       data: { trainNo: trainNumber },
-      success: function(data) {
-        $('.train-info-output').css('animation-name', 'train-info-output-in-animation');
-        $('#train-info-output').css('display', 'block');
-        $('#blur, #navbar-blur').css('filter', 'blur(5px)');
-        $('body').css('overflow', 'hidden');
-        let response = data.trainInfoArray;
-        let responseArray = response.route;
-        let trainNo = data.trainNo;
-        let route_length = responseArray.length;
-        $('#train_number').text(trainNo);
-        $('#train_name').text(response.trainName);
-        $('#from_station').text(responseArray[0].station_name);
-        $('#to_station').text(responseArray[route_length - 1].station_name);
-        let rundays = response.runDays;
-        $.each(rundays, function(index, day) {
+      success: function (data) {
+        $('.train-info-output').css(
+          'animation-name',
+          'train-info-output-in-animation'
+        )
+        $('#train-info-output').css('display', 'block')
+        $('#blur, #navbar-blur').css('filter', 'blur(5px)')
+        $('body').css('overflow', 'hidden')
+        let response = data.trainInfoArray
+        let responseArray = response.route
+        let trainNo = data.trainNo
+        let route_length = responseArray.length
+        $('#train_number').text(trainNo)
+        $('#train_name').text(response.trainName)
+        $('#from_station').text(responseArray[0].station_name)
+        $('#to_station').text(responseArray[route_length - 1].station_name)
+        let rundays = response.runDays
+        $.each(rundays, function (index, day) {
           if (day === false) {
-            $('.'+day).css('background-color','#ff8484');
+            $('.' + day).css('background-color', '#ff8484')
+          } else {
+            $('.' + day).css('background-color', '#0DE89F')
           }
-          else
-          {
-            $('.'+day).css('background-color','#0DE89F');
-          }
-        });
+        })
         for (let key in rundays) {
           if (rundays.hasOwnProperty(key)) {
-              value = rundays[key];
-              if (value === false) {
-                $('.'+key).css('background-color','#ff8484');
-              }
-              else
-              {
-                $('.'+key).css('background-color','#0DE89F');
-              }
-        }
-    }
-
-        
-        let SNo = 0;
-        $.each(responseArray, function(index, route) {
-          if (route.stop === true) {
-            SNo++;
-            let row = $('<tr class="tr"></tr>');
-            row.append('<td>' + SNo + '</td>');
-            row.append('<td>' + route.station_code + '</td>');
-            row.append('<td>' + route.station_name + '</td>');
-
-            let reference_time = route.today_sta;
-            let hours = Math.floor(reference_time / 60);
-            let mins = reference_time % 60;
-            let arrival_time = hours.toString().padStart(2, '0') + ':' + mins.toString().padStart(2, '0');
-            let halt = route.std_min - route.sta;
-            mins += halt;
-            if (mins >= 60) {
-              hours += 1;
-              mins -= 60;
+            value = rundays[key]
+            if (value === false) {
+              $('.' + key).css('background-color', '#ff8484')
+            } else {
+              $('.' + key).css('background-color', '#0DE89F')
             }
-            let departure_time = hours.toString().padStart(2, '0') + ':' + mins.toString().padStart(2, '0');
+          }
+        }
+
+        let SNo = 0
+        $.each(responseArray, function (index, route) {
+          if (route.stop === true) {
+            SNo++
+            let row = $('<tr class="tr"></tr>')
+            row.append('<td>' + SNo + '</td>')
+            row.append('<td>' + route.station_code + '</td>')
+            row.append('<td>' + route.station_name + '</td>')
+
+            let reference_time = route.today_sta
+            let hours = Math.floor(reference_time / 60)
+            let mins = reference_time % 60
+            let arrival_time =
+              hours.toString().padStart(2, '0') +
+              ':' +
+              mins.toString().padStart(2, '0')
+            let halt = route.std_min - route.sta
+            mins += halt
+            if (mins >= 60) {
+              hours += 1
+              mins -= 60
+            }
+            let departure_time =
+              hours.toString().padStart(2, '0') +
+              ':' +
+              mins.toString().padStart(2, '0')
             if (index == 0) {
-              arrival_time = "---";
-              halt = "---";
+              arrival_time = '---'
+              halt = '---'
             }
             if (index == route_length - 1) {
-              departure_time = "---";
-              halt = "---";
+              departure_time = '---'
+              halt = '---'
             }
             halt = halt.toString().padStart(2, '0')
-            row.append('<td>' + arrival_time + '</td>');
-            row.append('<td>' + departure_time + '</td>');
-            row.append('<td>' + halt + '</td>');
-            row.append('<td>' + Math.floor(route.distance_from_source) + '</td>');
-            row.append('<td>' + route.day + '</td>');
+            row.append('<td>' + arrival_time + '</td>')
+            row.append('<td>' + departure_time + '</td>')
+            row.append('<td>' + halt + '</td>')
+            row.append(
+              '<td>' + Math.floor(route.distance_from_source) + '</td>'
+            )
+            row.append('<td>' + route.day + '</td>')
 
-            $('#train-info-stoppages').append(row);
+            $('#train-info-stoppages').append(row)
           }
-        });
+        })
       },
-      error: function(error) {
-        console.error(error);
+      error: function (error) {
+        console.error(error)
       }
-    });
+    })
   }
-});
+})
 
-loader = $(".lds-default");
-$('#blur').addClass('blur-background');
-window.addEventListener("load", function(){
-    loader.css('display', 'none');
-    $('#blur').removeClass('blur-background');
-});
+/******************************************************************************************************************* */
 
-$(document).ready(function() {
-  $(".print").click(function() {
-    var printContent = $(".pnr-top").html();
-    var originalContent = $("body").html();
-    $("body").html(printContent);
-    window.print();
-    $("body").html(originalContent);
+/******************************************************************************************************************* */
+
+loader = $('.lds-default')
+$('#blur').addClass('blur-background')
+window.addEventListener('load', function () {
+  loader.css('display', 'none')
+  $('#blur').removeClass('blur-background')
+})
+
+function profile () {
+  const profile = $('.edit_form')
+  profile.css('display', 'block')
+  const profilepiclabel = $('.profilepiclabel')
+  profilepiclabel.css('display', 'none')
+  const profilefile = $('#profilefile')
+  profilefile.prop('disabled', true)
+  const edit_input = $('.edit_input')
+  edit_input.prop('disabled', true)
+  const editProfileButton = $('#editProfileButton')
+  editProfileButton.css('display', 'none')
+  const changePassword = $('.change_password')
+  changePassword.css('display', 'none')
+}
+
+function editProfile () {
+  const profile = $('.edit_form')
+  profile.css('display', 'block')
+  const profilepiclabel = $('.profilepiclabel')
+  profilepiclabel.css('display', 'block')
+  const profilefile = $('#profilefile')
+  profilefile.prop('disabled', false)
+  const edit_input = $('.edit_input')
+  edit_input.prop('disabled', false)
+  const editProfileButton = $('#editProfileButton')
+  editProfileButton.css('display', 'block')
+  const changePassword = $('.change_password')
+  changePassword.css('display', 'none')
+}
+
+function email_validation (emailID) {
+  let email = $('#'+ emailID).val()
+  if (email.length > 0) {
+    let regex = /^([a-zA-Z0-9\.-]+)@([a-zA-Z0-9-]+)\.([a-z]{2,8})(.[a-z]{2,8})?$/
+    if (!regex.test(email)) {
+      const message = 'Invalid Email';
+      createAlert(message);
+      e.preventDefault()
+    }
+  }
+}
+
+function createAlert(message){
+  const alert_box = $('.universalAlertboxpopup');
+  alert_box.css('display', 'block');
+  const alert_box_content = $('.alert_message_box');
+  alert_box_content.html(`<div class="alert_message" role="alert" id="alert_box">
+            <strong>Oops! </strong>${message}
+        </div>`);
+}
+function closeAlertBox(){
+  const alert_box = $('.universalAlertboxpopup');
+  alert_box.css('display', 'none');
+}
+
+function contactValidation(contactID){
+  let contact = $('#'+contactID);
+  let input_value = contact.val();
+  var sanitizedInput = input_value.replace(/\D/g, '')
+    sanitizedInput = sanitizedInput.slice(0, 10)
+    contact.val(sanitizedInput);
+}
+
+function passwordValidation(passwordID, confirmID){
+  let password = $('#'+passwordID).val();
+  let confirm = $('#'+confirmID);
+  let regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+])(?=.*[a-zA-Z!@#$%^&*()_+])(?!.*\s).{8,20}$/;
+  if(password.length > 0){
+    if(!regex.test(password)){
+      const message = 'Password must contain atleast 8 characters, 1 uppercase, 1 lowercase, 1 number and 1 special character';
+      createAlert(message);
+      confirm.prop('disabled', true);
+      return false;
+    }
+    else{
+      confirm.prop('disabled', false);
+      return true;
+    }
+  }
+  else{
+    confirm.prop('disabled', true);
+  }
+}
+
+function confirmPassword(confirmID, passwordID, buttonID){
+  let password = $('#'+passwordID).val();
+  let confirm = $('#'+confirmID).val();
+  const button = $('#'+buttonID);
+  if(confirm !== password){
+    button.prop('disabled', true);
+  }
+  else
+  {
+    button.prop('disabled', false);
+  }
+}
+
+
+function changePassword(){
+  const profile = $('.edit_form');
+  profile.css('display', 'none');
+  const changePassword = $('.change_password');
+  changePassword.css('display', 'block');
+}
+
+function showPassword(inputID, iconID){
+  const input = $('#'+inputID);
+  const icon = $('#'+iconID);
+  if(input.attr('type') == 'password'){
+    input.attr('type', 'text');
+    icon.addClass('fa-eye-slash');
+    icon.removeClass('fa-eye');
+  }
+  else{
+    input.attr('type', 'password');
+    icon.addClass('fa-eye');
+    icon.removeClass('fa-eye-slash');
+  }
+}
+
+function editFormSubmitted(imageID, userID, fnameID, lnameID, emailID, contactID, e)
+{
+  let image = $('#'+imageID).val();
+  let userID_value = $('#'+userID).val();
+  let fname = $('#'+fnameID).val();
+  let lname = $('#'+lnameID).val();
+  let email = $('#'+emailID).val();
+  let contact = $('#'+contactID).val();
+ 
+  console.log(fname+' '+lname+' '+email+' '+contact+' '+userID_value);
+  if(fname.length > 0){
+    if(!isNaN(fname)){
+      window.alert('First Name cannot be a number');
+      return false;
+    }
+  }
+  if(lname.length > 0){
+    if(!isNaN(lname)){
+      window.alert('Last Name cannot be a number');
+      return false;
+    }
+  }
+  $.ajax({
+    url: '/editprofile',
+    method: 'POST',
+    data: {userID: userID_value, fname: fname, lname: lname, email: email, contact: contact},
+    success: function(response){
+      setTimeout(function(){
+        window.alert(response);
+      }, 5000);
+      window.location.href = '/profile';
+    },
+    error: function(error){
+      console.log(error);
+      e.preventDefault();
+    }
   });
-});
+}
+
+function onlyLowerCaseInput(inputID){
+  let input = $('#'+inputID);
+  let input_value = input.val();
+  var sanitizedInput = input_value.replace(/[^a-z0-9@.]/g, '')
+  sanitizedInput = sanitizedInput.slice(0, 25)
+  input.val(sanitizedInput);
+}
+
+
+function forgotPassword(emailID, e)
+{
+  e.preventDefault();
+  $('.otpSentAnimation').css('display', 'block');
+  $('#otpsent').text('Sending OTP...');
+  $('#otpsenticon').removeClass('fa-circle-check');
+  $('#otpsenticon').addClass('fa-circle-notch fa-spin');
+  const userVerificationEmail = $('#'+emailID).val();
+  console.log(userVerificationEmail);
+  $.ajax(
+    {
+      url: '/forgotPassword',
+      method: 'POST',
+      data: {email: userVerificationEmail},
+      success: function(response){
+        const success_status = response.success;
+        console.log(success_status);
+        if(success_status===true)
+        {
+          $('#otpsent').text('OTP Sent');
+          $('#otpsenticon').removeClass('fa-circle-notch fa-spin');
+          $('#otpsenticon').addClass('fa-circle-check');
+          setTimeout(function(){
+            $('.otpSentAnimation').css('display', 'none');
+            const otpbox = $('.otpPopUp');
+            otpbox.css('display', 'block');
+            resendTimer();
+            $('#blur, #navbar-blur').addClass('blur-background');
+          }, 3000);
+        }
+        else{
+          const message = response.message;
+          $('.otpSentAnimation').css('display', 'none');
+          $('#otpsent').text('Send OTP');
+          $('#otpsenticon').removeClass('fa-circle-notch fa-spin');
+          $('#otpsenticon').addClass('fa-circle-check');
+          createAlert(message);
+          setTimeout(function(){
+            window.location.href = '/forgotPassword';
+          }, 5000);
+          return;
+        }
+      },
+      error: function(error){
+        console.log(error);
+      }
+    }
+  );
+}
+
+function resendOtp(event){ 
+  event.preventDefault();
+  const userVerificationEmail = $('#forgot_password_email').val();
+  const did_not_received_otp = $('.did_not_received_otp');
+  did_not_received_otp.css('display', 'none');
+  const Otptimer = $('.Otptimer');
+  Otptimer.css('display', 'block');
+  $('.timermessage').css('display', 'none');
+  $('#sendingotpicon').css('display', 'block');
+  $.ajax(
+    {
+      url: '/forgotPassword',
+      method: 'POST',
+      data: {email: userVerificationEmail},
+      success: function(response){
+        const success_status = response.success;
+        if(success_status===true)
+        {
+          $('#sendingotpicon').css('display', 'none');
+          $('.otpsentmessage').css('display', 'block');
+          setTimeout(function(){
+            const otpbox = $('.otpPopUp');
+            $('.timermessage').css('display', 'block');
+            $('.otpsentmessage').css('display', 'none');
+            otpbox.css('display', 'block');
+            resendTimer();
+          }, 5000);
+        }
+        else{
+          const message = response.message;
+          createAlert(message);
+        }
+      },
+      error: function(error){
+        console.log(error);
+      }
+    }
+  );
+}
+
+function verifyOtp(emailID, otpClasses, e)
+{
+  e.preventDefault();
+  $('.otpsubmitanimation').css('display', 'block');
+  $('#otpsubmiticon').removeClass('fa-circle-check');
+  $('#otpsubmiticon').addClass('fa-circle-notch fa-spin');
+  const userVerificationEmail = $('#'+emailID).val();
+  let userVerificationOtp = '';
+  const otparray = $('.' + otpClasses).toArray();
+  otparray.forEach(function(otpElement) {
+    userVerificationOtp += $(otpElement).val();
+  });
+  console.log(userVerificationEmail+ "*******" + userVerificationOtp);
+  $.ajax(
+    {
+      url: '/verifyOtp',
+      method: 'POST',
+      data: {email: userVerificationEmail, otp: userVerificationOtp},
+      success: function(response){
+        const success_status = response.success;
+        if(success_status)
+        {
+          $('#otpsubmiticon').removeClass('fa-circle-notch fa-spin');
+          $('#otpsubmiticon').addClass('fa-circle-check');
+          setTimeout(function(){
+            $('.otpsubmitanimation').css('display', 'none');
+            const otpbox = $('.otpPopUp');
+            otpbox.css('display', 'none');
+            $('#blur, #navbar-blur').removeClass('blur-background');
+            const resetPassword = $('.resetPassword');
+            resetPassword.css('display', 'block');
+            console.log('OTP verification success');
+            window.location.href = `/${response.userID}/resetPassword`;
+          }, 2000);
+        }
+        else{
+          $('.otpsubmitanimation').css('display', 'none');
+          const message = response.message;
+          createAlert(message);
+        }
+      },
+      error: function(error){
+        console.log(error);
+      }
+    }
+  );
+}
+
+function resetPassword(passwordID, userID, event)
+{
+  event.preventDefault();
+  const resetNewPassword = $('#'+passwordID).val();
+  const userID_value = userID;
+  $('.resetPasswordanimation').css('display', 'block');
+  $.ajax(
+    {
+      url: '/resetPassword',
+      method: 'POST',
+      data: {userID: userID_value, newPassword: resetNewPassword},
+      success: function(response){
+        const success_status = response.success;
+        if(success_status)
+        {
+          const message = response.message;
+          $('#resetSubmitmessage').text(message);
+          $('#resetSubmiticon').removeClass('fa-circle-notch fa-spin');
+          $('#resetSubmiticon').addClass('fa-circle-check');
+          setTimeout(function(){
+            $('.resetPasswordanimation').css('display', 'none');
+            $('#resetSubmitmessage').text('Setting Password . . . . .');
+            $('#resetSubmiticon').removeClass('fa-circle-check');
+            $('#resetSubmiticon').addClass('fa-circle-notch fa-spin');
+          }, 3000);
+          setTimeout(function(){
+            window.location.href = '/login';
+          }, 1000);
+        }
+        else{
+          const message = response.message;
+          createAlert(message);
+        }
+      },
+      error: function(error){
+        console.log(error);
+      }
+    }
+  );
+
+}
+
+function otpKeyPressed(inputID, event) {
+  const inputElement = $('#' + inputID);
+  const keyDownValue = event.key;
+  event.preventDefault();
+  // Prevent non-numeric characters and spaces
+  if (keyDownValue === 'Backspace') 
+  {
+    if (inputID === 'digit1') {
+      inputElement.val('');
+      return;
+    } else if(inputID ==='digit6'){
+      const dig6 = inputElement.val();
+      if(dig6.length==0){
+        const previousInputID = 'digit' + (parseInt(inputID.substring(5, 6)) - 1);
+        const previousInput = $('#' + previousInputID);
+        const prevValue = previousInput.val();
+        previousInput.focus();
+      } else inputElement.val('');
+      return;
+    }else{
+      const dig = inputElement.val();
+      if(dig.length==0){
+        const previousInputID = 'digit' + (parseInt(inputID.substring(5, 6)) - 1);
+        const previousInput = $('#' + previousInputID);
+        const prevValue = previousInput.val();
+        previousInput.focus();
+      }else inputElement.val('');
+      return;
+    }
+  } else{
+    if(!isNaN(keyDownValue) && keyDownValue!==" "){
+      const digvalue = inputElement.val();
+      if(inputID==='digit6'){
+        if(digvalue.length==0){
+          inputElement.val(keyDownValue);
+          return;
+        }else{
+          inputElement.val(digvalue.substring(0,1));
+          return;
+        }
+      }else{
+        if(digvalue.length==0){
+          inputElement.val(keyDownValue);
+          return;
+        }else{
+          inputElement.val(digvalue.substring(0,1));
+          const nextInputID = 'digit' + (parseInt(inputID.substring(5, 6)) + 1);
+          const nextInput = $('#' + nextInputID);
+          nextInput.focus();
+          return;
+        }
+      }
+    }else{
+      if(keyDownValue!=='Enter'){
+        inputElement.val('');
+      }
+      else{
+        if(inputID=='digit6' && keyDownValue==='Enter')
+        {
+          const form = $('.otpInputForm');
+          form.submit();
+        }
+      }
+      return;
+    }
+    return;
+  }
+}
+
+
+function keyDown(inputID, event){
+  const key = event.key;
+  if((isNaN(key) || key===" ") && key!=='Backspace') event.preventDefault();
+}
+
+function resendTimer()
+{
+  const timerDuration = 60
+  let timer = timerDuration
+  const timerElement = $('#timer')
+  $('.timermessage').css('display', 'block')
+  $('.otpsentmessage').css('display', 'none')
+  
+  function updateTimer() {
+    timerElement.text(timer + ' seconds')
+    timer--
+
+    if (timer < 0) {
+      clearInterval(timerInterval)
+      const otptime = $('.Otptimer')
+      timerElement.text('')
+      timer = timerDuration
+      otptime.css('display', 'none')
+      const resendotpdiv = $('.did_not_received_otp')
+      resendotpdiv.css('display', 'block')
+      return
+    }
+  }
+  const timerInterval = setInterval(function () {
+    updateTimer()
+  }, 1000)
+}
+
+
+function home (e) {
+  window.location.href = '/'
+}
+
+function logout (e) {
+  window.location.href = '/logout'
+}
+
+
+function arrowDownIconClicked(tbodyID, iconclass, event)
+{
+  const downicon = $('.'+ iconclass);
+  downicon.toggleClass('rotateDownIcon');
+  const tableBody = $('#'+ tbodyID);
+  if(tableBody.css('display')==='none')
+  {
+    tableBody.css('display', 'contents');
+  }
+  else
+  {
+    tableBody.css('display', 'none');
+  }
+}
+
+$(document).ready(function () {
+  $('.print').click(function () {
+    var printContent = $('.pnr-top').html()
+    var originalContent = $('body').html()
+    $('body').html(printContent)
+    window.print()
+    $('body').html(originalContent)
+  })
+})

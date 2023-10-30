@@ -17,21 +17,21 @@
                     </div>
                 </div>
                 <div class="form-floating">
-                    <input type="email" class="form-control signup-email" id="floatingInputEmail" placeholder="name@example.com" name="username" required>
-                    <label for="floatingInputEmail">Email address</label>
+                    <input type="email" class="form-control signup-email" id="user_signup_email" placeholder="name@example.com" name="username" onblur="email_validation('user_signup_email')" required>
+                    <label for="user_signup_email">Email address</label>
                 </div>
                 <span class="email-error-message err"></span>
                 <div class="form-floating">
-                    <input type="password" class="form-control signup-password password" id="floatingPassword" placeholder="Password" name="password" required>
-                    <label for="floatingPassword" class="password-label">Password</label>
+                    <input type="password" class="form-control signup-password password" id="user_first_password" placeholder="Password" name="password" onblur="passwordValidation('user_first_password', 'user_confirm_password')" required>
+                    <label for="user_first_password" class="password-label">Password</label>
                 </div>
                 <span class="error-message err"></span>
                 <div class="form-floating">
-                    <input type="password" class="form-control signup-password confirm-password" id="floatingConfirmPassword" placeholder="Password" name="confirm-password" required autocomplete="off">
-                    <label for="floatingConfirmPassword" class="password-label">Confirm Password</label>
+                    <input type="password" class="form-control signup-password confirm-password" id="user_confirm_password" placeholder="Password" name="confirm-password" oninput="confirmPassword('user_confirm_password', 'user_first_password', 'signup_button')" required autocomplete="off" disabled>
+                    <label for="user_confirm_password" class="password-label">Confirm Password</label>
                 </div>
                 <span class="confirm-error-message err"></span>
-                <button class="w-100 btn btn-lg btn-success signup-button" type="submit" disabled>Sign Up</button>
+                <button class="w-100 btn btn-lg btn-success signup-button" id="signup_button" type="submit" disabled>Sign Up</button>
                 <p class="forgot-password">Already a OneTrain user? <a href="/login">Signin/Login here</a></p>
             </form>
             <div class="Choice">

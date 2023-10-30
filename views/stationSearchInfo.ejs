@@ -1,0 +1,118 @@
+<%- include('partials/header') -%>
+<section id="blur">
+    <section id="stationSearchInfo">
+        <div class="row stationInfo">
+            <div class="col-lg-5 col-md-12 resultBox">
+                <p class="resultHead">Station Name</p>
+                <p  class="resultResult"><%= stationInformation[0].station_name %></p>
+            </div>
+            <div class="col-lg-3 col-md-12 resultBox">
+                <p class="resultHead">Zone</p>
+                <p  class="resultResult"><%= stationInformation[0].zone %></p>
+            </div>
+            <div class="col-lg-4 col-md-12 resultBox">
+                <p class="resultHead">State</p>
+                <p  class="resultResult"><%= stationInformation[0].state %></p>
+            </div>
+        </div>
+        <div class="row stationInfo">
+            <div class="col-lg-6 col-md-12 resultBox">
+                <p class="resultHead">Station Category</p>
+                <p  class="resultResult"><%= stationInformation[0].station_category %></p>
+            </div>
+            <div class="col-lg-6 col-md-12 resultBox">
+                <p class="resultHead">Station Code</p>
+                <p  class="resultResult"><%= stationInformation[0].station_code %></p>
+            </div>
+        </div>
+        <div class="row stationInfo">
+            <div class="col-lg-6 col-md-12 resultBox">
+                <p class="resultHead">District</p>
+                <p  class="resultResult"><%= stationInformation[0].district %></p>
+            </div>
+            <div class="col-lg-6 col-md-12 resultBox">
+                <p class="resultHead">Division</p>
+                <p  class="resultResult"><%= stationInformation[0].division %></p>
+            </div>
+        </div>
+        <div class="trainsInformation">
+            <table class="trainTable">
+                <thead class="tableHead">
+                    <tr class="tableHeadRow" onclick="arrowDownIconClicked('originatingBody', 'originnatingicon', event)">
+                        <th class="tableHeadData">
+                            <p class="tableHeadDataP">Trains Originating</p>
+                            <i class="fa-solid fa-caret-down downicon originnatingicon"></i>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="originatingBody" class="trainBody">
+                    <% for(let i = 0; i<trainFromStation.originating.length; i++) { %>
+                        <tr class="tableBodyRow">
+                            <td class="tableBodyData">
+                                <div class="datarow">
+                                    <p class="trainNumber"><%= trainFromStation.originating[i].trainNo %></p>
+                                    <p class="trainName"><%= trainFromStation.originating[i].trainName %></p>
+                                    <p class="trainDays">Arrival: <span> <%= trainFromStation.originating[i].arrivalTime %> </span></p>
+                                    <p class="trainDays">Departure: <span> <%= trainFromStation.originating[i].departureTime %> </span></p>
+                                </div>
+                            </td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+        <div class="trainsInformation">
+            <table class="trainTable">
+                <thead class="tableHead">
+                    <tr class="tableHeadRow" onclick="arrowDownIconClicked('passingBody', 'passingicon', event)">
+                        <th class="tableHeadData">
+                            <p class="tableHeadDataP">Trains Passing</p>
+                            <i class="fa-solid fa-caret-down downicon passingicon" ></i>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="passingBody" class="trainBody">
+                    <% for(let i = 0; i<trainFromStation.passing.length; i++ ) {%>
+                        <tr class="tableBodyRow">
+                            <td class="tableBodyData">
+                                <div class="datarow">
+                                    <p class="trainNumber"><%= trainFromStation.passing[i].trainNo %></p>
+                                    <p class="trainName"><%= trainFromStation.passing[i].trainName %></p>
+                                    <p class="trainDays">Arrival: <span> <%= trainFromStation.passing[i].arrivalTime %> </span></p>
+                                    <p class="trainDays">Departure: <span> <%= trainFromStation.passing[i].departureTime %> </span></p>
+                                </div>
+                            </td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+        <div class="trainsInformation">
+            <table class="trainTable">
+                <thead class="tableHead">
+                    <tr class="tableHeadRow" onclick="arrowDownIconClicked('terminatingBody', 'terminatingicon', event)">
+                        <th class="tableHeadData">
+                            <p class="tableHeadDataP">Trains Terminating</p>
+                            <i class="fa-solid fa-caret-down downicon terminatingicon" ></i>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="terminatingBody" class="trainBody">
+                    <% for(let i = 0; i<trainFromStation.destination.length; i++ ) {%>
+                        <tr class="tableBodyRow">
+                            <td class="tableBodyData">
+                                <div class="datarow">
+                                    <p class="trainNumber"><%= trainFromStation.destination[i].trainNo %></p>
+                                    <p class="trainName"><%= trainFromStation.destination[i].trainName %></p>
+                                    <p class="trainDays">Arrival: <span> <%= trainFromStation.destination[i].arrivalTime %> </span></p>
+                                    <p class="trainDays">Departure: <span> <%= trainFromStation.destination[i].departureTime %> </span></p>
+                                </div>
+                            </td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</section>
+<%- include('partials/footer') -%>

@@ -1,16 +1,17 @@
 <%- include('partials/header') -%>
 <section id='blur'>
     <section id="Station">
-        <form action="/station-info" method="post" class="Stationinput">
+        <form method="post" action="/stationSearchInfo" class="Stationinput">
             <div class="form-floating mb-3 Station-input ">
-                <input type="text" class="form-control source Station search-station" id="floatingInput" placeholder="NDLS/New Delhi" autocomplete="off" name="Station">
-                <label for="floatingInput">Station Name/Code</label>
+                <input type="text" class="form-control source Station search-station" id="station_info_input" placeholder="NDLS/New Delhi" autocomplete="off" name="station_info_input">
+                <label for="station_info_input">Station Name/Code</label>
                 <div class="autocom-box autocom-source" id="autocom-source"></div>
             </div>
             <div class="form-floating mb-3 Station-button">
-                <button type="submit" class="btn btn-success Station-search" disabled><h4 class="h4">Search</h4></button>
+                <button type="submit" class="btn btn-success Station-search"><h4 class="h4">Search</h4></button>
             </div>
         </form>
+        <span style="text-align: center; color:red;"><%= stationSearchError %> </span>
     </section>
 </section>
 <%- include('partials/footer') -%>

@@ -1,15 +1,14 @@
 <%- include('partials/header'); -%>
 <section id="blur">
     <section id="title" class="title">
-        <p class="text-center fst-normal text-warning">------Right Now only PNR status, Train b/w stations, Train Info, emergency number, login/signup, IRCTC website link are working------</p>
-        <div clas="container-fluid">
+        <div class="container-fluid">
             <div class="title-content">
                 <div class="row align-items-md-stretch">
                     <div class="col-lg-6">
                         <div class="h-100 p-5 rounded-3">
                             <div class="row g-3 align-items-center">
                                 <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <label for="source" class="col-form-label"><img src="images/From.png"> From</label>
+                                    <label class="col-form-label" for="source"><img src="images/From.png"> From</label>
                                 </div>
                                 <div class="col-lg-9 col-md-9 col-sm-9">
                                     <input type="text" id="source" class="form-control source search-station" name="source">
@@ -21,24 +20,24 @@
                             </div>
                             <div class="row g-3 align-items-center">
                                 <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <label for="destination" class="col-form-label"><img src="images/To.png"> To</label>
+                                    <label class="col-form-label" for="destination"><img src="images/To.png"> To</label>
                                 </div>
                                 <div class="col-lg-9 col-md-9 col-sm-9">
-                                    <input type="text" id="destination" class="form-control destination search-station" name="destination">
+                                    <input type="text" id="destination" class="form-control destination search-station"  name="destination">
                                     <div class="autocom-box autocom-destination" id="autocom-destination"></div>
                                 </div>
                             </div>
                             <div class="row g-3 align-items-center">
                                 <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <label for="date" class="col-form-label"> <img src="images/calendar.png"> Date</label>
+                                    <label class="col-form-label" for="date"> <img src="images/calendar.png"> Date</label>
                                 </div>
                                 <div class="col-lg-9 col-md-9 col-sm-9">
-                                    <input type="Date" id="date" class="form-control" name="date">
+                                    <input type="Date" id="date" class="form-control"  name="date">
                                 </div>
                             </div>
                             <div class="row g-3 align-items-center">
                                 <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <label for="trainClass" class="col-form-label"> <img src="images/class.png"> Class</label>
+                                    <label class="col-form-label" for="trainClass"> <img src="images/class.png"> Class</label>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <select class="form-select form-select" id="trainClass" aria-label=".form-select-lg example" name="trainClass">
@@ -59,7 +58,7 @@
                                     </select>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <label for="trainQuota" class="col-form-label"><img src="images/quotation.png"> Quota</label>
+                                    <label class="col-form-label" for="trainQuota"><img src="images/quotation.png"> Quota</label>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <select class="form-select form-select" id="trainQuota" aria-label=".form-select-lg example" name="trainQuota">
@@ -197,7 +196,7 @@
                     <div class="card-body feature-content">
                         <p class="card-text">Know more about One Train</p>
                         <div>
-                            <a class="btn btn-outline-success btn-md more-feature-button" href="/about">About Us</a>
+                            <a class="btn btn-outline-success btn-md more-feature-button" href="/service-not-available">About Us</a>
                         </div>
                     </div>
                 </div>
@@ -207,7 +206,7 @@
                     <div class="card-body feature-content">
                         <p class="card-text">Know More About IRCTC</p>
                         <div>
-                            <a class="btn btn-outline-success btn-md more-feature-button" href="/know-irctc">Know IRCTC</a>
+                            <a class="btn btn-outline-success btn-md more-feature-button" href="/service-not-available">Know IRCTC</a>
                         </div>
                     </div>
                 </div>
@@ -227,7 +226,7 @@
                     <div class="card-body feature-content">
                         <p class="card-text">Click here if you need some help!</p>
                         <div>
-                            <a class="btn btn-outline-success btn-md more-feature-button" href="/help-desk">Help Desk</a>
+                            <a class="btn btn-outline-success btn-md more-feature-button" href="/service-not-available">Help Desk</a>
                         </div>
                     </div>
                 </div>
@@ -350,7 +349,7 @@
             </div> 
         </div>
         <div class="more">
-                <a class="btn btn-lg btn-outline-success more-button" href="/more-info"> More </a>
+                <a class="btn btn-lg btn-outline-success more-button" href="/service-not-available"> More </a>
         </div>
     </section>
     <hr class="hr">
@@ -361,38 +360,38 @@
         <div id="carouselExampleAutoplaying" class="carousel slide mx-auto" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active carousel-1">
-                    <img src="/images/Vande.jpg" class="d-block w-100" alt="...">
+                    <img src="/images/Vande.jpg" class="d-block w-100" alt="Vande Bharat Train">
                     <div class="carousel-caption d-sm-block">
                         <h2 class="carousel-text">Vande Bharat Express</h2>
                         <p>India's Fastest and most loved Trains by passengers</p>
                     </div>
                 </div>
                 <div class="carousel-item carousel-2">
-                    <img src="/images/Tejas.jpg" class="d-block w-100" alt="...">
+                    <img src="/images/tejas.jpg" class="d-block w-100" alt="Tejas Express">
                     <div class="carousel-caption d-sm-block">
                         <h2  class="carousel-text">Tejas Express</h2>
                         <p>India's first Private Train with luxurious facilities</p>
                     </div>
                 </div>
                 <div class="carousel-item carousel-3">
-                    <img src="/images/Shatabdi.jpg" class="d-block w-100" alt="...">
+                    <img src="/images/shatabdi.jpg" class="d-block w-100" alt="Shatabdi Express">
                     <div class="carousel-caption d-sm-block">
                         <h2 class="carousel-text">Shatabdi Express</h2>
                         <p>India's second fastest and premium superfast train </p>
                     </div>
                 </div>
                 <div class="carousel-item carousel-4">
-                    <img src="/images/rajdhani.jpg" class="d-block w-100" alt="...">
+                    <img src="/images/rajdhani.jpg" class="d-block w-100" alt="Rajdhani Express">
                     <div class="carousel-caption d-sm-block">
                         <h2 class="carousel-text">Rajdhani Express</h2>
                         <p>It is a premium long-distance passenger train</p>
                     </div>
                 </div>
                 <div class="carousel-item carousel-5">
-                    <img src="/images/black.jpg" class="d-block w-100" alt="...">
+                    <img src="/images/black.jpg" class="d-block w-100" alt="Know More About Indian Trains">
                     <div class="carousel-caption d-sm-block">
                         <h2 class="carousel-text">Click Here to know more about Indian Trains</h2>
-                        <a href="http://" class="btn carousel-text btn-md btn-success" href="/trains-IR">Know More</a>
+                        <a href="/service-not-available" class="btn carousel-text btn-md btn-success" href="/trains-IR">Know More</a>
                     </div>
                 </div>
             </div>

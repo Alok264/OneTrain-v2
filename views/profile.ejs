@@ -1,28 +1,94 @@
 <%- include('partials/header') -%>
-<section id='blur'>
-  <section id="profile">
-      <div class="bg-body-tertiary rounded-3 profileBody">
-        <div class="container-fluid">
-          <img class="profileImage" 
-          <% if(!user.photo) {%>
-              src="https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-1.jpg"
-          <%}else{%>
-              src="<%= user.photo %>"
-          <%} %>alt="profile image">
-          <h1 class="display-5 fw-bold"><%= user.first_name + " "+ user.last_name %></h1>
-        </div>
-        <div class="profileDetails">
-          <p>Email : <%= user.email %></p>
-          <p>First Name : <%= user.first_name %></p>
-          <p>Last Name : <%= user.last_name %></p>
-        </div>
-        <div class="userPnr">
-          <p class="userPnrhead"> <b>PNR : </b> </p>
-          <% user.userPNR.forEach((pnr) => { %>
-            <p class="pnr-item"><%= pnr %></p>
-          <%})%>
+  <section id="blur">
+    <section id="profile">
+      <div class="menubar">
+        <button type="button" id="menubutton" onclick="home()">
+          <h6>Home</h6>
+        </button>
+        <button type="button" id="menubutton" onclick="profile()">
+          <h6>Profile</h6>
+        </button>
+        <button type="button" id="menubutton" onclick="editProfile()">
+          <h6>Edit Profile</h6>
+        </button>
+        <button type="button" id="menubutton" onclick="changePassword()">
+          <h6>Change Password</h6>
+        </button>
+        <button type="button" id="menubutton">
+          <h6>Upcoming Journey</h6>
+        </button>
+        <button type="button" id="menubutton">
+          <h6>Past Journey</h6>
+        </button>
+        <button type="button" id="menubutton">
+          <h6>Delete Account</h6>
+        </button>
+        <button type="button" id="menubutton" onclick="logout()">
+          <h6>Logout</h6>
+        </button>
+      </div>
+      <div class="menuaction">
+        <form onsubmit="editFormSubmitted('profilefile', 'newusername', 'newfirstname', 'newlastname', 'new_email', 'new_contact')" class="edit_form">
+          <div class="profilepic">
+            <label for="profilefile" class="profilepiclabel"><i class="fa-solid fa-cloud-arrow-up" style="color: white;"></i></label>
+            <input type="file" name="profilefile" id="profilefile" disabled>
+            <img <% if(user.photo) { %> src="<%= user.photo %>" <%} else {%> src="https://www.w3schools.com/w3images/avatar2.png" <%}%> alt="profilepic" class="ProfileImage">
+          </div>
+          <div class="profileinfo">
+            <div class="EditprofileInputs">
+              <label for="newusername">Username: </label>
+              <input type="text" class="edit_input eiput" id="newusername" name="usernewusername" value="<%= user.username %>" oninput="onlyLowerCaseInput('newusername')" disabled>
+            </div>
+            <div class="EditprofileInputs">
+              <label for="newfirstname">First Name: </label>
+              <input type="text" class="edit_input eiput" id="newfirstname" name="usernewfirstname"  required value="<%= user.first_name %>" disabled>
+            </div>
+            <div class="EditprofileInputs">
+              <label for="newlastname">Last Name: </label>
+              <input type="text" class="edit_input eiput" id="newlastname" name="usernewlastname" required value="<%= user.last_name %>" disabled>
+            </div>
+            <div class="EditprofileInputs">
+              <label for="new_email">Email: </label>
+              <input class="eiput" type="email" id="new_email" name="usernewemail" required onblur="email_validation('new_email')" value="<%= user.email %>" disabled>
+            </div>
+            <div class="EditprofileInputs">
+              <label for="new_contact">Contact Number: </label>
+              <input class="edit_input eiput" type="tel" id="new_contact" name="usernewcontact" value="<%= user.contact_no %>" oninput="contactValidation('new_contact')" disabled>
+            </div>
+            <div class="EditprofileInputs">
+              <button type="submit" name="editProfileButton" id="editProfileButton" class="btn btn-success" value="submit">Submit</button>
+            </div>
+          </div>
+        </form>
+        <div class="change_password">
+          <form action="/changepassword" method="post" class="change_password_form">
+            <div class="EditprofileInputs change_password_input_container">
+              <label for="old_password">Old Password: </label>
+              <div class="password_input">
+                <input type="password" class="change_password_inputs" id="old_password" name="old_password" required>
+                <span toggle="#old_password" class="toggle_password" onclick="showPassword('old_password', 'old_password_icon')"><i id="old_password_icon" class="fa-solid fa-eye"></i></span>
+              </div>
+            </div>
+            <!-- <i class="fa-solid fa-eye-slash"></i> -->
+            <div class="EditprofileInputs change_password_input_container">
+              <label for="new_password">New Password: </label>
+              <div class="password_input">
+                <input type="password" class="change_password_inputs" id="new_password" name="new_password" required onblur="passwordValidation('new_password', 'confirm_new_password')">
+                <span toggle="#new_password" class="toggle_password" onclick="showPassword('new_password', 'new_password_icon')"><i id="new_password_icon" class="fa-solid fa-eye"></i></span>
+              </div>
+            </div>
+            <div class="EditprofileInputs change_password_input_container">
+              <label for="confirm_new_password">Confirm New Password: </label>
+              <div class="password_input">
+                <input type="password" class="change_password_inputs" id="confirm_new_password" name="confirm_new_password" required disabled oninput="confirmPassword('confirm_new_password', 'new_password', 'changePasswordButton')">
+              </div>
+            </div>
+            <div class="EditprofileInputs">
+              <button type="submit" name="changePasswordButton" id="changePasswordButton" class="btn btn-success" value="submit" disabled>Submit</button>
+            </div>
+          </form>
         </div>
       </div>
+    </section>
   </section>
-</section>
-<%- include('partials/footer') -%>
+  <%- include('partials/footer') -%>
