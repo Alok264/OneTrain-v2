@@ -92,6 +92,7 @@ let logedIn;
 let userWarning;
 let notFoundWarning;
 let userLoginWarning;
+let searchTrains = [];
 
 passport.use(User.createStrategy());  
 passport.serializeUser(function(user, done) {
