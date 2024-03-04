@@ -1,124 +1,110 @@
 <%- include('partials/header') -%>
 <section id='blur'>
     <section id="ticket">
-        <div class="pnr-top">
-            <div class="row">
-                <div class="col from">
-                    <h3 class="h3"><b><%= response.FromstationName %></b></h3>
-                    <h5 class="h5"><b><%= response.From %></b></h5>
-                    <p class="p"><%= response.Doj %></p>
-                    <p class="p"><%= response.DepartureTime %></p>
-                </div>
-                <div class="col pnr">
-                    <h5  class="h5">PNR: <b><%= response.Pnr %></b></h5>
-                    <div >
-                        <img class="arrow" src="/images/arrow.png" alt="arrow image" srcset="">
-                    </div>
-                    <h6  class="h6">DOJ: <b><%= response.Doj %></b></h6>
-                    <p class="p">Duration: <%= response.Duration %> hrs</p>
-                </div>
-                <div class="col to">
-                    <h3 class="h3"><b><%= response.TostationName %></b></h3>
-                    <h5  class="h5"><b><%= response.To %></b></h5>
-                    <p class="p"><%= response.DestinationDoj %></p>
-                    <p class="p"><%= response.ArrivalTime %></p>
+        <div id="PNRdetails" class="PNRcontainer">
+            <div class="pnrdata">
+                <p>PNR: <span id="pnrdataNumber"><%= response.Pnr %></span></p>
+                <div class="pnrutility">
+                    <span title="Copy Pnr" onclick="copyToClipBoard('pnrdataNumber')" class="utility pnrcopy"><i class="fa-solid fa-copy"></i></span>
+                    <span title="Print" onclick="printIt('PNRdetails')" class="utility pnrprint"><i class="fa-solid fa-print"></i></span>
                 </div>
             </div>
-            <hr  noshade size="5">
-            <div class="row">
-                <div class="col-md-6 ">
-                    <div class="card shadow-sm pnr-detail">
-                        <p class="p">Train Name: <b><%= response.TrainName %></b></p>
-                        <p class="p">Train Number: <b><%= response.TrainNo %></b></p>
-                        <p class="p">Booking Quota: <b><%= response.Quota %></b></p>
-                        <p class="p">Booking Date: <b><%= response.BookingDate %></b></p>
-                        <p class="p">From: <b><%= response.From %></b></p>
-                        <p class="p">From station Name: <b><%= response.FromstationName %></b></p>
-                        <p class="p">To: <b><%= response.To %></b></p>
-                        <p class="p">Reservation upto Name: <b><%= response.TostationName %></b></p>
-                    </div>
+            <div class="pnrdata">
+                <div class="pnrdata2">
+                    <p class="stn"><span><%= response.BoardingStationName %></span> <span>(<%= response.From %>)</span></p>
+                    <p><%= response.DepartureTime %></p>
+                    <p></p>
+                    <p><%= response.Doj %></p>
                 </div>
-                <div class="col-md-6">
-                    <div class="card shadow-sm pnr-detail">
-                        <p class="p">Boarding station: <b><%= response.BoardingStationName %></b></p>
-                        <p class="p">DOJ: <b><%= response.Doj %></b></p>
-                        <% if(response.ChartPrepared === false){ %>
-                            <p class="p">Chart prepared: <b>No</b></p>
-                        <% } else { %>
-                            <p class="p">Chart prepared: <b>Yes</b></p>
-                        <% } %>
-                        <p class="p">Class: <b><%= response.Class %></b></p>
-                        <p class="p">Train Cancelled flag: <b><%= response.TrainCancelledFlag %></b></p>
-                        <p class="p">Passenger Count: <b><%= response.PassengerCount %></b></p>
-                        <p class="p">Departure Time: <b><%= response.DepartureTime %></b></p>
-                        <p class="p">Arrival Time: <b><%= response.ArrivalTime %></b></p>
-                    </div>
+                <div class="pnrdata2">
+                    <p class="stn"><span><%= response.ReservationUptoName %></span> <span>(<%= response.To %>)</span></p>
+                    <p><%= response.ArrivalTime %></p>
+                    <p></p>
+                    <p><%= response.DestinationDoj %></p>
                 </div>
             </div>
-            <hr noshade size="5">
-            <div class="row">
-                <h4  class="h4">Passenger Information</h4>
-                <div class="col">
-                    <table>
-                        <thead>
-                            <th>S.No</th>
-                            <th>Booking Status</th>
-                            <th>Current Status</th>
-                            <th>Coach</th>
-                            <th>Berth</th>
-                            <th>Birth Type</th>
-                        </thead>
-                        <tbody>
-                            <div class="card shadow-sm">
-                                <% for(let i = 0; i < response.PassengerStatus.length ; i++){ %>
-                                    <tr>
-                                        <td><%= response.PassengerStatus[i].Number %></td>
-                                        <td><%= response.PassengerStatus[i].BookingStatus %></td>
-                                        <td><%= response.PassengerStatus[i].CurrentStatus %></td>
-                                        <td><%= response.PassengerStatus[i].Coach %></td>
-                                        <td><%= response.PassengerStatus[i].Berth %></td>
-                                        <% if(response.PassengerStatus[i].BookingBerthCode == 'SL') { %>
-                                            <td>Side Lower</td>
-                                        <% } else if(response.PassengerStatus[i].BookingBerthCode == 'SU') { %>
-                                            <td>Side Upper</td>
-                                        <% }  else if(response.PassengerStatus[i].BookingBerthCode == 'L' || response.PassengerStatus[i].BookingBerthCode == 'LB') { %>
-                                            <td>Lower</td>
-                                        <% } else if(response.PassengerStatus[i].BookingBerthCode == 'M' || response.PassengerStatus[i].BookingBerthCode == 'MB') { %>
-                                            <td>Middle</td>
-                                        <% } else if(response.PassengerStatus[i].BookingBerthCode == 'U' || response.PassengerStatus[i].BookingBerthCode == 'UB') { %>
-                                            <td>Upper</td>
-                                        <% }  else { %>
-                                            <td>-------</td>
-                                        <% } %>
-                                    </tr>
-                                <% } %>
-                            </div>
-                        </tbody>
-                    </table>
+            <div class="pnrdata">
+                <p>Train Number: <span><%= response.TrainNo %></span></p>
+                <p>Train Name: <span><%= response.TrainName %></span></p>
+            </div>
+            <div class="pnrdata pnrdata0">
+                <div class="pnrdata1">
+                    <p>DOJ: <span><%= response.Doj %></span></p>
+                    <p>Duration: <span><%= response.Duration %> hrs</span></p>
+                </div>
+                <div class="pnrdata1">
+                    <p>Class: <span><%= response.Class %></span></p>
+                    <p>No. of Travelers: <span><%= response.PassengerCount %></span></p>
                 </div>
             </div>
-            <hr noshade size="5">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card shadow-sm pnr-detail">
-                        <p class="p">Expected Platform Number: <b><%= response.ExpectedPlatformNo %></b></p>
-                        <p class="p">Booking Fare:  <b><%= response.BookingFare %></b></p>
-                        <p class="p">Ticket Fare: <b><%= response.TicketFare %></b></p>
-                        <p class="p">Rating: <b><%= response.Rating %></b></p>
-                        <p class="p">Coach Position: <b><%= response.CoachPosition %></b></p>
-                    </div>
+            <div class="pnrdata">
+                <p>Boarding Stn: <span><%= response.BoardingStationName %></span> <span>(<%= response.BoardingPoint %>)</span></p>
+                <p>Booking Quota: <span><%= response.Quota %></span></p>
+            </div>
+
+            <div class="pnrdata pnrdata0">
+                <div class="pnrdata1">
+                    <p>Booking Date: <span><%= response.Booking %></span></p>
+                    <p>Train Cancelled: <span><%= response.TrainCancelledFlag? "Yes":"No" %></span></p>
                 </div>
-                <div class="col-md-6">
-                    <div class="card shadow-sm pnr-detail">
-                        <p class="p">Food Rating: <b><%= response.FoodRating %></b></p>
-                        <p class="p">Punctuality Rating: <b><%= response.PunctualityRating %></b></p>
-                        <p class="p">Cleanliness Rating: <b><%= response.CleanlinessRating %></b></p>
-                        <p class="p">Pantry Availability: <b><%= response.HasPantry %></b></p>
-                    </div>
+                <div class="pnrdata1">
+                    <p>Departure Time: <span><%= response.DepartureTime %></span></p>
+                    <p>Arrival Time: <span><%= response.ArrivalTime %></span></p>
                 </div>
             </div>
-            <div class="print">
-                <button type="submit" class="btn btn-primary btn-md print">Print</button>
+            <div class="pnrdata">
+                <p>From: <span><%= response.BoardingStationName %></span> <span>(<%= response.From %>)</span></p>
+                <p>To: <span><%= response.ReservationUptoName %></span> <span>(<%= response.To %>)</span></p>
+            </div>
+            <div class="pnrdata3">
+                <table class="pnrtable">
+                    <caption class="pnrtablecaption">Passenger Details</caption>
+                    <thead class="pnrtablehead">
+                        <th>S.No.</th>
+                        <th>Booking Status</th>
+                        <th>Current Status</th>
+                        <th>Coach</th>
+                        <th>Berth</th>
+                        <th>Birth Type</th>
+                    </thead>
+                    <tbody class="pnrtablebody">
+                        <% response.PassengerStatus.map((passenger)=>{ %>
+                            <tr>
+                                <td><%= passenger.Number %></td>
+                                <td><%= passenger.BookingStatus %></td>
+                                <td><%= passenger.CurrentStatus %></td>
+                                <td><%= passenger.Coach %></td>
+                                <td><%= passenger.Berth %></td>
+                                <td><%= passenger.BookingBerthCode?passenger.BookingBerthCode:"-----" %></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pnrdata pnrdata0">
+                <div class="pnrdata1">
+                    <p>Platform Number: <span><%= response.ExpectedPlatformNo %></span></p>
+                    <p>Pantry Car: <span><%= response.HasPantry?"Yes" : "No" %></span></p>
+                </div>
+                <div class="pnrdata1">
+                    <p>Chart Prepared: <span><%= response.ChartPrepared?"Yes" : "No" %></span></p>
+                    <p>Ticket Fare: <span><%= response.TicketFare %></span></p>
+                </div>
+            </div>
+            <div class="pnrdata4">
+                <p>
+                    Coach Position: <span><%= response.CoachPosition %></span>
+                </p>
+            </div>
+            <div class="pnrdata pnrdata0">
+                <div class="pnrdata1">
+                    <p>Overall Rating: <span><%= response.Rating %></span></p>
+                    <p>Food Rating: <span><%= response.FoodRating?response.FoodRating: "----" %></span></p>
+                </div>
+                <div class="pnrdata1">
+                    <p>Puntuality Rating: <span><%= response.PunctualityRating %></span></p>
+                    <p>Cleanliness Rating: <span><%= response.CleanlinessRating %></span></p>
+                </div>
             </div>
         </div>
     </section>

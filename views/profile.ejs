@@ -14,10 +14,10 @@
         <button type="button" id="menubutton" onclick="changePassword()">
           <h6>Change Password</h6>
         </button>
-        <button type="button" id="menubutton">
+        <button type="button" id="menubutton" onclick="upcomingJourney()">
           <h6>Upcoming Journey</h6>
         </button>
-        <button type="button" id="menubutton">
+        <button type="button" id="menubutton" onclick="pastJourney()">
           <h6>Past Journey</h6>
         </button>
         <button type="button" id="menubutton">
@@ -28,32 +28,34 @@
         </button>
       </div>
       <div class="menuaction">
-        <form onsubmit="editFormSubmitted('profilefile', 'newusername', 'newfirstname', 'newlastname', 'new_email', 'new_contact')" class="edit_form">
+        <form onsubmit="editFormSubmitted('profilefile', 'newusername', 'newfirstname', 'newlastname', 'new_email', 'new_contact', event)" class="edit_form">
           <div class="profilepic">
-            <label for="profilefile" class="profilepiclabel"><i class="fa-solid fa-cloud-arrow-up" style="color: white;"></i></label>
             <input type="file" name="profilefile" id="profilefile" disabled>
+            <label for="profilefile" class="profilepiclabel"><i class="fa-solid fa-cloud-arrow-up" style="color: white;"></i></label>
             <img <% if(user.photo) { %> src="<%= user.photo %>" <%} else {%> src="https://www.w3schools.com/w3images/avatar2.png" <%}%> alt="profilepic" class="ProfileImage">
           </div>
           <div class="profileinfo">
             <div class="EditprofileInputs">
               <label for="newusername">Username: </label>
-              <input type="text" class="edit_input eiput" id="newusername" name="usernewusername" value="<%= user.username %>" oninput="onlyLowerCaseInput('newusername')" disabled>
+              <input type="text" class="edit_input eiput" id="newusername" name="usernewusername" value="<%= user.user_name %>" oninput="onlyLowerCaseInput('newusername')" onblur="usernameExistOrNot('newusername')" required disabled>
+              <p class="usernameAlert"></p>
+              <p class="usernameAlert 01usernameAlert" ><i class="fa-solid fa-spin fa-circle-notch"></i></p>
             </div>
             <div class="EditprofileInputs">
               <label for="newfirstname">First Name: </label>
-              <input type="text" class="edit_input eiput" id="newfirstname" name="usernewfirstname"  required value="<%= user.first_name %>" disabled>
+              <input type="text" class="edit_input eiput" id="newfirstname" name="usernewfirstname"  required value="<%= user.first_name %>" required disabled>
             </div>
             <div class="EditprofileInputs">
               <label for="newlastname">Last Name: </label>
-              <input type="text" class="edit_input eiput" id="newlastname" name="usernewlastname" required value="<%= user.last_name %>" disabled>
+              <input type="text" class="edit_input eiput" id="newlastname" name="usernewlastname" required value="<%= user.last_name %>" required disabled>
             </div>
             <div class="EditprofileInputs">
               <label for="new_email">Email: </label>
-              <input class="eiput" type="email" id="new_email" name="usernewemail" required onblur="email_validation('new_email')" value="<%= user.email %>" disabled>
+              <input class="eiput" type="email" id="new_email" name="usernewemail" onblur="email_validation('new_email')" value="<%= user.email %>" required disabled>
             </div>
             <div class="EditprofileInputs">
               <label for="new_contact">Contact Number: </label>
-              <input class="edit_input eiput" type="tel" id="new_contact" name="usernewcontact" value="<%= user.contact_no %>" oninput="contactValidation('new_contact')" disabled>
+              <input class="edit_input eiput" type="tel" id="new_contact" name="usernewcontact" value="<%= user.contact_no %>" oninput="contactValidation('new_contact')" required disabled>
             </div>
             <div class="EditprofileInputs">
               <button type="submit" name="editProfileButton" id="editProfileButton" class="btn btn-success" value="submit">Submit</button>
@@ -61,7 +63,7 @@
           </div>
         </form>
         <div class="change_password">
-          <form action="/changepassword" method="post" class="change_password_form">
+          <form onsubmit="changePasswordFormSubmitted('old_password', 'new_password', 'confirm_new_password', event)" class="change_password_form">
             <div class="EditprofileInputs change_password_input_container">
               <label for="old_password">Old Password: </label>
               <div class="password_input">
@@ -69,7 +71,6 @@
                 <span toggle="#old_password" class="toggle_password" onclick="showPassword('old_password', 'old_password_icon')"><i id="old_password_icon" class="fa-solid fa-eye"></i></span>
               </div>
             </div>
-            <!-- <i class="fa-solid fa-eye-slash"></i> -->
             <div class="EditprofileInputs change_password_input_container">
               <label for="new_password">New Password: </label>
               <div class="password_input">
@@ -87,6 +88,12 @@
               <button type="submit" name="changePasswordButton" id="changePasswordButton" class="btn btn-success" value="submit" disabled>Submit</button>
             </div>
           </form>
+        </div>
+        <div class="upcoming_journey">
+          
+        </div>
+        <div class="past_journey">
+
         </div>
       </div>
     </section>

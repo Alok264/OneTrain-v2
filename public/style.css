@@ -5,7 +5,7 @@
 }
 
 body {
-    background-color: #ffffff;
+    background-color: #EEEEEE;
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -507,7 +507,7 @@ body {
 
 .chat09-container-text-system {
     width: fit-content;
-    max-width: 80%;
+    max-width: 90%;
     font-size: 0.84rem;
     padding: 2% 3.5%;
     background-color: #c1f7dc;
@@ -520,8 +520,49 @@ body {
     -o-border-radius: 10px 10px 0 10px;
 }
 
+.chat09-container-system-text{
+    width: max-content;
+    max-width: fit-content;
+}
+.chatpnrcontainer{
+    width: 12rem;
+}
 .text09 {
     margin-top: 15px;
+}
+
+.common{
+    display: flex;
+    justify-content: space-between;
+    align-item: center;
+    font-size: 0.7rem;
+    margin: none;
+    height: min-content;
+    border-bottom: 1px solid black;
+    padding: 2% 4%;
+}
+.common p{
+    padding: 0;
+    margin: 0;
+}
+
+.chatpnrth th{
+    font-size: 0.6rem;
+    text-align: left;
+    min-width: max-content;
+}
+
+.chatpnrtr td{
+    font-size: 0.6rem;
+    text-align: left;
+    min-width: max-content;
+}
+.tablediv{
+    width: 100%;
+}
+.tablediv table{
+    width: 100%;
+    margin: 1%;
 }
 
 @-webkit-keyframes scaling-dots {
@@ -1116,11 +1157,12 @@ body {
     font-family: sans-serif;
     text-transform: uppercase;
     font-size: 2em;
-    letter-spacing: 4px;
+    letter-spacing: 3px;
     overflow: hidden;
     background: linear-gradient(90deg, #000, #fff, #000);
     background-size: 90%;
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: rgba(255, 255, 255, 0);
     -webkit-animation: animate 4s linear infinite;
     animation: animate 4s linear infinite;
@@ -1136,20 +1178,7 @@ body {
     }
 }
 
-/* .on-scroll {
-  transform: translateY(0);
-  opacity: 1;
-  transition: transform 0.5s ease-in-out;
-  -webkit-transform: translateY(0);
-  -moz-transform: translateY(0);
-  -ms-transform: translateY(0);
-  -o-transform: translateY(0);
-}
 
-.on-scroll.animate {
-  transform: translateY(30px);
-  opacity: 0;
-} */
 .trains-head {
     text-align: center;
     text-shadow: 2px 1px 4px rgb(0, 125, 77);
@@ -1208,11 +1237,13 @@ a {
     color: black;
 }
 
-.feature-img {
+.footer-img{
     padding: 0;
     border-radius: 50%;
     box-shadow: 2px 5px 25px 4px rgb(0, 87, 50);
+    width: 100%;
 }
+
 
 .list-group-item {
     background-color: transparent;
@@ -1251,6 +1282,12 @@ a {
 
 .footer-last {
     text-align: center;
+}
+
+.footer-img-col{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #trains {
@@ -1315,37 +1352,123 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 #ticket {
-    border: solid 2px black;
-    margin: 5% 15%;
-    border-radius: 2rem;
+    width: 50vw;
+    margin: 0 auto;
 }
 
-.pnr-top {
-    margin: 3%;
+.pnrutility{
+    display: flex;
+    flex-direction: row;
+    justify-content:end;
+    align-items: center;
+    gap: 5%;
 }
 
-.pnr-detail {
-    padding: 5%;
-    margin: 5% 0;
+.utility{
+    cursor: pointer;
 }
 
-.arrow {
-    width: 40%;
-}
-
-table {
+.PNRcontainer {
     width: 100%;
-    margin: 3% 0;
+    margin: 10% auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.h4 {
-    margin: 3% 0;
-    font-size: large;
+.pnrdata {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3%;
+    padding: 1% 2%;
+    background-color: #ffffff;
 }
 
-th,
-td {
+.PNRcontainer p {
+    margin: 0;
+    border-right: 1px solid #a1a1a1;
+}
+
+.stn{
+    text-align: center;
+}
+
+.pnrdata:first-child {
+    background-color:#004b95;
+    color: white;
+    border-radius: 10px 10px 0 0;
+    font-size: 1.1rem;
+}
+.pnrdata:first-child p{
+    border: none;
+}
+
+.pnrdata:last-child {
+    border-radius: 0 0 10px 10px;
+    background-color: #E0F4FF;
+}
+
+.pnrdata:nth-child(2n) {
+    background-color: #E0F4FF;
+}
+
+.pnrdata1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3%;
+}
+
+.pnrdata2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 2% auto;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+.pnrdata2 p{
+    border: none;
+}
+.pnrdata3 {
+    margin: 1.5%;
+}
+
+.pnrtable {
+    width: 100%;
+}
+
+.pnrtablecaption{
+    font-size: 0.6rem;
+}
+
+.pnrtablehead {
+    background-color: #87C4FF;
+}
+
+.pnrtablehead th {
+    text-align: center;
+    padding: 1% 0%;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.pnrtablebody tr td {
+    text-align: center;
     padding: 1%;
+    font-size: 0.9rem;
+}
+
+.pnrtablebody tr:nth-child(2n) {
+    background-color: #B5F7E6;
+}
+
+.pnrdata4 {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 2% 2%;
+    align-item: center;
+    background-color: #F9F3DF;
 }
 
 .print {
@@ -1759,10 +1882,16 @@ label {
 }
 
 #profile {
-    margin: auto 10% 5%;
+    margin: auto 15% 5%;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
 }
 .menubar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 18%;
     margin: 5% 0;
     border-radius: 10px;
@@ -1776,19 +1905,20 @@ label {
     border: none;
     border-bottom: rgba(203, 203, 203, 0.778) 1px solid;
     padding: 5%;
-    background-color: #D0E7D2;
-    font-family: 'Varela Round', sans-serif;
+    background-color: #aeffdc;
+    font-family: 'Righteous', cursive;
+
 }
 #menubutton:hover{
-    background-color: #B0D9B1;
+    background-color: #00ffaa;
     transition: 0.5s;
 }
 #menubutton:focus{
-    background-color: #cccccc;
+    background-color: #EEF5FF;
     transition: 0.5s;
 }
 #menubutton:active{
-    background-color: #cccccc;
+    background-color: #EEF5FF;
     transition: 0.5s;
 }
 #menubutton:first-child{
@@ -1807,15 +1937,28 @@ label {
     color: red;
 }
 
+#menubutton:last-child:hover{
+    background-color: #ffabab;
+    transition: 0.5s;
+}
+
 .menuaction{
     width: 75%;
     margin: 5% 2% 5% 7%;
+    padding-bottom: 2%;
     border-radius: 10px;
-    background-color: #dedede;
+    background-color: #EEF5FF;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
+    min-height: 50vh;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.menuaction::-webkit-scrollbar {
+    display: none;
 }
 
 .ProfileImage{
@@ -1832,25 +1975,9 @@ label {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
-/* .profileInputs{
-    margin: 0 10% 3%;
-    font-size: 1.1rem;
-    display:flex;
-    justify-content: space-between;
-    align-items: center;
-} */
 
-/* .profileInputs input{
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-    -o-border-radius: 5px;
-    padding: 1% 1%;
-    width: 70%;
-    min-width: 40%;
-} */
 .edit_form{
     display: block;
 }
@@ -1865,10 +1992,13 @@ label {
     background-color: #000;
     overflow: hidden;
     width: 40px;
-    height: 40px; /* 18% of viewport height */
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
+    top: 50%;
+    left: 50%; 
+    transform: translate(-50%, -50%);
 }
 .EditprofileInputs{
     margin: 0 10% 3%;
@@ -1877,6 +2007,7 @@ label {
     grid-template-columns: 1fr 3fr;
     justify-content: space-between;
     align-items: center;
+    gap: 2%;
 }
 .eiput{
     width: 100%;
@@ -1986,8 +2117,9 @@ input.change_password_inputs[name='confirm_new_password'] {
 .alert_close_button:focus{
     outline: none;
 }
-.alert_message{
-    color: red;
+.alert_close_button:hover{
+    background-color: #ffabab;
+    transition: 0.5s;
 }
 .alert_message_box{
     width: 100%;
@@ -2284,12 +2416,88 @@ input.change_password_inputs[name='confirm_new_password'] {
     border-right: 1px solid #009456;
 }
 
+.upcoming_journey{
+    margin: 3%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: 1fr 1fr;
+    gap: 2%;
+    row-gap: 4%;
+}
 
+.past_journey{
+    margin: 3%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: 1fr 1fr;
+    gap: 2%;
+    row-gap: 4%;
+}
 
+.journey_elements{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.journey_data{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    align-items: center;
+    padding: 1.5%;
+    background-color: #E0F4FF;
+    gap: 1%;
+}
+.journey_data p{
+    margin: 0;
+}
+.journey_data:first-child{
+    color: white;
+    background-color:#00693d;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
 
+.journey_data:last-child{
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    grid-template-columns: 1fr;
+}
 
+.journey_elements:hover{
+    .journey_data:first-child{
+        background-color: #00ad73;
+        transition: 0.5s;
+    }
+}
 
+::-webkit-scrollbar {
+    width: 10px;
+}
 
+::-webkit-scrollbar-track {
+    background: #E3F8FF;
+}
+
+::-webkit-scrollbar-thumb {
+    background:#00693d;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+.usernameAlert{
+    margin: 0;
+    display: none;
+    font-size: 1rem;
+}
 
 
 
@@ -2331,6 +2539,39 @@ input.change_password_inputs[name='confirm_new_password'] {
 
 
 @media (max-width: 1180px) {
+    #ticket{
+        width: 60vw;
+        margin: 0 auto;
+    }
+    .PNRcontainer p {
+        font-size: 1rem;
+    }
+    #profile {
+        margin: auto 10% 5%;
+        justify-content: space-between;
+    }
+    #menubutton{
+        padding: 9% 3%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .menuaction{
+        margin: 5% 0;
+    }
+    #menubutton h6{
+        font-size: 0.8rem;
+        margin: 0;
+    }
+
+    .EditprofileInputs{
+        margin: 0 5% 3%;
+        font-size: 0.9rem;
+    }
+    .on-scroll{
+        font-size: 1.7rem;
+    }
     .lds-default {
         left: 45%;
         top: 45%;
@@ -2442,10 +2683,6 @@ input.change_password_inputs[name='confirm_new_password'] {
         font-size: 2.3rem;
     }
 
-    #ticket {
-        margin: 2% 11%;
-    }
-
     #pnr-query {
         margin: 5% 7%;
     }
@@ -2495,15 +2732,12 @@ input.change_password_inputs[name='confirm_new_password'] {
 
     .running-day {
         padding: 2.2%;
+        font-size: smaller;
+        text-align: left;
     }
 
     .train-info-stations-head th {
         padding: 0.6rem;
-    }
-
-    .running-day {
-        font-size: smaller;
-        text-align: left;
     }
 
     .table-head {
@@ -2516,6 +2750,16 @@ input.change_password_inputs[name='confirm_new_password'] {
 }
 
 @media (max-width: 993px) {
+    #ticket{
+        width: 70vw;
+        margin: 0 auto;
+    }
+    .PNRcontainer p {
+        font-size: 0.9rem;
+    }
+    .on-scroll{
+        font-size: 1.3rem;
+    }
     .nav-item {
         margin: 0 3rem;
         padding-left: 2%;
@@ -2629,12 +2873,6 @@ input.change_password_inputs[name='confirm_new_password'] {
         font-size: 0.8rem;
     }
 
-
-
-    #ticket {
-        margin: 3% 10%;
-    }
-
     .h3 {
         font-size: 1.2rem;
     }
@@ -2707,15 +2945,12 @@ input.change_password_inputs[name='confirm_new_password'] {
 
     .running-day {
         padding: 1.8%;
+        font-size: 10px;
+        text-align: left;
     }
 
     .train-info-stations-head th {
         padding: 0.5rem;
-    }
-
-    .running-day {
-        font-size: 10px;
-        text-align: left;
     }
 
     .table-head {
@@ -2724,7 +2959,67 @@ input.change_password_inputs[name='confirm_new_password'] {
 }
 
 @media (max-width: 768px) {
+    #ticket{
+        width: 80vw;
+        margin: 0 auto;
+    }
+    .pnrtablehead th {
+        font-size: 0.8rem;
+    }
 
+    .pnrtablebody tr td {
+        font-size: 0.8rem;
+    }
+    #profile {
+        margin: auto 8% 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .menubar{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        width: 100%;
+        z-index: 1000000;
+    }
+    #menubutton{
+        padding: 7% 0;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    #menubutton:nth-child(1){
+        border-radius: 10px 0 0 0;
+    }
+    #menubutton:nth-child(4){
+        border-radius: 0 10px 0 0;
+    }
+    #menubutton:nth-child(5){
+        border-radius: 0 0 0 10px;
+}
+    #menubutton:nth-child(8){
+        border-radius: 0 0 10px 0;
+    }
+    #menubutton h6{
+        font-size: 0.8rem;
+        margin: 0;
+    }
+    .menuaction{
+        width: 100%;
+        margin: 0;
+    }
+    .EditprofileInputs{
+        margin: 0 5% 3%;
+        font-size: 0.9rem;
+    }
+    .on-scroll{
+        font-size: 1.3rem;
+    }
     .nav {
         margin: 0 1%;
         padding: 0.1%;
@@ -2946,17 +3241,15 @@ input.change_password_inputs[name='confirm_new_password'] {
 
     .fare-check {
         width: 100%;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 1rem;
     }
 
     .fare-station {
         border-radius: 1rem;
     }
 
-    .fare-check {
-        border-top-left-radius: 1rem;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 1rem;
-    }
 
     .fare-number {
         border-radius: 1rem;
@@ -2989,6 +3282,9 @@ input.change_password_inputs[name='confirm_new_password'] {
     .avail-check {
         width: 50%;
         margin: 0 auto;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 1rem;
     }
 
     .avail-source {
@@ -3029,17 +3325,7 @@ input.change_password_inputs[name='confirm_new_password'] {
         border-right-width: 20px;
     }
 
-    .avail-check {
-        border-top-left-radius: 1rem;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 1rem;
-    }
 
-
-
-    #ticket {
-        margin: 3% 8%;
-    }
 
     .h3 {
         font-size: 1rem;
@@ -3088,6 +3374,31 @@ input.change_password_inputs[name='confirm_new_password'] {
 }
 
 @media (max-width: 576px) {
+    #ticket {
+        width: 90vw;
+    }
+    .PNRcontainer p {
+        font-size: 0.8rem;
+    }
+    .pnrtablehead th {
+        font-size: 0.6rem;
+    }
+    .pnrdata0{
+        grid-template-columns: 1fr;
+    }
+    #profile {
+        margin: auto 7% 5%;
+    }
+    
+    #menubutton h6{
+        font-size: 0.7rem;
+    }
+    .EditprofileInputs{
+        font-size: 0.8rem;
+    }
+    .on-scroll{
+        font-size: 1.2rem;
+    }
     .lds-default {
         left: 43%;
         top: 45%;
@@ -3170,7 +3481,7 @@ input.change_password_inputs[name='confirm_new_password'] {
     }
 
     .service-head h1 {
-        font-size: 2rem;
+        font-size: 1.3rem;
     }
 
     .service-container {
@@ -3242,11 +3553,6 @@ input.change_password_inputs[name='confirm_new_password'] {
         font-size: 0.8rem;
     }
 
-
-
-    #ticket {
-        margin: 3% 5%;
-    }
 
     .h3 {
         font-size: 0.9rem;
@@ -3327,6 +3633,48 @@ input.change_password_inputs[name='confirm_new_password'] {
 }
 
 @media (max-width:360px) {
+    .pnrtablebody tr td{
+        font-size: 0.6rem;
+    }
+    #profile {
+        margin: auto 6% 5%;
+    }
+
+    .menubar{
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    
+    #menubutton:nth-child(1){
+        border-radius: 10px 0 0 0;
+    }
+    #menubutton:nth-child(3){
+        border-radius: 0 10px 0 0;
+    }
+    #menubutton:nth-child(4){
+        border-radius: 0;
+    }
+    #menubutton:nth-child(5){
+        border-radius: 0;
+    }
+    #menubutton:nth-child(6){
+        border-radius: 0 0 10px 0;
+    }
+    #menubutton:nth-child(7){
+        border-radius: 0 0 0 10px;
+    }
+    #menubutton:nth-child(8){
+        border-radius: 0 0 10px 0;
+    }
+
+    #menubutton h6{
+        font-size: 0.6rem;
+    }
+    .EditprofileInputs{
+        font-size: 0.7rem;
+    }
+    .on-scroll{
+        font-size: 1.11rem;
+    }
     .chatbot-body {
         bottom: 1%;
         right: 2.5%;

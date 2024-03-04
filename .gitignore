@@ -1,6 +1,7 @@
 
 #paste all this in a node .gitignore file
 
+.DS_Store
 
 # Logs
 logs

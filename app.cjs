@@ -11,25 +11,25 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const passport = require("passport");
 const session = require("express-session");
 const passportLM = require("passport-local-mongoose");
-const passportL = require("passport-local");
 const cookieParser  = require('cookie-parser') // date added 17/10/2023
 const nodemailer = require('nodemailer');
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
 const bcrypt = require("bcrypt");
 const findOrCreate = require("mongoose-findorcreate");
-const saltRound = 15;
+const saltRound = 8;
 const { spawn } = require('child_process');
 const app = express();
 const fs = require('fs')
 const mysql = require('mysql2');
-const { resolve } = require('path');
-const { rejects } = require('assert');
+
 
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname+"/public"));
+app.use(express.urlencoded({extended: true}));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(cookieParser(process.env.SECRET));
 app.use(express.json());
 app.use(session({
   secret: process.env.SECRET,
@@ -73,45 +73,54 @@ const StationSchema = new mongoose.Schema({
   A: String,
   B: String
 });
+
 const userSchema = new mongoose.Schema({
   email: { type: String, unique: true, required: true },
-  password: { type: String, minLength: 8},
+  password: {type: String, minlength: 8},
   first_name: String,
   last_name: String,
   googleId: String,
   facebookId: String,
   photo: String,
   contact_no: {type:String, maxlength: 10, minlength: 10, unique: true},
-  username: {type: String, unique: true},
+  user_name: {type: String, unique: true},
   OtpVerifyCode: {otp: String, time: Date},
-  user_trip: [{
-    pnr: {type: String, unique: true, maxlength: 10, minlength: 10},
-    train_number: String,
-    train_name: String,
-    source: String,
-    destination: String,
-    date: Date,
-    class: String,
-    count: Number,
-  }]
-})
+  user_trip: [{type: mongoose.Schema.Types.ObjectId, ref: 'usertrip'}]
+});
+
+const userTripSchema = new mongoose.Schema({
+  pnr: {type: String, unique: true, maxlength: 10, minlength: 10},
+  train_number: String,
+  train_name: String,
+  source: String,
+  source_code: String,
+  destination: String,
+  destination_code: String,
+  date: Date,
+  class: String,
+  count: Number,
+  user: {type: mongoose.Schema.Types.ObjectId, ref: 'user'}
+});
+
 const TrainSchema = new mongoose.Schema({
   trainNo: String,
   trainName: String,
 });
+
 const IndianTrains = new mongoose.Schema({
   trainName: String,
   trainDetails: String,
   trainImage: [String]
 });
 
-userSchema.plugin(passportLM);
+userSchema.plugin(passportLM, {usernameField: "email", usernameLowerCase: true});
 userSchema.plugin(findOrCreate);
 
 const stationList = new mongoose.model('list', StationSchema);
 const User = new mongoose.model('user', userSchema);
 const Train = new mongoose.model('train', TrainSchema);
-const IndianTrain = new mongoose.model('indiantrain', IndianTrains)
+const IndianTrain = new mongoose.model('indiantrain', IndianTrains);
+const Usertrip = new mongoose.model('usertrip', userTripSchema);
 
 let pnr = 1
 let alert = ''
@@ -127,15 +136,8 @@ let stationInformation
 let stationSearchError
 
 passport.use(User.createStrategy());  
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
-passport.deserializeUser(function(id, done){
-  User.findById(id).then(function(user){
-    done(null, user);
-  }).catch((err)=> console.log(err));
-});
-
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
@@ -146,14 +148,14 @@ passport.use(new GoogleStrategy({
 function(accessToken, refreshToken, profile, cb) {
   User.findOne({googleId: profile.id}).then((currentUser)=>{
     if(currentUser){
-      User.updateOne({googleId: profile.id}, {$set: {username: profile.displayName, email: profile.emails[0].value, photo: profile.photos[0].value}})
+      User.updateOne({googleId: profile.id}, {$set: {user_name: profile.displayName, email: profile.emails[0].value, photo: profile.photos[0].value}})
       return cb(null, currentUser);
     }
     else
     {
       const newUser = new User({
             googleId: profile.id,
-            username: profile.displayName,
+            user_name: profile.displayName,
             email: profile.emails[0].value,
             photo: profile.photos[0].value,
             first_name: profile.name.givenName,
@@ -175,16 +177,16 @@ passport.use(new FacebookStrategy({
   callbackURL: process.env.FACEBOOK_CALLBACK_URL,
   profileFields: ['id', 'displayName', 'photos', 'email', 'first_name', 'last_name'],
 },
- function(accessToken, refreshToken, profile, cb) {
+function(accessToken, refreshToken, profile, cb) {
     User.findOne({ facebookId: profile.id }).then((founduser) => {
         if (founduser) {
-          User.updateOne({facebookId: profile.id}, {$set: {email:profile.emails[0].vaalue, username: profile.displayName}}); // update the email and username
+          User.updateOne({facebookId: profile.id}, {$set: {email:profile.emails[0].value, user_name: profile.displayName}}); // update the email and username
           return cb(null, founduser);
         } else {
             const newUser = new User({
               facebookId: profile.id,
               email: profile.emails[0].value,
-              username: profile.displayName,
+              user_name: profile.displayName,
               photo: profile.photos[0].value,
               first_name: profile._json.first_name,
               last_name: profile._json.last_name,
@@ -205,17 +207,18 @@ app.get("/", function(req, res){
   {
     logedIn = true;
   }
+  console.log("Cookies: ", req.cookies);
+  console.log("Session: ", req.session);
+  console.log("Signed Cookies: ", req.signedCookies); 
   res.render("home");
 })
 
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'], prompt: 'select_account'}));
 app.get('/auth/google/OneTrain', passport.authenticate('google', { failureRedirect: '/singup' }), function(req, res) {
-   
     res.redirect('/');
   });
 
 app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'], authType: 'reauthenticate', prompt: 'select_account' }));
-
 app.get('/auth/facebook/OneTrain',
   passport.authenticate('facebook', { failureRedirect: '/signup' }),
   function(req, res) {
@@ -224,7 +227,8 @@ app.get('/auth/facebook/OneTrain',
 
 
 app.get("/pnr-status", (req, res)=>{
-  if(req.isAuthenticated())
+  try{
+    if(req.isAuthenticated())
     {
       res.render('PNR', {alert: alert});
       alert = "";
@@ -233,12 +237,27 @@ app.get("/pnr-status", (req, res)=>{
     {
         res.redirect('/login');
     }
+  }
+  catch(error)
+  {
+    console.log(error);
+    alert = "Internal server error.";
+    res.redirect('/pnr-status');
+  }
 })
 
 app.get("/pnr-check/:pnr", (req, res)=>{
-  res.render("Check", {
-    response: PassengerPNR
-  });
+  try{
+    res.render("Check", {
+      response: PassengerPNR
+    });
+  }
+  catch(error)
+  {
+    console.log(error);
+    alert = "Internal server error.";
+    res.redirect('/pnr-status');
+  }
 })
 
 app.get('/TBWS', function(req, res){
@@ -312,22 +331,29 @@ app.get('/logout', (req, res)=> {
 })
 
 app.get('/isLogedIn', (req, res)=> {
-  if(logedIn===true)
-  {
-    const userId = req.user.id;
-    User.findById(userId).then((foundUser)=>{
-      if(foundUser)
-      {
-        const username = foundUser.first_name + " " + foundUser.last_name;
-        const photourl = foundUser.photo;
-        logedIn = true;
-        res.json({logedIn: logedIn, username: username, photourl: photourl});
-      }
-    }).catch((err)=> console.log(err));
+  try{
+    if(logedIn===true)
+    {
+      const userId = req.user.id;
+      User.findById(userId).then((foundUser)=>{
+        if(foundUser)
+        {
+          const username = foundUser.first_name + " " + foundUser.last_name;
+          const photourl = foundUser.photo;
+          logedIn = true;
+          res.json({logedIn: logedIn, username: username, photourl: photourl});
+        }
+      }).catch((err)=> console.log(err));
+    }
+    else
+    {
+      res.json({logedIn: logedIn});
+    }
   }
-  else
+  catch(error)
   {
-    res.json({logedIn: logedIn});
+    console.log(error);
+    res.json({logedIn: false});
   }
 });
 
@@ -368,9 +394,9 @@ app.get('/chat', (req, res) => {
   chat_process.on('close', (code) => {
     console.log(`child process exited with code ${code}`);
     if(error) {
-      res.send("There is some error in the chatbot. Please try again later.");
+      res.status(500).send("There is some error in the chatbot. Please try again later.");
     } else {
-      res.send(output);
+      res.status(200).send(output);
     }
   });
 })
@@ -388,23 +414,60 @@ app.get('/stationSearchInfo', (req, res) => {
   res.render('stationSearchInfo', {stationInformation: stationInformation, trainFromStation: trainList});
 });
 
-
-app.post("/pnr-status", (req, res) =>
-{
-    const userID = req.user.id;
-    pnr = req.body.pnrcheck;
-    const options = {
-      method: 'GET',
-      url: 'https://irctc1.p.rapidapi.com/api/v3/getPNRStatus',
-      params: {pnrNumber: pnr},
-      headers: {
-        'X-RapidAPI-Key': process.env.X_RAPID_API_KEY,
-        'X-RapidAPI-Host': 'irctc1.p.rapidapi.com'
+app.get('/upcomingJourney', async (req, res) => {
+  try{
+    if (req.isAuthenticated()) {
+      const userID = req.user.id;
+      const foundUser = User.findById(userID);
+      if (foundUser) {
+        const trips = await Usertrip.find({ user: foundUser._id, date: { $gte: new Date() } }).sort({ date: 1 });
+        res.status(200).send({ success: true, message: trips });
+      } else {
+        res.status(400).send({ success: false, message: "User not found." });
       }
-    };
+    } else {
+      res.redirect('/login');
+    }
+  }
+  catch(error)
+  {
+    console.error(error);
+    res.status(500).send({ success: false, message: "Internal server error." });
+  }
+})
 
-    axios.request(options).then(function (response) 
+app.get('/pastJourney', async (req, res) => {
+  try{
+    if (req.isAuthenticated()) {
+      const userID = req.user.id;
+      const foundUser = User.findById(userID);
+      if (foundUser) {
+        const trips = await Usertrip.find({ user: foundUser._id, date: { $lt: new Date() } }).sort({ date: -1 });
+        res.status(200).send({ success: true, message: trips });
+      } else {
+        res.status(400).send({ success: false, message: "User not found." });
+      }
+    } else {
+      res.redirect('/login');
+    }
+  }
+  catch(error)
+  {
+    console.error(error);
+    res.status(500).send({ success: false, message: "Internal server error." });
+  }
+})
+
+
+
+app.post("/pnr-status", async (req, res) =>
+{
+  try{
+    const userID = req.user.id;
+    pnr = req.body.pnrcheck.trim();
+    if(pnr)
     {
+      const response = await PNRapiCall(pnr);
       if(response.data.data.TrainNo === null)
       {
         alert = "Not A valid PNR";
@@ -412,23 +475,132 @@ app.post("/pnr-status", (req, res) =>
       }
       else
       {
-        User.findById(userID).then((foundUser)=>{
-          if(foundUser)
-          {
-            foundUser.userPNR.push(pnr);
-            foundUser.save();
-          }
-        }).catch((err)=> console.log(err));
-        alert = "";
-        PassengerPNR = response.data.data;
-        res.redirect(`/pnr-check/${pnr}`);
+        const saveResponse = await savePNR(userID, response.data.data);
+        if(saveResponse.status === 200)
+        {
+          alert = "";
+          PassengerPNR = response.data.data;
+          res.redirect(`/pnr-check/${pnr}`);
+        }
+        else
+        {
+          alert = saveResponse.message;
+          res.redirect("/pnr-status");
+        }
       }
-    }).catch(function (error) 
+    }
+    else
     {
-      console.error(error);
-    });
-  
+      alert = "Please enter a valid PNR";
+      res.redirect("/pnr-status");
+    }
+  }
+  catch(error)
+  {
+    console.log(error);
+    alert = "Internal server error.";
+    res.redirect("/pnr-status");
+  }
+
+}
+);
+
+async function savePNR(userID, response) {
+  try {
+    let Pnrsavemessage;
+    let status;
+    const foundUser = await User.findById(userID);
+    if (foundUser) {
+      const trippnr = response.Pnr;
+      const train_name = response.TrainName;
+      const train_number = response.TrainNo;
+      const source = response.BoardingStationName;
+      const source_code = response.From;
+      const destination = response.ReservationUptoName;
+      const destination_code = response.To;
+      const [day, month, year] = response.Doj.split('-');
+      const [hour, minute] = response.ScheduledDeparture.split(':');
+      const date = new Date(parseInt(year), parseInt(month - 1), parseInt(day), parseInt(hour), parseInt(minute));
+      const Class = response.Class;
+      const count = response.PassengerCount;
+
+      const existingTrip = await Usertrip.findOne({ pnr: trippnr, user: foundUser._id });
+      if (existingTrip) {
+        existingTrip.train_number = train_number;
+        existingTrip.train_name = train_name;
+        existingTrip.source = source;
+        existingTrip.source_code = source_code;
+        existingTrip.destination = destination;
+        existingTrip.destination_code = destination_code;
+        existingTrip.date = date;
+        existingTrip.class = Class;
+        existingTrip.count = count;
+        await existingTrip.save();
+        Pnrsavemessage = "Existing trip updated.";
+        status = 200;
+      } else {
+        const newTrip = new Usertrip({
+          pnr: trippnr,
+          train_number: train_number,
+          train_name: train_name,
+          source: source,
+          source_code: source_code,
+          destination: destination,
+          destination_code: destination_code,
+          date: date,
+          class: Class,
+          count: count,
+          user: foundUser._id
+        });
+        await newTrip.save();
+        Pnrsavemessage = "New trip saved.";
+        status = 200;
+      }
+    } else {
+      status = 400;
+      Pnrsavemessage = "User not found.";
+    }
+    return { status: status, message: Pnrsavemessage };
+  } catch (error) {
+    console.error(error);
+    return { status: 500, message: "Internal server error." };
+  }
+}
+
+app.post('/chatPNR', async (req, res) => {
+  try {
+    const Chatpnr = req.body.pnr;
+    const response = await PNRapiCall(Chatpnr);
+    if (response.data.data.TrainNo === null) {
+      res.status(404).send({ success: false, message: "Not a valid PNR." });
+    } else {
+      res.status(200).send({ success: true, message: response.data.data });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ success: false, message: "Internal server error." });
+  }
 })
+
+async function PNRapiCall(pnr) {
+  const options = {
+    method: 'GET',
+    url: 'https://irctc1.p.rapidapi.com/api/v3/getPNRStatus',
+    params: {pnrNumber: pnr},
+    headers: {
+      'X-RapidAPI-Key': process.env.X_RAPID_API_KEY,
+      'X-RapidAPI-Host': 'irctc1.p.rapidapi.com'
+    }
+  };
+
+  try {
+    const response = await axios.request(options);
+    return response.data.data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
 
 app.post("/TBWS", function(req, res){
   let source = (req.body.Source);
@@ -447,12 +619,8 @@ app.post('/TBWS/:from/:to', (req, res)=>{
   TBWSAPIoutput(res, source, destination);
 })
 
-app.get("/", function(req, res){
-  res.render("home", {docs: docsget});
-});
-
 app.post('/station-search', (req, res) => {
-  const value = req.body.input;
+  const value = req.body.input.trim();
   if (value) {
     stationList.aggregate([
       {
@@ -478,19 +646,19 @@ app.post('/station-search', (req, res) => {
         $sort: { priority: 1 }
       }
     ]).then(function (docs) {
-      res.send(docs.slice(0, 6));
+      res.status(200).send(docs.slice(0, 8));
     }).catch(function (err) {
       console.log(err);
-      res.status(500).send("An error occurred");
+      res.status(500).send("Server side error, please try again later.");
     });
   } else {
-    res.send([]);
+    res.status(400).send([]);
   }
 });
 
 
 app.post('/train-search', function (req, res) {
-  const value = req.body.input;
+  const value = req.body.input.trim();
   if(value)
   {
     Train.aggregate([
@@ -518,147 +686,274 @@ app.post('/train-search', function (req, res) {
       }
     ]).then(function (docs) {
       docs.sort((a, b) => parseInt(a.trainNo) - parseInt(b.trainNo));
-      res.send(docs.slice(0, 8));
+      res.status(200).send(docs.slice(0, 8));
     }).catch(function (err) {
       console.log(err);
       res.status(500).send("An error occurred");
     });
   } else {
-    res.send([]);
+    res.status(400).send([]);
   }
 });
 
 app.post('/train-info', (req, res)=>{
-  const trainNo = req.body.trainNo;
-  TrainInfoAPIoutput(res, trainNo).then((trainInfoArray) => {
-      res.send({ trainInfoArray: trainInfoArray, trainNo: trainNo });
-    })
-    .catch((error) => {
-      console.error(error);
-      res.sendStatus(500);
-    });
+  const trainNo = req.body.trainNo.trim();
+  if(trainNo){
+    TrainInfoAPIoutput(res, trainNo).then((trainInfoArray) => {
+        res.status(200).send({ success: true, trainInfoArray: trainInfoArray, trainNo: trainNo });
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send({ success: false, trainInfoArray: "Internal server error.", trainNo: trainNo });
+      });
+  }
+  else{
+    res.status(400).send({ success: false, trainInfoArray: "Please enter a valid train number.", trainNo: trainNo });
+  }
 })
 
 
-app.post('/login', (req, res) => {
-  User.findOne({ email: lodash.toLower(req.body.username) })
-    .then(user => {
-      if (user) {
-        if (user.googleId) {
-          userLoginWarning =
-            'This Email Address is registered with Google. Please Login with Google.'
-          res.redirect('/login')
-        } else if (user.facebookId) {
-          userLoginWarning =
-            'This Email Address is registered with Facebook. Please Login with Facebook.'
-          res.redirect('/login')
-        } else {
-          userWarning = ''
-          const existUser = new User({
-            email: lodash.toLower(req.body.username),
-            password: req.body.password
-          })
-          const rememberMe = req.body.rememberMe; 
-          req.login(existUser, function (err) {
-            if (err) {
-              console.log(err)
-              res.redirect('/login')
-            } else {
-              passport.authenticate('local')(req, res, function () {
-                logedIn = true
-                res.redirect('/')
-              });
-              if(rememberMe === 'on') {
-                req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; 
-              } else {
-                req.session.cookie.expires = false;
-              }
-            }
-          })
-        }
-      } else {
-        userLoginWarning =
-          'This Email Address is not registered. Please Sign Up or use registered email address.'
-        res.redirect('/login')
+app.post('/login', async (req, res) => {
+  try{
+    const userEmail = req.body.email.trim().toLowerCase();
+    const foundUser = await User.findOne({ email: userEmail });
+    if(foundUser)
+    {
+      if(foundUser.googleId)
+      {
+        return handleGoogleLogin(req, res);
       }
-    })
-    .catch(err => console.log(err))
-  // find user in database
+      else if(foundUser.facebookId)
+      {
+        return handleFacebookLogin(req, res);
+      }
+      else
+      {
+        return handleLocalLogin(req, res);
+      }
+    }
+    else
+    {
+      return handleNotRegisteredUser(req, res);
+    }
+  }
+  catch(error)
+  {
+    console.log(error);
+    userLoginWarning = "Internal server error.";
+    return res.redirect('/login');
+  }
 })
 
-app.post('/signup', (req, res) => {
-  User.findOne({ email: lodash.toLower(req.body.username) })
-    .then(user => {
-      if (user) {
-        userWarning =
-          'This Email Address is already registered. Please Login or use another email address.'
-        res.redirect('/signup')
-      } else {
-        userWarning = ''
-        User.register(
-          {
-            username: lodash.toLower(req.body.username),
-            email: lodash.toLower(req.body.username),
-            last_name: lodash.upperFirst(lodash.toLower(req.body.last_name)),
-            first_name: lodash.upperFirst(lodash.toLower(req.body.first_name))
-          },
-          req.body.password,
-          function (err, user) {
-            if (err) {
-              console.log(err)
-              res.redirect('/signup')
-            } else {
-              passport.authenticate('local')(req, res, function () {
-                logedIn = true
-                res.redirect('/')
-              })
-            }
+function handleGoogleLogin(req, res) {
+  userLoginWarning = "This email address is registered with Google. Please login with Google.";
+  return res.redirect('/login');
+}
+
+function handleFacebookLogin(req, res) {
+  userLoginWarning = "This email address is registered with Facebook. Please login with Facebook.";
+  return res.redirect('/login');
+}
+
+function handleNotRegisteredUser(req, res) {
+  userLoginWarning = "This email address is not registered. Please Sign Up first.";
+  return res.redirect('/login');
+}
+
+function handleLocalLogin(req, res) {
+  passport.authenticate('local', (err, user, info) => {
+          if (err) {
+            console.log("Error during authentication:", err);
+            userLoginWarning = "Internal server error.";
+            return res.redirect('/login');
           }
-        )
+          if (!user) {
+            console.log("Authentication failed:", info.message);
+            userLoginWarning = "Invalid username or password.";
+            return res.redirect('/login');
+          }
+          req.logIn(user, function(err) {
+            if (err) {
+              console.log("Error during login:", err);
+              userLoginWarning = "Internal server error.";
+              return res.redirect('/login');
+            }
+            userLoginWarning = "";
+            logedIn = true;
+            return res.redirect('/');
+          });
+        })(req, res);
+}
+
+
+app.post('/signup', async (req, res) => {
+  try{
+    const userEmail = req.body.username.trim().toLowerCase();
+    console.log(userEmail);
+    const foundUser = await User.findOne({ email: userEmail });
+    console.log(foundUser);
+    if(foundUser)
+    {
+      userWarning = "This email address is already registered. Please try another.";
+      res.redirect('/signup');
+    }
+    else
+    {
+      userWarning = "";
+      const Newuser = new User({
+        email: userEmail,
+        user_name: userEmail,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+      });
+      console.log(Newuser)
+      await User.register(Newuser, req.body.password, async (err, newUser) => {
+      if (err) {
+        console.log(err + " Cannot register new user");
+        userWarning = "Internal server error.";
+        res.redirect('/signup');
+      } else {
+        req.logIn(newUser, function(err) {
+          if (err) {
+            console.log(err + " Cannot log in with the new user");
+            return res.redirect('/signup');
+          }
+
+          logedIn = true;
+          console.log("New user logged in");
+          return res.redirect('/');
+        });
       }
-    })
-    .catch(err => {
-      console.log(err)
-    })
-  // must give a unique username and also write username: req.body.username. This is must. and also, write req.body.password remember password must include
+    });
+    }
+  }
+  catch(error)
+  {
+    console.log(error + "Cannot register new user Catch Error, exception in main try block");
+    userWarning = "Internal server error.";
+    res.redirect('/signup');
+  }
+  
+})
+
+app.post('/usernameExistOrNot', async (req, res) => {
+  try{
+    const userName = req.body.username;
+    let userID = "";
+    if (req.isAuthenticated()) {
+      userID = req.user.id;
+    }
+    else
+    {
+      res.redirect('/login');
+    }
+    const currentUser = await User.findOne({_id: userID})
+    const currentUsername = currentUser.user_name;
+    if(currentUsername === userName)
+    {
+      res.status(200).send({success: false, message: "This username is available."});
+    }
+    else
+    {
+      const foundUser = await User.findOne({user_name: userName});
+      if(foundUser)
+      {
+        res.status(200).send({success: true, message: "This username is already taken. Please try another."});
+      }
+      else
+      {
+        res.status(200).send({success: false, message: "This username is available."});
+      }
+    }
+  }
+  catch(error)
+  {
+    console.log(error);
+    res.status(500).send({success: false, message: "Internal server error."});
+  }
 })
 
 app.post('/editprofile', (req, res) => {
-  const userId = req.user.id
   const newFirstName = req.body.fname
   const newLastName = req.body.lname
   const newContact = req.body.contact
   const userName = req.body.userID
   const userEmail = req.body.email
-  User.findById(userId)
-    .then(foundUser => {
+  User.findOne({email: userEmail})
+    .then(async (foundUser) => {
       if (foundUser) {
-        let foundUserWithUserEmail = null;
-        let foundUserWithUserName = null;
-        if(foundUser.email !== userEmail) {
-          foundUserWithUserEmail = User.findOne({ email: userEmail });
-        }
-        if(foundUser.username !== userName) {
-          foundUserWithUserName = User.findOne({ username: userName });
+        let foundUserWithUserName = "";
+        if(foundUser.user_name !== userName) {
+          foundUserWithUserName = await User.findOne({ user_name: userName });
         }
         if (foundUserWithUserName) {
           const warning = 'This username is already taken. Please try another.'
-          res.send(warning);
-        } else if (foundUserWithUserEmail) {
-          const warning = 'This email is already taken. Please try another.'
-          res.send(warning);
+          res.status(400).send(warning);
         }
         const success = 'Profile Updated Successfully.'
-        foundUser.first_name = newFirstName
-        foundUser.last_name = newLastName
-        foundUser.contact_no = newContact
-        foundUser.username = userName
-        foundUser.save()
-        res.send(success);
+        const updatedUser = await User.updateOne({ email: userEmail }, { $set: { first_name: newFirstName, last_name: newLastName, contact_no: newContact, user_name: userName } }, { new: true });
+        if(updatedUser) {
+          res.status(200).send(success);
+        } else {
+          res.status(500).send("Internal server error.");
+        }
       }
     })
     .catch(err => console.log(err))
 })
+
+app.post('/changePassword', async (req, res) => {
+  console.log("change password")
+  try{
+    if(req.isAuthenticated())
+    {
+      const userID = req.user.id;
+      const oldPassword = req.body.oldPassword;
+      const newPassword = req.body.newPassword;
+
+      const foundUser = await User.findById(userID);
+      console.log(foundUser)
+      if(foundUser)
+      {
+        foundUser.authenticate(oldPassword, async (err, user, passwordErr) => {
+          if (err) {
+            console.log(err);
+            res.status(500).send({ success: false, message: "Internal server error." });
+          }
+          if (!user) {
+            console.log(passwordErr)
+            res.status(400).send({ success: false, message: "Old password is incorrect." });
+          }
+          else
+          {
+            console.log("password changed")
+            await foundUser.setPassword(newPassword);
+            await foundUser.save();
+            res.status(200).send({ success: true, message: "Password changed successfully." });
+          }
+        });
+      }
+      else
+      {
+        res.status(400).send({ success: false, message: "User not found." });
+      }
+    }
+    else
+    {
+      res.redirect('/login');
+    }
+  }
+  catch(error)
+  {
+    console.error(error);
+    res.status(500).send({ success: false, message: "Internal server error." });
+  }
+})
+
+
+
+
+
 
 function generateOTP() {
   let digits = '123456789';
@@ -672,14 +967,14 @@ function generateOTP() {
 
 function sendEmail(senderEmail, Message, receiverEmail, subject, anyhtml) {
   return new Promise((resolve, reject) => {
-    var transporter = nodemailer.createTransport({
+    let transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user: process.env.COMPANY_ID,
         pass: process.env.APP_PASSWORD
       }
     });
-    var mailOptions = {
+    let mailOptions = {
       from: senderEmail,
       to: receiverEmail,
       subject: subject,
@@ -689,10 +984,10 @@ function sendEmail(senderEmail, Message, receiverEmail, subject, anyhtml) {
     transporter.sendMail(mailOptions, function(error, info) {
       if (error) {
         console.log(error);
-        reject(false); // Email sending failed, reject the promise with false
+        reject(false);
       } else {
         console.log("Email sent: " + info.response);
-        resolve(true); // Email sent successfully, resolve the promise with true
+        resolve(true);
       }
     });
   });
@@ -700,8 +995,6 @@ function sendEmail(senderEmail, Message, receiverEmail, subject, anyhtml) {
 
 function getCurrentTime(time)
 {
-  const x = new Date();
-  x.get
   const hour = time.getHours();
   const minute = time.getMinutes();
   const second = time.getSeconds();
@@ -714,7 +1007,7 @@ function getCurrentTime(time)
 }
 
 app.post('/forgotPassword', (req, res)=>{
-  const userEmail = req.body.email;
+  const userEmail = req.body.email.trim();
   User.findOne({email: userEmail})
   .then(foundUser => {
     if(foundUser) {
@@ -739,18 +1032,18 @@ app.post('/forgotPassword', (req, res)=>{
         const emailSent = sendEmail(senderEmail, message, receiverEmail, subject, html);
         emailSent.then(success => {
           if (success) {
-            res.send({ success: true, message: "Email sent successfully" });
+            res.status(200).send({ success: true, message: "Email sent successfully" });
           } else {
-            res.send({ success: false, message: "Email could not be sent. Please check your Email and try Again" });
+            res.status(400).send({ success: false, message: "Email could not be sent. Please check your Email and try Again" });
           }
         }).catch(error => {
           console.error(error);
-          res.send({ success: false, message: "Email could not be sent due to an error. Please try again later." });
+          res.status(500).send({ success: false, message: "Email could not be sent due to an error. Please try again later." });
         });
       }
     }
     else {
-      res.send({
+      res.status(400).send({
         success: false,
         message: "This email address is not registered. Please try another."
       });
@@ -760,9 +1053,8 @@ app.post('/forgotPassword', (req, res)=>{
 })
 
 app.post('/verifyOtp', (req, res)=>{
-  const userEmail = req.body.email;
-  const otp = req.body.otp;
-  console.log(otp+" ***** "+typeof(otp)+ ' **** '+ userEmail);
+  const userEmail = req.body.email.trim();
+  const otp = req.body.otp.trim();
   User.findOne({email: userEmail}).then(
     foundUser => {
       if(foundUser){
@@ -771,19 +1063,19 @@ app.post('/verifyOtp', (req, res)=>{
         const time = new Date();
         const savedTime = foundUser.OtpVerifyCode.time;
         if(time.getTime() - savedTime.getTime() > 600000) {
-          res.send({success: false, message: "OTP is expired. Please try again."});
+          res.status(400).send({success: false, message: "OTP is expired. Please try again."});
         }
         bcrypt.compare(otpString, hashedOTPString).then(
           result => {
             if(result) {
-              res.send({success: true, message: "OTP is verified successfully", userID: foundUser._id});
+              res.status(200).send({success: true, message: "OTP is verified successfully", userID: foundUser._id});
             } else {
-              res.send({success: false, message: "OTP is incorrect. Please try again."});
+              res.status(400).send({success: false, message: "OTP is incorrect. Please try again."});
             }
           }
         ).catch(err => console.log(err) );  
       } else {
-        res.send({success: false, message: "This email address is not registered. Please try another."});
+        res.status(400).send({success: false, message: "This email address is not registered. Please try another."});
       }
     }
   );
@@ -791,21 +1083,23 @@ app.post('/verifyOtp', (req, res)=>{
 
 app.post('/resetPassword', async (req, res) => {
   const userID = req.body.userID;
-  const newPassword = req.body.newPassword;
+  const newPassword = req.body.newPassword.trim();
   try {
     const foundUser = await User.findById(userID);
     if (foundUser) {
       await foundUser.setPassword(newPassword);
       await foundUser.save();
-      res.send({ success: true, message: "Password reset successfully." });
+      res.status(200).send({ success: true, message: "Password reset successfully." });
     } else {
-      res.send({ success: false, message: "User not found." });
+      res.status(400).send({ success: false, message: "User not found." });
     }
   } catch (error) {
     console.error(error);
     res.status(500).send({ success: false, message: "Internal server error." });
   }
 });
+
+
 const promisePool = pool.promise();
 
 app.post('/stationSearchInfo', async (req, res) => {
@@ -814,7 +1108,6 @@ app.post('/stationSearchInfo', async (req, res) => {
   const stationCode = lodash.lowerCase(stationNameArr[1]).trim();
   try {
   const [rows, fields] = await promisePool.execute('SELECT * FROM stations_info WHERE station_code = ?', [stationCode]);
-    // console.log('Query Results:', rows); // send javascript object to the client
     stationInformation = rows;
   stationInfo(res, req, rows, stationCode);
 } catch (error) {

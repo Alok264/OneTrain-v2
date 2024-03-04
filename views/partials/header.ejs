@@ -42,7 +42,7 @@
                         <a href="/running-status" class="nav-link">Running Status</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" >More</a>
+                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" >More</a>
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="/TBWS" class="dropdown-item">Train b/w Stations</a>
@@ -67,7 +67,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item login_dropdown"> <!--add dropdown on login-dropdown data-bs-toggle="dropdown" -->
+                    <li class="nav-item login_dropdown">
                         <a href="/login" role="button" aria-expanded="false" id="login_user"  class="nav-link dropdown-toggle d-flex align-items-center login_username text-success-emphasis rounded-pill">
                             <img class="rounded-circle login_img me-1" width="24" height="24" src="https://icon-library.com/images/no-profile-picture-icon/no-profile-picture-icon-1.jpg" alt="User Profile"><span>Login/Signup</span>
                         </a>
@@ -111,40 +111,30 @@
                     <div class="service091 row">
                         <div class="service091-20 col">
                             <div class="service091-button">
-                                <button class="btn btn-outline-success btn-md service091-btn" >Pnr Status</button>
+                                <button id="09pnrstatus" class="btn btn-outline-success btn-md service091-btn" onclick="handleChatButton(event)" >Pnr Status</button>
                             </div>
                         </div>
                         <div class="service091-20 col">
                             <div class="service091-button">
-                                <button class="btn btn-outline-success btn-md service091-btn">Train Info</button>
+                                <button id="09traininfo" class="btn btn-outline-success btn-md service091-btn">Train Info</button>
                             </div>
                         </div>
                     </div>
                     <div class="row service091">
                         <div class="service091-20 col">
                             <div class="service091-button">
-                                <button class="btn btn-outline-success btn-md service091-btn">Fare Calculator</button>
+                                <button id="09farecalculator" class="btn btn-outline-success btn-md service091-btn">Fare Calculator</button>
                             </div>
                         </div>
                         <div class="service091-20 col">
                             <div class="service091-button">
-                                <button class="btn btn-outline-success btn-md service091-btn">Go To IRCTC</button>
+                                <button id="09irctc" class="btn btn-outline-success btn-md service091-btn">Go To IRCTC</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="chat09 row">
                     <div class="chat09-container" id="chatbox">
-                        <!-- <div class="chat09-container-user text09">
-                            <div class="chat09-container-text-user">
-                                <span class="chat09-container-user-text">Hi!</span>
-                            </div>
-                        </div>
-                        <div class="chat09-container-system text09">
-                            <div class="chat09-container-text-system">
-                                <span class="chat09-container-system-text">Hi, I am One Train. How can I help you?</span>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
                 <div>
@@ -152,9 +142,9 @@
                 </div>
             </div>
             <div class="chatbot-input">
-                <form class="chatbot-input-form" onsubmit="return chat_response()">
+                <form class="chatbot-input-form" onsubmit="return chat_response(event)">
                     <div class="chatbot-input-text">
-                        <input type="text" class="chatbot-input-box" id="userInput" placeholder="May I Help You......." name="userInput">
+                        <input type="text" class="chatbot-input-box" id="userInput" placeholder="May I Help You......." name="userInput" autocomplete="off" >
                     </div>
                     <div class="chatbot-input-icon">
                         <button type="submit" class="chatbot-input-button">
@@ -167,7 +157,7 @@
     </div>
     <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 
-    <!-- normal customizable alert box -->
+
     <div class="universalAlertboxpopup">
         <div class="alert_close_box">
             <button type="button" class="alert_close_button" onclick="closeAlertBox()"><i class="fa-solid fa-circle-xmark fa-xl" style="color:red;"></i></button>
@@ -179,8 +169,3 @@
     
     
 
-
-
-<!-- write css for chatbot body 
-
--->
